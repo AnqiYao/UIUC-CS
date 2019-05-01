@@ -1,0 +1,107 @@
+#! /usr/bin/vvp
+:ivl_version "0.9.6 " "(v0_9_6)";
+:vpi_time_precision + 0;
+:vpi_module "system";
+:vpi_module "v2005_math";
+:vpi_module "va_math";
+S_0x15b2fc0 .scope module, "sc2_test" "sc2_test" 2 1;
+ .timescale 0 0;
+v0x15c98a0_0 .var "a_in", 0 0;
+v0x15c9970_0 .var "b_in", 0 0;
+v0x15c9a40_0 .var "cin_in", 0 0;
+v0x15c9b10_0 .net "cout_out", 0 0, L_0x15ca570; 1 drivers
+v0x15c9b90_0 .net "s_out", 0 0, L_0x15ca430; 1 drivers
+S_0x15b30b0 .scope module, "sc1" "sc2_block" 2 7, 3 4, S_0x15b2fc0;
+ .timescale 0 0;
+L_0x15ca570 .functor OR 1, L_0x15c9c60, L_0x15ca0e0, C4<0>, C4<0>;
+v0x15c92f0_0 .net "a", 0 0, v0x15c98a0_0; 1 drivers
+v0x15c93c0_0 .net "b", 0 0, v0x15c9970_0; 1 drivers
+v0x15c9470_0 .net "cin", 0 0, v0x15c9a40_0; 1 drivers
+v0x15c9520_0 .alias "cout", 0 0, v0x15c9b10_0;
+v0x15c95d0_0 .alias "s", 0 0, v0x15c9b90_0;
+v0x15c9680_0 .net "w1", 0 0, L_0x15c9fe0; 1 drivers
+v0x15c9750_0 .net "w2", 0 0, L_0x15c9c60; 1 drivers
+v0x15c97d0_0 .net "w3", 0 0, L_0x15ca0e0; 1 drivers
+S_0x15c8cf0 .scope module, "s1" "sc_block" 3 9, 4 1, S_0x15b30b0;
+ .timescale 0 0;
+L_0x15c9c60 .functor AND 1, v0x15c98a0_0, v0x15c9970_0, C4<1>, C4<1>;
+L_0x15c9d10 .functor NOT 1, v0x15c98a0_0, C4<0>, C4<0>, C4<0>;
+L_0x15c9e00 .functor NOT 1, v0x15c9970_0, C4<0>, C4<0>, C4<0>;
+L_0x15c9ef0 .functor AND 1, v0x15c98a0_0, L_0x15c9e00, C4<1>, C4<1>;
+L_0x15c9f50 .functor AND 1, v0x15c9970_0, L_0x15c9d10, C4<1>, C4<1>;
+L_0x15c9fe0 .functor OR 1, L_0x15c9ef0, L_0x15c9f50, C4<0>, C4<0>;
+v0x15c8de0_0 .alias "a", 0 0, v0x15c92f0_0;
+v0x15c8ea0_0 .alias "b", 0 0, v0x15c93c0_0;
+v0x15c8f40_0 .alias "c", 0 0, v0x15c9750_0;
+v0x15c8fe0_0 .net "not_a", 0 0, L_0x15c9d10; 1 drivers
+v0x15c9060_0 .net "not_b", 0 0, L_0x15c9e00; 1 drivers
+v0x15c9100_0 .alias "s", 0 0, v0x15c9680_0;
+v0x15c9180_0 .net "w1", 0 0, L_0x15c9ef0; 1 drivers
+v0x15c9200_0 .net "w2", 0 0, L_0x15c9f50; 1 drivers
+S_0x15b4650 .scope module, "s2" "sc_block" 3 10, 4 1, S_0x15b30b0;
+ .timescale 0 0;
+L_0x15ca0e0 .functor AND 1, L_0x15c9fe0, v0x15c9a40_0, C4<1>, C4<1>;
+L_0x15ca220 .functor NOT 1, L_0x15c9fe0, C4<0>, C4<0>, C4<0>;
+L_0x15ca280 .functor NOT 1, v0x15c9a40_0, C4<0>, C4<0>, C4<0>;
+L_0x15ca370 .functor AND 1, L_0x15c9fe0, L_0x15ca280, C4<1>, C4<1>;
+L_0x15ca3d0 .functor AND 1, v0x15c9a40_0, L_0x15ca220, C4<1>, C4<1>;
+L_0x15ca430 .functor OR 1, L_0x15ca370, L_0x15ca3d0, C4<0>, C4<0>;
+v0x15b4740_0 .alias "a", 0 0, v0x15c9680_0;
+v0x15c87f0_0 .alias "b", 0 0, v0x15c9470_0;
+v0x15c8890_0 .alias "c", 0 0, v0x15c97d0_0;
+v0x15c8930_0 .net "not_a", 0 0, L_0x15ca220; 1 drivers
+v0x15c89e0_0 .net "not_b", 0 0, L_0x15ca280; 1 drivers
+v0x15c8a80_0 .alias "s", 0 0, v0x15c9b90_0;
+v0x15c8b60_0 .net "w1", 0 0, L_0x15ca370; 1 drivers
+v0x15c8c00_0 .net "w2", 0 0, L_0x15ca3d0; 1 drivers
+    .scope S_0x15b2fc0;
+T_0 ;
+    %vpi_call 2 12 "$dumpfile", "sc2.vcd";
+    %vpi_call 2 13 "$dumpvars", 1'sb0, S_0x15b2fc0;
+    %set/v v0x15c98a0_0, 0, 1;
+    %set/v v0x15c9970_0, 0, 1;
+    %set/v v0x15c9a40_0, 0, 1;
+    %delay 10, 0;
+    %set/v v0x15c98a0_0, 0, 1;
+    %set/v v0x15c9970_0, 1, 1;
+    %set/v v0x15c9a40_0, 0, 1;
+    %delay 10, 0;
+    %set/v v0x15c98a0_0, 1, 1;
+    %set/v v0x15c9970_0, 0, 1;
+    %set/v v0x15c9a40_0, 0, 1;
+    %delay 10, 0;
+    %set/v v0x15c98a0_0, 1, 1;
+    %set/v v0x15c9970_0, 1, 1;
+    %set/v v0x15c9a40_0, 0, 1;
+    %delay 10, 0;
+    %set/v v0x15c98a0_0, 0, 1;
+    %set/v v0x15c9970_0, 0, 1;
+    %set/v v0x15c9a40_0, 1, 1;
+    %delay 10, 0;
+    %set/v v0x15c98a0_0, 0, 1;
+    %set/v v0x15c9970_0, 1, 1;
+    %set/v v0x15c9a40_0, 1, 1;
+    %delay 10, 0;
+    %set/v v0x15c98a0_0, 1, 1;
+    %set/v v0x15c9970_0, 0, 1;
+    %set/v v0x15c9a40_0, 1, 1;
+    %delay 10, 0;
+    %set/v v0x15c98a0_0, 1, 1;
+    %set/v v0x15c9970_0, 1, 1;
+    %set/v v0x15c9a40_0, 1, 1;
+    %delay 10, 0;
+    %vpi_call 2 28 "$finish";
+    %end;
+    .thread T_0;
+    .scope S_0x15b2fc0;
+T_1 ;
+    %vpi_call 2 32 "$monitor", "At time %2t, a_in = %d b_in = %d cin_in = %d s_out = %d cout_out = %d", $time, v0x15c98a0_0, v0x15c9970_0, v0x15c9a40_0, v0x15c9b90_0, v0x15c9b10_0;
+    %end;
+    .thread T_1;
+# The file index is used to find the file name in the following table.
+:file_names 5;
+    "N/A";
+    "<interactive>";
+    "sc2_block_tb.v";
+    "sc2_block.v";
+    "sc_block.v";

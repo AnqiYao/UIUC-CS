@@ -1,0 +1,166 @@
+Exam #6 score (xinruiy2): 90/100
+
+=== Grade Feedback for Problem "programming_ternarySearchTree" ===
+[20/20]: Test: Simple Tree - find will find a mid-only word?
+[10/10]: Test: Simple Tree - find will not match longer words than exists?
+[0/10]: Test: Simple Tree - find will not match shorter words than exists?
+[60/60]: Test: Exam-provided
+=====
+[90/100]
+
+--- stdout ---
+sed -i -- 's/TSTNode(char c) : c(c) {}/TSTNode(char c) : left(NULL), mid(NULL), right(NULL), c(c) {}/g' TST.h
+g++ main.cpp TST.cpp -std=c++1y -g -O0 -Wall -Wextra -pedantic -o main
+===============================================================================
+All tests passed (2 assertions in 1 test case)
+
+===============================================================================
+All tests passed (2 assertions in 1 test case)
+
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+main is a Catch v1.8.1 host application.
+Run with -? for options
+
+-------------------------------------------------------------------------------
+Simple Tree - find will not match shorter words than exists?
+-------------------------------------------------------------------------------
+main.cpp:43
+...............................................................................
+
+main.cpp:55: FAILED:
+  CHECK( tst.find("f") == false )
+with expansion:
+  true == false
+with messages:
+  Check if "fun" exists...
+  Check if "f" exists...
+
+===============================================================================
+test cases: 1 | 1 failed
+assertions: 2 | 1 passed | 1 failed
+
+===============================================================================
+All tests passed (5 assertions in 1 test case)
+
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+main is a Catch v1.8.1 host application.
+Run with -? for options
+
+-------------------------------------------------------------------------------
+Simple Tree - find will not match shorter words than exists?
+-------------------------------------------------------------------------------
+main.cpp:43
+...............................................................................
+
+main.cpp:55: FAILED:
+  CHECK( tst.find("f") == false )
+with expansion:
+  true == false
+with messages:
+  Check if "fun" exists...
+  Check if "f" exists...
+
+===============================================================================
+test cases:  4 |  3 passed | 1 failed
+assertions: 11 | 10 passed | 1 failed
+
+
+
+--- stderr ---
+TST.cpp: In member function ‘bool TST::helpfind(const string&, int, TST::TSTNode*)’:
+TST.cpp:14:24: warning: comparison between signed and unsigned integer expressions [-Wsign-compare]
+   if(i == query.length())
+                        ^
+
+
+--- submitted file: TST.cpp ---
+#include <iostream>
+#include <vector>
+#include <stdexcept>
+#include "TST.h"
+
+using namespace std;
+
+bool TST::find(const string & query) {
+  // ... your code here ...
+  return helpfind(query,0,root);
+}
+
+bool TST::helpfind(const string & query,int i,TSTNode* subroot){
+  if(i == query.length())
+     return true;
+  if(subroot == NULL)
+     return false;
+  if(query[i] == subroot->c){
+     if(helpfind(query,i+1,subroot->mid))
+        return true;
+   }
+   return helpfind(query,i,subroot->left)||helpfind(query,i,subroot->right);  
+}
+
+
+//
+// The `insert` and `findLocation` functions are used to construct the
+// TST and (almost certainly) will not be useful for your find() function.
+//
+
+TST::TSTNode *& TST::findLocation(TST::TSTNode *&thru, int *location, int size) {
+  // base case:
+  if (size == 0)          { return thru; }
+
+  // recurse down the tree, based on value at the front of the location array
+  int traverse = location[0];
+  if (traverse == 0)      { return findLocation(thru->left, location + 1, size - 1); }
+  else if (traverse == 1) { return findLocation(thru->mid, location + 1, size - 1); }
+  else if (traverse == 2) { return findLocation(thru->right, location + 1, size - 1); }
+  else { throw invalid_argument( "unknown location" ); }
+}
+
+void TST::insert(char k, vector<int> locationVector) {
+  // Create an array from the vector:
+  int size = locationVector.size();
+  int *location = new int[size];
+  for (int i = 0; i < size; i++) {
+    location[i] = locationVector[i];
+  }
+
+  // Find the pointer to add the node at:
+  TST::TSTNode *& loc = findLocation(root, location, size);
+  loc = new TSTNode(k);
+}
+
+--- submitted file: TST.h ---
+#ifndef _TST_H
+#define _TST_H
+
+#include <vector>
+
+using namespace std;
+
+class TST {
+private:
+  class TSTNode {
+  public:
+    TSTNode *left;
+    TSTNode *mid;
+    TSTNode *right;
+    char c;
+
+    TSTNode(char c) : c(c) {};
+  };
+
+  TSTNode *root;
+  TSTNode *& findLocation(TSTNode *&thru, int *location, int size);
+
+public:
+  TST() : root(NULL) {};
+  void insert(char k, vector<int> location);
+  bool find(const string & query);
+  bool helpfind(const string & query,int i,TSTNode* subroot);
+};
+
+#endif
+
+

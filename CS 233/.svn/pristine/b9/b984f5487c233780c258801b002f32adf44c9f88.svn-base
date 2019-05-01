@@ -1,0 +1,42 @@
+.data
+
+.text
+## struct Node {
+##     int node_id;            // Unique node ID
+##     struct Node **children; // pointer to null terminated array of children node pointers
+## };
+##
+## int
+## has_cycle(Node *root, int num_nodes) {
+##     if (!root)
+##         return 0;
+## 
+##     Node *stack[num_nodes];
+##     stack[0] = root;
+##     int stack_size = 1;
+## 
+##     int discovered[num_nodes];
+##     for (int i = 0; i < num_nodes; i++) {
+##         discovered[i] = 0;
+##     }
+## 
+##     while (stack_size > 0) {
+##         Node *node_ptr = stack[--stack_size];
+## 
+##         if (discovered[node_ptr->node_id]) {
+##             return 1;
+##         }
+##         discovered[node_ptr->node_id] = 1;
+## 
+##         for (Node **edge_ptr = node_ptr->children; *edge_ptr; edge_ptr++) {
+##             stack[stack_size++] = *edge_ptr;
+##         }
+##     }
+## 
+##     return 0;
+## }
+
+.globl has_cycle
+has_cycle:
+	# Your code goes here :)
+	jr	$ra

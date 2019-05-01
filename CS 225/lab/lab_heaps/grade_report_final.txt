@@ -1,0 +1,31 @@
+Grading r48242 by xinruiy2 committed on Fri Apr 21 15:15:17 CDT 2017
+Monad Autograder
+Testing lab_heaps at 2017-04-24 00:26:50
+
+"If at first you don't succeed, that's one data point." ~ Randall Munroe
+
+Setting up test environment...
+Compiling...
+================================================================
+
+
+Running tests...
+================================================================
+peek1  . . . [5 pts] - passed
+peek2  . . . [5 pts] - passed
+heapifyDown1 [9 pts] - passed
+heapifyDown2 [9 pts] - passed
+heapifyDown3 [9 pts] - passed
+heapifyDown4 [9 pts] - passed
+heapifyDown5 [9 pts] - passed
+buildHeap1 . [9 pts] - passed
+buildHeap2 . [9 pts] - passed
+buildHeap3 . [9 pts] - passed
+buildHeap4 . [9 pts] - passed
+buildHeap5 . [9 pts] - passed
+
+
+Total score...
+================================================================
+TOTAL SCORE: 100
+

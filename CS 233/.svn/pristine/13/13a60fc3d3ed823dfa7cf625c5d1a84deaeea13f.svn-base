@@ -1,0 +1,13 @@
+.text
+
+## void
+## key_addition(unsigned char *in_one, unsigned char *in_two, unsigned char *out) {
+##     for (unsigned int i = 0; i < 16; i++) {
+##         out[i] = in_one[i] ^ in_two[i];
+##     }
+## }
+
+.globl key_addition
+key_addition:
+	# Your code goes here :)
+	jr	$ra

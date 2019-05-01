@@ -1,0 +1,19 @@
+Grades for version committed on time
+	keypad: 16.36 / 20
+			*Passed test: abcdefg = 48
+			*Passed test: abcdefg = 28
+			*Passed test: abcdefg = 18
+			*Passed test: abcdefg = 44
+			*Failed test: abcdefg = 24
+				*Your output: valid = 1 number = 4
+			*Passed test: abcdefg = 14
+			*Failed test: abcdefg = 42
+				*Your output: valid = 1 number = 5
+			*Passed test: abcdefg = 22
+			*Passed test: abcdefg = 12
+			*Passed test: abcdefg = 21
+			*Passed test: abcdefg = 00
+		
+Total: 16.36 / 20
+
+Final Score: 16.36 / 20

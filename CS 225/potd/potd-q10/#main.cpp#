@@ -1,0 +1,20 @@
+#include <iostream>
+
+using namespace std;
+
+//
+// Write the function `raise` that accepts an array of integers and
+// an integer as the input parameters.
+//
+int* raise(int[] array, int a)
+{ int *arr = new int[array.length];
+  for(int i=0;i<array.length-2;i++)
+    { arr[i]= pow(array[i],array[i+1]);}
+   return arr;
+}
+
+int main() {
+  int arr_in[5] = { 1, 2, 3, 4, -1 };
+  int *arr_out = raise(arr_in, 5);
+  return 0;
+}

@@ -1,0 +1,40 @@
+Grades for version committed on time
+	accumulate: 40.0 / 40
+			*Passed test: Base Case 1 
+			*Passed test: Base Case 1  (evil)
+			*Passed test: Base Case 2 
+			*Passed test: Base Case 2  (evil)
+			*Passed test: Base Case 3
+			*Passed test: Base Case 3 (evil)
+			*Passed test: Given 1
+			*Passed test: Given 1 (evil)
+			*Passed test: Given 2
+			*Passed test: Given 2 (evil)
+			*Passed test: TooShort
+			*Passed test: TooShort (evil)
+			*Passed test: Empty
+			*Passed test: Empty (evil)
+			*Passed test: Long
+			*Passed test: Long (evil)
+		
+	max_n_unique_substring: 30.0 / 30
+			*Passed test: BaseCase n
+			*Passed test: BaseCase n (evil)
+			*Passed test: test_null
+			*Passed test: test_null (evil)
+			*Passed test: empty
+			*Passed test: empty (evil)
+			*Passed test: given1
+			*Passed test: given1 (evil)
+			*Passed test: given2
+			*Passed test: given2 (evil)
+			*Passed test: edge_case_n
+			*Passed test: edge_case_n (evil)
+			*Passed test: broken
+			*Passed test: broken (evil)
+			*Passed test: whole
+			*Passed test: whole (evil)
+		
+Total: 70.0 / 70
+
+Final Score: 70.0 / 70

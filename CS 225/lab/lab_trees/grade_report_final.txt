@@ -1,0 +1,23 @@
+Grading r26425 by xinruiy2 committed on Fri Mar  3 17:22:09 CST 2017
+Monad Autograder
+Testing lab_trees at 2017-03-06 00:24:53
+
+"Hey Jude / Your make is bad / You should fix that / Compiler error / Remember / To let it search the root path / Then you can start / To make it better" ~ Ryan North
+
+Setting up test environment...
+Compiling...
+================================================================
+
+
+Running tests...
+================================================================
+test_isOrdered  . [33 pts] - passed
+test_mirror . . . [33 pts] - passed
+test_printPaths . [34 pts] - passed
+test_sumDistances [25 pts] - passed
+
+
+Total score...
+================================================================
+TOTAL SCORE: 125
+

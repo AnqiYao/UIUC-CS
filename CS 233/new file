@@ -1,0 +1,301 @@
+
+setup:
+
+li	$a0, 10
+sw	$a0, VELOCITY
+
+lw $t1, BOT_X   #x=t1
+lw $t2, BOT_Y	#y=t2
+
+beq $s0, 0, start
+
+li $t5,0
+
+get_banana_loop:
+
+lw $t3, starcoin_map($t5)
+add $t5, $t5, 4
+bne $t3, 0xffffffff, get_banana_loop
+
+start_find_banana:
+add $t5, $t5, 4
+lw $t6, starcoin_map($t5)
+beq $t6, 0xffffffff, start
+lh $t4, starcoin_map($t5)  #y
+and $t3, $t6, 0xffff0000
+srl $t3, $t3, 16	#x
+sub $t8, $t3, $t1	#x diff
+sub $t9, $t4, $t2	#y diff
+mul $t8, $t8, 2
+mul $t9, $t9, 2
+
+	bge $t1, 150, east
+	j west
+east:
+	bge $t2, 150, southeast
+	j northeast
+
+west:
+	bge $t2, 150, southwest
+	j northwest
+
+northeast:
+	blt $t8, 0, start
+	blt $t9, 0, start
+
+ne_go_east:
+	bge $t8, 0, ne_go_south
+	li $t7, 1
+	sw $t7, ANGLE_CONTROL
+	li $t7, 0
+	sw $t7, ANGLE
+	li $t7, 4
+	sw $t7, VELOCITY
+	sub $t8, $t8, 1
+	j ne_go_east
+
+ne_go_south:
+	bge $t9, 0, start
+	li $t7, 1
+	sw $t7, ANGLE_CONTROL
+	li $t7, 90
+	sw $t7, ANGLE
+	li $t7, 4
+	sw $t7, VELOCITY
+	sub $t9, $t9, 1
+	j ne_go_south
+
+southeast:
+	bgt $t8, 0, start
+	blt $t9, 0, start
+
+	se_go_west:
+		bge $t8, 0, se_go_south
+		li $t7, 1
+		sw $t7, ANGLE_CONTROL
+		li $t7, 180
+		sw $t7, ANGLE
+		li $t7, 4
+		sw $t7, VELOCITY
+		add $t8, $t8, 1
+		j se_go_west
+
+	se_go_south:
+		bge $t9, 0, start
+		li $t7, 1
+		sw $t7, ANGLE_CONTROL
+		li $t7, 90
+		sw $t7, ANGLE
+		li $t7, 4
+		sw $t7, VELOCITY
+		sub $t9, $t9, 1
+		j se_go_south
+
+northwest:
+	blt $t8, 0, start
+	bgt $t9, 0, start
+
+
+	nw_go_east:
+		bge $t8, 0, nw_go_north
+		li $t7, 1
+		sw $t7, ANGLE_CONTROL
+		li $t7, 0
+		sw $t7, ANGLE
+		li $t7, 4
+		sw $t7, VELOCITY
+		sub $t8, $t8, 1
+		j nw_go_east
+
+	nw_go_north:
+		bge $t9, 0, start
+		li $t7, 1
+		sw $t7, ANGLE_CONTROL
+		li $t7, 270
+		sw $t7, ANGLE
+		li $t7, 4
+		sw $t7, VELOCITY
+		add $t9, $t9, 1
+		j nw_go_north
+
+southwest:
+	bgt $t8, 0, start
+	bgt $t9, 0, start
+
+	sw_go_west:
+		bge $t8, 0, sw_go_north
+		li $t7, 1
+		sw $t7, ANGLE_CONTROL
+		li $t7, 180
+		sw $t7, ANGLE
+		li $t7, 4
+		sw $t7, VELOCITY
+		add $t8, $t8, 1
+		j sw_go_west
+
+	sw_go_north:
+		bge $t9, 0, start
+		li $t7, 1
+		sw $t7, ANGLE_CONTROL
+		li $t7, 270
+		sw $t7, ANGLE
+		li $t7, 4
+		sw $t7, VELOCITY
+		add $t9, $t9, 1
+		j sw_go_north
+
+	# note that we infinite loop to avoid stopping the simulation early
+
+
+start:
+		bge $t1, 150, else_1
+
+		else_1:
+			bge $t2, 150, else_2_2
+
+			add $t3, $t1, 1
+			mul $t4, $t2, 300
+			add $t3, $t3, $t4
+			lb $t3, 0($t3)
+			beq $t3, 2, else_3_3
+		
+
+
+			j go_south
+
+
+
+
+		bge $t2, 150, else_2_1
+
+		sub $t3, $t2, 1
+		mul $t3, $t3, 300
+		add $t3, $t3, $t1
+		#add $t3, $t3, REQUEST_JETSTREAM
+		lb $t3, 0($t3)
+		beq $t3, 2, else_3_1
+		j go_east
+
+		else_3_1:
+
+		add $t3, $t1, 1
+		mul $t4, $t2, 300
+		add $t3, $t3, $t4
+		#add $t3, $t3, REQUEST_JETSTREAM
+		lb $t3, 0($t3)
+		bne $t3, 2, go_north
+		j setup
+
+		else_2_1:
+
+			sub $t3, $t1, 1
+			mul $t4, $t2, 300
+			add $t3, $t3, $t4
+			#add $t3, $t3, REQUEST_JETSTREAM
+			lb $t3, 0($t3)
+			beq $t3, 2, else_3_2
+
+			go_north:
+
+			li $t1, 1
+			sw $t1, ANGLE_CONTROL
+			li $t1, 270
+			sw $t1, ANGLE
+
+
+			j setup
+
+	else_3_2:
+
+		sub $t3, $t2, 1
+		mul $t3, $t3, 300
+		add $t3, $t3, $t1
+		#add $t3, $t3, REQUEST_JETSTREAM
+		lb $t3, 0($t3)
+		bne $t3, 2, go_west
+		j setup
+
+
+		else_3_3:
+
+		add $t3, $t2, 1
+		mul $t3, $t3, 300
+		add $t3, $t3, $t1
+		#add $t3, $t3, REQUEST_JETSTREAM
+		lb $t3, 0($t3)
+		beq $t3, 2, setup
+
+		go_east:
+
+		li $t1, 1
+		sw $t1, ANGLE_CONTROL
+		sw $0, ANGLE
+		j setup
+
+		else_2_2:
+
+		add $t3, $t2, 1
+		mul $t3, $t3, 300
+		add $t3, $t3, $t1
+		#add $t3, $t3, REQUEST_JETSTREAM
+		lb $t3, 0($t3)
+		beq $t3, 2, else_3_4
+
+		go_west:
+
+		li $t1, 1
+		sw $t1, ANGLE_CONTROL
+		li $t1, 180
+		sw $t1, ANGLE
+
+
+		j setup
+
+		else_3_4:
+
+		sub $t3, $t1, 1
+		mul $t4, $t2, 300
+		add $t3, $t3, $t4
+		#add $t3, $t3, REQUEST_JETSTREAM
+		lb $t3, 0($t3)
+		beq $t3, 2, setup
+
+		go_south:
+
+		li $t1, 1
+		sw $t1, ANGLE_CONTROL
+		li $t1, 90
+		sw $t1, ANGLE
+		j setup
+
+		go_northeast:
+
+		li $t1, 1
+		sw $t1, ANGLE_CONTROL
+		li $t1, 315
+		sw $t1, ANGLE
+		j setup
+
+		go_northwest:
+		li $t1, 1
+		sw $t1, ANGLE_CONTROL
+		li $t1, 225
+		sw $t1, ANGLE
+		j setup
+
+		go_southeast:
+
+		li $t1, 1
+		sw $t1, ANGLE_CONTROL
+		li $t1, 45
+		sw $t1, ANGLE
+		j setup
+
+		go_southwest:
+		li $t1, 1
+		sw $t1, ANGLE_CONTROL
+		li $t1, 135
+		sw $t1, ANGLE
+		j setup
+
+

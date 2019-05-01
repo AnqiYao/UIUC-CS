@@ -1,0 +1,134 @@
+.data
+
+.text
+## struct Node {
+##     int node_id;            // Unique node ID
+##     struct Node **children; // pointer to null terminated array of children node pointers
+## };
+##
+## int
+## has_cycle(Node *root, int num_nodes) {
+##     if (!root)
+##         return 0;
+## 
+##     Node *stack[num_nodes];
+##     stack[0] = root;
+##     int stack_size = 1;
+## 
+##     int discovered[num_nodes];
+##     for (int i = 0; i < num_nodes; i++) {
+##         discovered[i] = 0;
+##     }
+## 
+##     while (stack_size > 0) {
+##         Node *node_ptr = stack[--stack_size];
+## 
+##         if (discovered[node_ptr->node_id]) {
+##             return 1;
+##         }
+##         discovered[node_ptr->node_id] = 1;
+## 
+##         for (Node **edge_ptr = node_ptr->children; *edge_ptr; edge_ptr++) {
+##             stack[stack_size++] = *edge_ptr;
+##         }
+##     }
+## 
+##     return 0;
+## }
+
+.globl has_cycle
+has_cycle:
+	# Your code goes here :)
+	bne $a0, 0, end_if
+	li $v0, 0
+	jr $ra		#if(!root)
+
+end_if:
+	mul	$t0, $a1, 4 
+
+	sub	$sp, $sp, $t0
+	move	$t1, $sp
+
+	sub	$sp, $sp, $t0
+	move	$t2, $sp
+	
+	sub	$sp, $sp, 12
+	sw	$ra, 0($sp)
+	sw	$s0, 4($sp)
+	sw	$s1, 8($sp)
+
+	move	$s0, $t1	# stack
+	move	$s1, $t2	# discovered
+
+	sw	$a0, 0($s0)	# stack[0] = root
+	li 	$t1, 1		# stack_size
+	li	$t2, 0		# i 
+
+for_loop:
+
+	bge 	$t2, $a1, while		# i>= num_nodes
+	mul	$t7, $t2, 4		# i * 4
+	add 	$s1, $s1, $t7		# discovered[i]
+	li  	$s1, 0			# discovered[i] = 0
+	sub 	$s1, $s1, $t7
+	add 	$t2, $t2, 1
+	j 	for_loop
+
+while:
+
+	ble 	$t1, 0, end_while 	# stack_size <= 0
+	sub	$t1, $t1, 1		# stack_size - 1
+	mul	$t7, $t1, 4
+	add	$s0, $s0, $t7		#stack[stack_size] 
+	lw	$t3, 0($s0)        	# node_ptr
+	sub	$s0, $s0, $t7
+
+
+	lw	$t4, 0($t3)	   	# node_ptr->id
+	mul	$t7, $t4, 4
+	add	$s1, $s1, $t7
+	lw	$t5, 0($s1)	   	# discovered[node_ptr->node_id]
+	sub	$s1, $s1, $t7
+
+	beq	$t5, 0, end_if_2
+	j	end_while_1
+	
+end_if_2:
+
+	li	$t5, 1
+	add	$s1, $s1, $t7
+	sw	$t5, 0($s1)	   # discovered[node_ptr->node_id] = 1
+	sub	$s1, $s1, $t7		
+		
+	add	$t3, $t3, 4
+	lw	$t6, 0($t3)	  # edge_ptr (node_ptr->child)
+	sub	$t3, $t3, 4
+
+for_2:
+	
+	beq	$t6, 0, end_while_in	#edge_ptr == 0
+	mul	$t7, $t1, 4		#stack_size * 4
+	add	$s0, $s0, $t7
+	sw	$t6, 0($s0)
+	sub	$s0, $s0, $t7
+	add	$t1, $t1, 1		#stack++
+	add	$t6, $t6, 1		#edge_ptr++
+	j	for_2
+
+end_while_in:
+	j	while
+	
+end_while:
+	li 	$v0, 0	
+	j	done
+end_while_1:
+	li	$v0, 1
+	j	done
+done:
+	mul	$t0, $a1, 8
+	add	$t0, $t0, 12
+	lw	$ra, 0($sp)
+	lw	$s0, 4($sp)
+	lw	$s1, 8($sp)
+	add	$sp, $sp, $t0
+	jr	$ra

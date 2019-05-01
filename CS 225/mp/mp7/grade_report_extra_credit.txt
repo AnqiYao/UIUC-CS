@@ -1,0 +1,24 @@
+Grading r48197 by xinruiy2 committed on Fri Apr 21 14:04:47 CDT 2017
+Monad Autograder
+Testing mp7.1 at 2017-04-22 00:37:35
+
+"Now let me erase this before you all copy it down." ~ Alexey Stepanov
+
+Setting up test environment...
+Compiling...
+================================================================
+
+
+Running tests...
+================================================================
+addElements1 . . . . [20 pts] - passed
+addElements2 . . . . [20 pts] - passed
+testFindAndSetUnion1 [20 pts] - passed
+testFindAndSetUnion2 [20 pts] - passed
+testFindAndSetUnion3 [20 pts] - passed
+
+
+Total score...
+================================================================
+TOTAL SCORE: 100
+

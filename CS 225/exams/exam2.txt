@@ -1,0 +1,404 @@
+Exam #2 score (xinruiy2): 100/200
+
+=== Grade Feedback for Problem "programming_bigThree_createCtor_garden" ===
+[100/100]: Test: initialize garden (ctor)
+=====
+[100/100]
+
+--- stdout ---
+g++ flower.cpp -std=c++1y -c -g -O0 -Wall -Wextra -pedantic
+g++ garden.cpp -std=c++1y -c -g -O0 -Wall -Wextra -pedantic
+g++ garden-test.cpp -std=c++1y -c -g -O0 -Wall -Wextra -pedantic
+g++ flower.o garden.o garden-test.o -std=c++1y -lpng -lpthread -o catch-tester
+Match @0
+Match @1
+Match @2
+Match @3
+Match @4
+Match @5
+Match @6
+Match @7
+Match @8
+Match @9
+Match @10
+Match @11
+Match @12
+Match @13
+Match @14
+Match @15
+===============================================================================
+All tests passed (1 assertion in 1 test case)
+
+Match @0
+Match @1
+Match @2
+Match @3
+Match @4
+Match @5
+Match @6
+Match @7
+Match @8
+Match @9
+Match @10
+Match @11
+Match @12
+Match @13
+Match @14
+Match @15
+===============================================================================
+All tests passed (1 assertion in 1 test case)
+
+
+
+--- stderr ---
+
+
+--- submitted file: garden.cpp ---
+#include "flower.h"
+#include "garden.h"
+
+
+garden::garden(flower* a){
+  grid=new flower*[4];
+  for(int i=0;i<4;i++){
+  grid[i] = new flower[4];
+   
+  } 
+ for(int k=0; k< 4;k++)
+    for( int i =0;i< 4;i++)
+      { grid[k][i]= a[4*k+i];}
+}
+
+flower garden::getFlower(int row, int column) const {
+  return this->grid[row][column];
+}
+
+void garden::setFlower(int row, int column, const flower &f) {
+  this->grid[row][column] = f;
+}
+
+--- submitted file: garden.h ---
+#ifndef _GARDEN_H
+#define _GARDEN_H
+
+#include "flower.h"
+
+class garden {
+public:
+  garden(flower* a);
+  flower getFlower(int row, int column) const;
+  void setFlower(int row, int column, const flower &f);
+
+private:
+  flower **grid;
+};
+
+#endif
+
+
+=== Grade Feedback for Problem "programming_operator_minus_schedule" ===
+[0/15]: Test: subtracting 1 course from 3 courses -- end of list
+[0/15]: Test: subtracting 1 course from 3 courses -- middle of list
+[0/15]: Test: subtracting 1 course from 3 courses -- front of list
+[0/15]: Test: subtracting 3 course from 3 courses, one at a time
+[0/30]: Test: subtracting 1 course from 1 course
+[0/10]: Test: subtracting 2 courses from 3 courses
+=====
+[0/100]
+
+--- stdout ---
+g++ -std=c++1y -c -g -O0 -Wall -Wextra -pedantic   -c -o schedule.o schedule.cpp
+g++ -std=c++1y -c -g -O0 -Wall -Wextra -pedantic   -c -o schedule-test.o schedule-test.cpp
+g++ schedule.o schedule-test.o -std=c++1y -lpng -lpthread -o catch-tester
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+catch-tester is a Catch v1.8.1 host application.
+Run with -? for options
+
+-------------------------------------------------------------------------------
+subtracting 1 course from 3 courses -- end of list
+-------------------------------------------------------------------------------
+schedule-test.cpp:37
+...............................................................................
+
+schedule-test.cpp:37: FAILED:
+due to unexpected exception with message:
+  basic_string::_S_construct null not valid
+
+===============================================================================
+test cases: 1 | 1 failed
+assertions: 1 | 1 failed
+
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+catch-tester is a Catch v1.8.1 host application.
+Run with -? for options
+
+-------------------------------------------------------------------------------
+subtracting 1 course from 3 courses -- middle of list
+-------------------------------------------------------------------------------
+schedule-test.cpp:54
+...............................................................................
+
+schedule-test.cpp:54: FAILED:
+due to unexpected exception with message:
+  basic_string::_S_construct null not valid
+
+===============================================================================
+test cases: 1 | 1 failed
+assertions: 1 | 1 failed
+
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+catch-tester is a Catch v1.8.1 host application.
+Run with -? for options
+
+-------------------------------------------------------------------------------
+subtracting 1 course from 3 courses -- front of list
+-------------------------------------------------------------------------------
+schedule-test.cpp:71
+...............................................................................
+
+schedule-test.cpp:71: FAILED:
+due to unexpected exception with message:
+  basic_string::_S_construct null not valid
+
+===============================================================================
+test cases: 1 | 1 failed
+assertions: 1 | 1 failed
+
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+catch-tester is a Catch v1.8.1 host application.
+Run with -? for options
+
+-------------------------------------------------------------------------------
+subtracting 3 course from 3 courses, one at a time
+-------------------------------------------------------------------------------
+schedule-test.cpp:88
+...............................................................................
+
+schedule-test.cpp:88: FAILED:
+due to unexpected exception with message:
+  basic_string::_S_construct null not valid
+
+===============================================================================
+test cases: 1 | 1 failed
+assertions: 1 | 1 failed
+
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+catch-tester is a Catch v1.8.1 host application.
+Run with -? for options
+
+-------------------------------------------------------------------------------
+subtracting 1 course from 1 course
+-------------------------------------------------------------------------------
+schedule-test.cpp:113
+...............................................................................
+
+schedule-test.cpp:113: FAILED:
+due to unexpected exception with message:
+  basic_string::_S_construct null not valid
+
+===============================================================================
+test cases: 1 | 1 failed
+assertions: 1 | 1 failed
+
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+catch-tester is a Catch v1.8.1 host application.
+Run with -? for options
+
+-------------------------------------------------------------------------------
+subtracting 2 courses from 3 courses
+-------------------------------------------------------------------------------
+schedule-test.cpp:126
+...............................................................................
+
+schedule-test.cpp:126: FAILED:
+due to unexpected exception with message:
+  basic_string::_S_construct null not valid
+
+===============================================================================
+test cases: 1 | 1 failed
+assertions: 1 | 1 failed
+
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+catch-tester is a Catch v1.8.1 host application.
+Run with -? for options
+
+-------------------------------------------------------------------------------
+subtracting 1 course from 3 courses -- end of list
+-------------------------------------------------------------------------------
+schedule-test.cpp:37
+...............................................................................
+
+schedule-test.cpp:37: FAILED:
+due to unexpected exception with message:
+  basic_string::_S_construct null not valid
+
+-------------------------------------------------------------------------------
+subtracting 1 course from 3 courses -- middle of list
+-------------------------------------------------------------------------------
+schedule-test.cpp:54
+...............................................................................
+
+schedule-test.cpp:54: FAILED:
+due to unexpected exception with message:
+  basic_string::_S_construct null not valid
+
+-------------------------------------------------------------------------------
+subtracting 1 course from 3 courses -- front of list
+-------------------------------------------------------------------------------
+schedule-test.cpp:71
+...............................................................................
+
+schedule-test.cpp:71: FAILED:
+due to unexpected exception with message:
+  basic_string::_S_construct null not valid
+
+-------------------------------------------------------------------------------
+subtracting 3 course from 3 courses, one at a time
+-------------------------------------------------------------------------------
+schedule-test.cpp:88
+...............................................................................
+
+schedule-test.cpp:88: FAILED:
+due to unexpected exception with message:
+  basic_string::_S_construct null not valid
+
+-------------------------------------------------------------------------------
+subtracting 1 course from 1 course
+-------------------------------------------------------------------------------
+schedule-test.cpp:113
+...............................................................................
+
+schedule-test.cpp:113: FAILED:
+due to unexpected exception with message:
+  basic_string::_S_construct null not valid
+
+-------------------------------------------------------------------------------
+subtracting 2 courses from 3 courses
+-------------------------------------------------------------------------------
+schedule-test.cpp:126
+...............................................................................
+
+schedule-test.cpp:126: FAILED:
+due to unexpected exception with message:
+  basic_string::_S_construct null not valid
+
+===============================================================================
+test cases: 6 | 6 failed
+assertions: 6 | 6 failed
+
+
+
+--- stderr ---
+schedule.cpp: In member function ‘schedule schedule::operator-(const schedule&)’:
+schedule.cpp:57:1: warning: no return statement in function returning non-void [-Wreturn-type]
+ }            
+ ^
+
+
+--- submitted file: schedule.cpp ---
+#include "schedule.h"
+
+
+#include <iostream>
+using namespace std;
+
+//
+// In the `schedule` class, overload the `-` (minus) operator to the courses
+// contained in one schedule from the other.
+//
+// The result must be a `schedule` that contains only the courses found in the
+// first `schedule` that are not found on the second `schedule`.
+//
+
+schedule::schedule() {
+  count = 0;
+  courses = NULL;
+}
+
+void schedule::addCourse(const string course) {
+  string *new_courses = new string[this->count + 1];
+  for (int i = 0; i < this->count; i++) {
+    new_courses[i] = courses[i];
+  }
+  new_courses[count] = course;
+  count++;
+
+  if (courses) { delete[] courses; }
+  courses = new_courses;
+}
+
+schedule schedule::operator- ( schedule const& other){
+     int oldcount=count;
+    for( int i=0;i<count;i++){
+        for( int k =0; k<other.getCourseCount(); i++){
+             if( getCourse(i)== other.getCourse(k))
+                     { courses[i]="nothing";
+                        count--;}
+              }
+          }
+    
+     string *newcourse=new string[count];
+     int initial=0;
+       int k=0;
+     while( k<oldcount){
+        if( courses[k]=="nothing")
+             {k++;}
+        else 
+            {newcourse [initial]=courses[k];
+                  initial++;
+                  k++;}
+         
+      }
+        delete[] courses;
+      courses=newcourse;              
+  
+}            
+
+
+int schedule::getCourseCount() const {
+  return count;
+}
+
+const string schedule::getCourse(const int index) const {
+  if (index < 0 || index >= count) { return NULL; }
+  else                             { return courses[index]; }
+}
+
+--- submitted file: schedule.h ---
+#ifndef _SCHEDULE_H
+#define _SCHEDULE_H
+
+#include <string>
+using namespace std;
+
+//
+// In the `schedule` class, overload the `-` (minus) operator to the courses
+// contained in one schedule from the other.
+//
+// The result must be a `schedule` that contains only the courses found in the
+// first `schedule` that are not found on the second `schedule`.
+//
+
+class schedule {
+public:
+  schedule();
+  void addCourse(const string course);
+  int getCourseCount() const;
+  const string getCourse(const int index) const;
+  schedule operator- ( schedule const& other);
+
+private:
+  int count;
+  string *courses;
+};
+
+#endif
+
+

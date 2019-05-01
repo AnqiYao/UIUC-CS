@@ -1,0 +1,245 @@
+Exam #1 score (xinruiy2): 3/6
+
+=== Grade Feedback for Problem "exam1_createSmallClass_cube" ===
+[0/1]: Test: default constructor
+     Message: Unable to run test due to `make` failing.
+[0/1]: Test: one parameter constructor
+     Message: Unable to run test due to `make` failing.
+[0/1]: Test: use of type double
+     Message: Unable to run test due to `make` failing.
+=====
+[0/3]
+
+--- stdout ---
+g++ -g -O0 -Wall -Wextra main.cpp cube.cpp -o cube-tester
+
+
+--- stderr ---
+In file included from main.cpp:3:0:
+cube.h:26:13: error: field ‘length’ has incomplete type
+  cube(length);
+             ^
+main.cpp: In function ‘int main()’:
+main.cpp:15:29: error: no matching function for call to ‘cube::getVolume()’
+   double d1 = c1->getVolume();
+                             ^
+main.cpp:15:29: note: candidate is:
+In file included from main.cpp:3:0:
+cube.h:29:9: note: double cube::getVolume(double)
+  double getVolume(double d);
+         ^
+cube.h:29:9: note:   candidate expects 1 argument, 0 provided
+main.cpp:32:24: error: no matching function for call to ‘cube::cube(int)’
+   cube *c2 = new cube(2);
+                        ^
+main.cpp:32:24: note: candidates are:
+In file included from main.cpp:3:0:
+cube.h:25:2: note: cube::cube()
+  cube();
+  ^
+cube.h:25:2: note:   candidate expects 0 arguments, 1 provided
+cube.h:21:7: note: cube::cube(const cube&)
+ class cube
+       ^
+cube.h:21:7: note:   no known conversion for argument 1 from ‘int’ to ‘const cube&’
+main.cpp:33:29: error: no matching function for call to ‘cube::getVolume()’
+   double d2 = c2->getVolume();
+                             ^
+main.cpp:33:29: note: candidate is:
+In file included from main.cpp:3:0:
+cube.h:29:9: note: double cube::getVolume(double)
+  double getVolume(double d);
+         ^
+cube.h:29:9: note:   candidate expects 1 argument, 0 provided
+main.cpp:50:26: error: no matching function for call to ‘cube::cube(double)’
+   cube *c3 = new cube(2.5);
+                          ^
+main.cpp:50:26: note: candidates are:
+In file included from main.cpp:3:0:
+cube.h:25:2: note: cube::cube()
+  cube();
+  ^
+cube.h:25:2: note:   candidate expects 0 arguments, 1 provided
+cube.h:21:7: note: cube::cube(const cube&)
+ class cube
+       ^
+cube.h:21:7: note:   no known conversion for argument 1 from ‘double’ to ‘const cube&’
+main.cpp:51:29: error: no matching function for call to ‘cube::getVolume()’
+   double d3 = c3->getVolume();
+                             ^
+main.cpp:51:29: note: candidate is:
+In file included from main.cpp:3:0:
+cube.h:29:9: note: double cube::getVolume(double)
+  double getVolume(double d);
+         ^
+cube.h:29:9: note:   candidate expects 1 argument, 0 provided
+In file included from cube.cpp:1:0:
+cube.h:26:13: error: field ‘length’ has incomplete type
+  cube(length);
+             ^
+cube.cpp: In constructor ‘cube::cube()’:
+cube.cpp:3:22: error: expected ‘{’ before ‘=’ token
+ cube::cube():length()=1.0
+                      ^
+cube.cpp: At global scope:
+cube.cpp:3:22: error: expected unqualified-id before ‘=’ token
+cube.cpp:6:3: error: prototype for ‘cube::cube(double)’ does not match any in class ‘cube’
+   cube::cube(double d):length()=d;
+   ^
+In file included from cube.cpp:1:0:
+cube.h:21:7: error: candidates are: cube::cube(const cube&)
+ class cube
+       ^
+cube.cpp:3:1: error:                 cube::cube()
+ cube::cube():length()=1.0
+ ^
+cube.cpp:7:3: error: expected unqualified-id before ‘{’ token
+   {}
+   ^
+cube.cpp: In function ‘void setLength(double)’:
+cube.cpp:9:26: error: only constructors take member initializers
+ void setLength(double a):length=a
+                          ^
+cube.cpp:9:32: error: expected ‘(’ before ‘=’ token
+ void setLength(double a):length=a
+                                ^
+cube.cpp:9:32: error: expected ‘{’ before ‘=’ token
+cube.cpp: At global scope:
+cube.cpp:9:6: warning: unused parameter ‘a’ [-Wunused-parameter]
+ void setLength(double a):length=a
+      ^
+cube.cpp:9:32: error: expected unqualified-id before ‘=’ token
+ void setLength(double a):length=a
+                                ^
+cube.cpp: In function ‘double getLength()’:
+cube.cpp:13:14: error: ‘length’ was not declared in this scope
+       return length;}
+              ^
+cube.cpp:13:21: warning: control reaches end of non-void function [-Wreturn-type]
+       return length;}
+                     ^
+make: *** [cube-tester] Error 1
+
+
+--- submitted file: cube.cpp ---
+#include "cube.h"
+
+cube::cube():length()=1.0
+{}
+
+  cube::cube(double d):length()=d;
+  {}
+
+void setLength(double a):length=a
+  {}
+
+double getLength(){
+      return length;}
+double getVolume(double d) {
+  return d*d*d;}
+//
+// The cube class must:
+//
+// - Store a variable d (stored as a double), which represents the length of
+//   one edge of the cube.
+//
+// - Have a default constructor that sets the length of the edge of the cube
+//   to 1.0.
+//
+// - Have a second constructor that takes one parameter: the length of one
+//   edge of the cube
+//
+// - Have a getVolume function that takes no parameters and returns the volume
+//   of the cube (as a double):
+//   - The volume of the cube can be calculated by: d * d * d
+//
+
+--- submitted file: cube.h ---
+#ifndef _CUBE_H
+#define _CUBE_H
+
+//
+// The cube class must:
+//
+// - Store a variable d (stored as a double), which represents the length of
+//   one edge of the cube.
+//
+// - Have a default constructor that sets the length of the edge of the cube
+//   to 1.0.
+//
+// - Have a second constructor that takes one parameter: the length of one
+//   edge of the cube
+//
+// - Have a getVolume function that takes no parameters and returns the volume
+//   of the cube (as a double):
+//   - The volume of the cube can be calculated by: d * d * d
+//
+
+class cube
+{
+public:
+ double length;
+ cube();
+ cube(length);
+ void setLength(double d);
+ double getLength();
+ double getVolume(double d);
+
+};
+
+ 
+
+#endif
+
+
+=== Grade Feedback for Problem "exam1_mp1-like_illiniBlue" ===
+[1/1]: Test: in_1.png
+[1/1]: Test: in_2.png
+[1/1]: Test: in_3.png
+=====
+[3/3]
+
+--- stdout ---
+g++ -std=c++1y -c -g -O0 -Wall -Wextra -pedantic main.cpp
+g++ -std=c++1y -c -g -O0 -Wall -Wextra -pedantic png.cpp
+g++ -std=c++1y -c -g -O0 -Wall -Wextra -pedantic rgbapixel.cpp
+g++ main.o png.o rgbapixel.o -std=c++1y -lpng -lpthread -o main
+
+
+--- stderr ---
+
+
+--- submitted file: main.cpp ---
+#include <algorithm>
+#include <iostream>
+
+#include "rgbapixel.h"
+#include "png.h"
+
+using namespace std;
+
+PNG transform_illini_blue(PNG original) {
+  size_t height=original.height();
+  size_t width=original.width();
+  for ( size_t x=0; x<width;x++){
+    for( size_t y=0; y<height;y++){
+      original(x,y)->red=0;
+      original(x,y)->green=0;
+    }
+  }
+	//
+	// To "Illini Blue" an image, you must:
+	// - Set the red and green components of every pixel to 0.
+	// - The value of the blue components in each pixel must not be changed.
+	//
+  return original;
+}
+
+int main() {
+	PNG image("in.png");
+	image = transform_illini_blue(image);
+	image.writeToFile("out.png");
+	return 0;
+}
+
+

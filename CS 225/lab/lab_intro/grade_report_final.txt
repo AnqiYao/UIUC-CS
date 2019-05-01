@@ -1,0 +1,22 @@
+Grading r2466 by xinruiy2 committed on Sat Jan 21 17:57:20 CST 2017
+Monad Autograder
+Testing lab_intro at 2017-01-23 00:25:32
+
+"You didn't write that. I wrote that." ~ Matt Joras
+
+Setting up test environment...
+Compiling...
+================================================================
+
+
+Running tests...
+================================================================
+testBrighten  . [33 pts] - passed
+testCrosshairs  [33 pts] - passed
+testBlendImages [34 pts] - passed
+
+
+Total score...
+================================================================
+TOTAL SCORE: 100
+

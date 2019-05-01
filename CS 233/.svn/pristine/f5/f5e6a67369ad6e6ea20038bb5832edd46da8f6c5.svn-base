@@ -1,0 +1,40 @@
+module gcd_control(done, x_sel, y_sel, x_en, y_en, output_en, go, x_lt_y, x_ne_y, clock, reset);
+	output	x_sel, y_sel, x_en, y_en, output_en, done;
+	input	go, x_lt_y, x_ne_y;
+	input	clock, reset;
+	wire   sGarbage_next,  sX_next,  sY_next, sT_next, sX, sGarbage, sY, sT, sN, sXN_next, sYN_next, sTN_next, sXN, sYN, sTN, sR, sR_next, tosX, tosY;
+        
+	assign sR_next = reset | (sR&~go);
+	assign sYN_next = (sY|sYN) & ~go & ~reset;
+	assign sXN_next = (sX|sXN) & ~go & ~reset; 
+	assign sTN_next = (sT|sTN) & ~go & ~reset; 
+	assign sGarbage_next = ((sYN | sXN | sTN | sR) & go & ~reset);
+	assign sY_next =  ((sGarbage| ending1) & x_lt_y & x_ne_y & go  & ~reset);
+	assign sX_next =  ((sGarbage| ending) & ~(x_lt_y) & x_ne_y & go & ~reset);	
+	assign tosX = sX_next & go;
+	assign tosY = sY_next & go;
+	assign sT_next =  ((sGarbage| sX | sY) & ~(x_ne_y) & go & ~reset);	
+	
+	dffe fsR (sR, sR_next, clock, 1'b1, reset);
+	dffe fsGarbage(sGarbage, sGarbage_next, clock, 1'b1, reset);
+	dffe fsY(sY, sY_next, clock, 1'b1, reset);
+	dffe fsX(sX, sX_next, clock, 1'b1, reset);
+	dffe fsT(sT, sT_next, clock, 1'b1, reset);
+	dffe fsN1(sXN, sXN_next, clock, 1'b1, reset);
+	dffe fsN2(sYN, sYN_next, clock, 1'b1, reset);
+	dffe fsN3(sTN, sTN_next, clock, 1'b1, reset);
+	dffe d1 (ending,tosX,clock,1'b1,reset);
+	dffe d2 (ending1,tosY,clock,1'b1,reset);
+
+
+	assign x_sel =  ending | sXN ;
+        assign y_sel =  ending1 | sYN; 
+	assign x_en =  ending | sGarbage | sXN;
+	assign y_en =  ending1 | sGarbage | sYN;
+	assign output_en = sT | sTN;
+	assign done = sT | sTN;
+
+
+
+
+endmodule //GCD_control

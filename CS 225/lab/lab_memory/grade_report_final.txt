@@ -1,0 +1,24 @@
+Grading r8675 by xinruiy2 committed on Thu Feb  2 21:16:51 CST 2017
+Monad Autograder
+Testing lab_memory at 2017-02-06 01:03:21
+
+"I think it's hacky, but maybe it's just good." ~ Sean Massung
+
+Setting up test environment...
+Compiling...
+================================================================
+
+
+Running tests...
+================================================================
+test_constructor (asan) [5 pts]  - passed
+test_allocate (asan)  . [5 pts]  - passed
+test_printrooms (asan)  [20 pts] - passed
+test_any_output . . . . [30 pts] - passed
+test_correct_output . . [40 pts] - passed
+
+
+Total score...
+================================================================
+TOTAL SCORE: 100
+

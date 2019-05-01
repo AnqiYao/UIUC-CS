@@ -1,0 +1,10 @@
+// GCD datapath
+module gcd_circuit(out, x_lt_y, x_ne_y, X, Y, x_sel, y_sel, x_en, y_en, output_en, clock, reset);
+	output  [31:0] out;
+	output  x_lt_y, x_ne_y;
+	input	[31:0]	X, Y;
+	input   x_sel, y_sel, x_en, y_en, output_en, clock, reset;
+
+    // IMPLEMENT gcd_circuit HERE
+
+endmodule // gcd_circuit

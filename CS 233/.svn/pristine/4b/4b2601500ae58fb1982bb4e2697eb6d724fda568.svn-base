@@ -1,0 +1,40 @@
+.data
+uniq_chars: .space 256
+
+.text
+
+## int
+## nth_uniq_char(char *in_str, int n) {
+##     if (!in_str || !n)
+##         return -1;
+## 
+##     uniq_chars[0] = *in_str;
+##     int uniq_so_far = 1;
+##     int position = 0;
+##     in_str++;
+##     while (uniq_so_far < n && *in_str) {
+##         char is_uniq = 1;
+##         for (int j = 0; j < uniq_so_far; j++) {
+##             if (uniq_chars[j] == *in_str) {
+##                 is_uniq = 0;
+##                 break;
+##             }
+##         }
+##         if (is_uniq) {
+##             uniq_chars[uniq_so_far] = *in_str;
+##             uniq_so_far++;
+##         }
+##         position++;
+##         in_str++;
+##     }
+## 
+##     if (uniq_so_far < n) {
+##         position++;
+##     }
+##     return position;
+## }
+
+.globl nth_uniq_char
+nth_uniq_char:
+	# Your code goes here :)
+	jr	$ra

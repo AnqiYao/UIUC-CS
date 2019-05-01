@@ -1,0 +1,415 @@
+<html>
+<head>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+<script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js"></script>
+
+<style>
+tr.total {
+  border-top: solid 2px black;
+  font-weight: bold;
+}
+tr.total td:first-child {
+  text-align: right;
+}
+li.L0, li.L1, li.L2, li.L3, li.L5, li.L6, li.L7, li.L8 {
+  list-style-type: decimal !important;
+}
+pre {
+  font-size: 0.75rem;
+}
+h5 {
+  margin-top: 10px;
+}
+</style>
+</head>
+<body>
+<div class="container">
+<h3>xinruiy2's feedback report for exam1</h3>
+<hr>
+<h4>Summary and Overall Grade</h4>
+<table class="table table-sm" style="width: auto;">
+  <thead>
+    <tr>
+      <th>Problem Name</th>
+      <th colspan="4">Score</th>
+    </tr>
+  </head>
+  <tbody>
+    <tr>
+      <td>Create a &quot;cube&quot; class</td>
+      <td style="text-align: right;">0</td>
+      <td>/</td>
+      <td style="text-align: right;">3</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>&quot;Illini Blue&quot; an Image</td>
+      <td style="text-align: right;">3</td>
+      <td>/</td>
+      <td style="text-align: right;">3</td>
+      <td></td>
+    </tr>
+    <tr class="total">
+      <td>Total:</td>
+      <td style="text-align: right;">3</td>
+      <td>/</td>
+      <td style="text-align: right;">6</td>
+      <td>50.00%</td>
+    </tr>
+  </tbody>
+</table>
+
+<hr>
+
+  <h4>&quot;Create a &quot;cube&quot; class&quot; Feedback</h4>
+
+  <h5>Question Text</h5>
+  <div style="border: solid 1px black; padding: 10px;">
+    <h4 id="theproblem">The Problem</h4>
+<p>In lecture, we developed a <code>sphere</code> class in C++. In this problem, you will develop a <code>cube</code> class.</p>
+<p>The <code>cube</code> class must:</p>
+<ul>
+<li>Store a variable d (stored as a double), which represents the length of one edge of the cube.</li>
+<li>Have a default constructor that sets the length of the edge of the cube to <code>1.0</code>.</li>
+<li>Have a second constructor that takes one parameter: the length of one edge of the cube</li>
+<li>Have a getVolume function that takes no parameters and returns the volume of the cube (as a double):</li>
+<li>The volume of the cube can be calculated by: <code>d * d * d</code></li>
+<li>The outline of the cube class is provided for you in <code>cube.cpp</code> and <code>cube.h</code>. To complete this problem, you must complete the <code>cube</code> class as described above. You should assume all input values will be valid.</li>
+</ul>
+<p>To help you test your code, we have provided test cases in <code>main.cpp</code>. To test your code, run the following commands:</p>
+<pre><code>make
+./cube-tester
+</code></pre>
+  </div>
+
+  <h5>File Submissions</h5>
+    <div>
+      cube.cpp
+    </div>
+    <div>
+      <pre class="prettyprint linenums">#include &quot;cube.h&quot;
+
+cube::cube():length()&#x3D;1.0
+{}
+
+  cube::cube(double d):length()&#x3D;d;
+  {}
+
+void setLength(double a):length&#x3D;a
+  {}
+
+double getLength(){
+      return length;}
+double getVolume(double d) {
+  return d*d*d;}
+//
+// The cube class must:
+//
+// - Store a variable d (stored as a double), which represents the length of
+//   one edge of the cube.
+//
+// - Have a default constructor that sets the length of the edge of the cube
+//   to 1.0.
+//
+// - Have a second constructor that takes one parameter: the length of one
+//   edge of the cube
+//
+// - Have a getVolume function that takes no parameters and returns the volume
+//   of the cube (as a double):
+//   - The volume of the cube can be calculated by: d * d * d
+//
+</pre>
+    </div>
+    <div>
+      cube.h
+    </div>
+    <div>
+      <pre class="prettyprint linenums">#ifndef _CUBE_H
+#define _CUBE_H
+
+//
+// The cube class must:
+//
+// - Store a variable d (stored as a double), which represents the length of
+//   one edge of the cube.
+//
+// - Have a default constructor that sets the length of the edge of the cube
+//   to 1.0.
+//
+// - Have a second constructor that takes one parameter: the length of one
+//   edge of the cube
+//
+// - Have a getVolume function that takes no parameters and returns the volume
+//   of the cube (as a double):
+//   - The volume of the cube can be calculated by: d * d * d
+//
+
+class cube
+{
+public:
+ double length;
+ cube();
+ cube(length);
+ void setLength(double d);
+ double getLength();
+ double getVolume(double d);
+
+};
+
+ 
+
+#endif
+</pre>
+    </div>
+
+  <h5>Results of Tests</h5>
+  <table class="table table-sm" style="width: auto;">
+    <thead>
+      <tr>
+        <th>Problem Name</th>
+        <th colspan="3">Score</th>
+      </tr>
+    </head>
+    <tbody>
+      <tr>
+        <td>default constructor</td>
+        <td style="text-align: right;">0</td>
+        <td>/</td>
+        <td style="text-align: right;">1</td>
+      </tr>
+      <tr>
+        <td>one parameter constructor</td>
+        <td style="text-align: right;">0</td>
+        <td>/</td>
+        <td style="text-align: right;">1</td>
+      </tr>
+      <tr>
+        <td>use of type double</td>
+        <td style="text-align: right;">0</td>
+        <td>/</td>
+        <td style="text-align: right;">1</td>
+      </tr>
+      <tr class="total">
+        <td>Total:</td>
+        <td style="text-align: right;">0</td>
+        <td>/</td>
+        <td style="text-align: right;">3</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h5>Raw Output</h5>
+  <div>
+    <div>stdout</div>
+    <pre style="border: solid 1px black";>g++ -g -O0 -Wall -Wextra main.cpp cube.cpp -o cube-tester
+</pre>
+  </div>
+  <div>
+    <div>stderr</div>
+    <pre style="border: solid 1px black";>In file included from main.cpp:3:0:
+cube.h:26:13: error: field ‘length’ has incomplete type
+  cube(length);
+             ^
+main.cpp: In function ‘int main()’:
+main.cpp:15:29: error: no matching function for call to ‘cube::getVolume()’
+   double d1 &#x3D; c1-&gt;getVolume();
+                             ^
+main.cpp:15:29: note: candidate is:
+In file included from main.cpp:3:0:
+cube.h:29:9: note: double cube::getVolume(double)
+  double getVolume(double d);
+         ^
+cube.h:29:9: note:   candidate expects 1 argument, 0 provided
+main.cpp:32:24: error: no matching function for call to ‘cube::cube(int)’
+   cube *c2 &#x3D; new cube(2);
+                        ^
+main.cpp:32:24: note: candidates are:
+In file included from main.cpp:3:0:
+cube.h:25:2: note: cube::cube()
+  cube();
+  ^
+cube.h:25:2: note:   candidate expects 0 arguments, 1 provided
+cube.h:21:7: note: cube::cube(const cube&amp;)
+ class cube
+       ^
+cube.h:21:7: note:   no known conversion for argument 1 from ‘int’ to ‘const cube&amp;’
+main.cpp:33:29: error: no matching function for call to ‘cube::getVolume()’
+   double d2 &#x3D; c2-&gt;getVolume();
+                             ^
+main.cpp:33:29: note: candidate is:
+In file included from main.cpp:3:0:
+cube.h:29:9: note: double cube::getVolume(double)
+  double getVolume(double d);
+         ^
+cube.h:29:9: note:   candidate expects 1 argument, 0 provided
+main.cpp:50:26: error: no matching function for call to ‘cube::cube(double)’
+   cube *c3 &#x3D; new cube(2.5);
+                          ^
+main.cpp:50:26: note: candidates are:
+In file included from main.cpp:3:0:
+cube.h:25:2: note: cube::cube()
+  cube();
+  ^
+cube.h:25:2: note:   candidate expects 0 arguments, 1 provided
+cube.h:21:7: note: cube::cube(const cube&amp;)
+ class cube
+       ^
+cube.h:21:7: note:   no known conversion for argument 1 from ‘double’ to ‘const cube&amp;’
+main.cpp:51:29: error: no matching function for call to ‘cube::getVolume()’
+   double d3 &#x3D; c3-&gt;getVolume();
+                             ^
+main.cpp:51:29: note: candidate is:
+In file included from main.cpp:3:0:
+cube.h:29:9: note: double cube::getVolume(double)
+  double getVolume(double d);
+         ^
+cube.h:29:9: note:   candidate expects 1 argument, 0 provided
+In file included from cube.cpp:1:0:
+cube.h:26:13: error: field ‘length’ has incomplete type
+  cube(length);
+             ^
+cube.cpp: In constructor ‘cube::cube()’:
+cube.cpp:3:22: error: expected ‘{’ before ‘&#x3D;’ token
+ cube::cube():length()&#x3D;1.0
+                      ^
+cube.cpp: At global scope:
+cube.cpp:3:22: error: expected unqualified-id before ‘&#x3D;’ token
+cube.cpp:6:3: error: prototype for ‘cube::cube(double)’ does not match any in class ‘cube’
+   cube::cube(double d):length()&#x3D;d;
+   ^
+In file included from cube.cpp:1:0:
+cube.h:21:7: error: candidates are: cube::cube(const cube&amp;)
+ class cube
+       ^
+cube.cpp:3:1: error:                 cube::cube()
+ cube::cube():length()&#x3D;1.0
+ ^
+cube.cpp:7:3: error: expected unqualified-id before ‘{’ token
+   {}
+   ^
+cube.cpp: In function ‘void setLength(double)’:
+cube.cpp:9:26: error: only constructors take member initializers
+ void setLength(double a):length&#x3D;a
+                          ^
+cube.cpp:9:32: error: expected ‘(’ before ‘&#x3D;’ token
+ void setLength(double a):length&#x3D;a
+                                ^
+cube.cpp:9:32: error: expected ‘{’ before ‘&#x3D;’ token
+cube.cpp: At global scope:
+cube.cpp:9:6: warning: unused parameter ‘a’ [-Wunused-parameter]
+ void setLength(double a):length&#x3D;a
+      ^
+cube.cpp:9:32: error: expected unqualified-id before ‘&#x3D;’ token
+ void setLength(double a):length&#x3D;a
+                                ^
+cube.cpp: In function ‘double getLength()’:
+cube.cpp:13:14: error: ‘length’ was not declared in this scope
+       return length;}
+              ^
+cube.cpp:13:21: warning: control reaches end of non-void function [-Wreturn-type]
+       return length;}
+                     ^
+make: *** [cube-tester] Error 1
+</pre>
+  </div>
+  <hr>
+  <h4>&quot;&quot;Illini Blue&quot; an Image&quot; Feedback</h4>
+
+  <h5>Question Text</h5>
+  <div style="border: solid 1px black; padding: 10px;">
+    <h4 id="theproblem">The Problem</h4>
+<p>Similar to lab_intro and MP1, in this problem you will manipulated an image using <code>RGBAPixel</code> and <code>PNG</code> classes. In this problem, you will "Illini Blue" the image.</p>
+  </div>
+
+  <h5>File Submissions</h5>
+    <div>
+      main.cpp
+    </div>
+    <div>
+      <pre class="prettyprint linenums">#include &lt;algorithm&gt;
+#include &lt;iostream&gt;
+
+#include &quot;rgbapixel.h&quot;
+#include &quot;png.h&quot;
+
+using namespace std;
+
+PNG transform_illini_blue(PNG original) {
+  size_t height&#x3D;original.height();
+  size_t width&#x3D;original.width();
+  for ( size_t x&#x3D;0; x&lt;width;x++){
+    for( size_t y&#x3D;0; y&lt;height;y++){
+      original(x,y)-&gt;red&#x3D;0;
+      original(x,y)-&gt;green&#x3D;0;
+    }
+  }
+	//
+	// To &quot;Illini Blue&quot; an image, you must:
+	// - Set the red and green components of every pixel to 0.
+	// - The value of the blue components in each pixel must not be changed.
+	//
+  return original;
+}
+
+int main() {
+	PNG image(&quot;in.png&quot;);
+	image &#x3D; transform_illini_blue(image);
+	image.writeToFile(&quot;out.png&quot;);
+	return 0;
+}
+</pre>
+    </div>
+
+  <h5>Results of Tests</h5>
+  <table class="table table-sm" style="width: auto;">
+    <thead>
+      <tr>
+        <th>Problem Name</th>
+        <th colspan="3">Score</th>
+      </tr>
+    </head>
+    <tbody>
+      <tr>
+        <td>in_1.png</td>
+        <td style="text-align: right;">1</td>
+        <td>/</td>
+        <td style="text-align: right;">1</td>
+      </tr>
+      <tr>
+        <td>in_2.png</td>
+        <td style="text-align: right;">1</td>
+        <td>/</td>
+        <td style="text-align: right;">1</td>
+      </tr>
+      <tr>
+        <td>in_3.png</td>
+        <td style="text-align: right;">1</td>
+        <td>/</td>
+        <td style="text-align: right;">1</td>
+      </tr>
+      <tr class="total">
+        <td>Total:</td>
+        <td style="text-align: right;">3</td>
+        <td>/</td>
+        <td style="text-align: right;">3</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h5>Raw Output</h5>
+  <div>
+    <div>stdout</div>
+    <pre style="border: solid 1px black";>g++ -std&#x3D;c++1y -c -g -O0 -Wall -Wextra -pedantic main.cpp
+g++ -std&#x3D;c++1y -c -g -O0 -Wall -Wextra -pedantic png.cpp
+g++ -std&#x3D;c++1y -c -g -O0 -Wall -Wextra -pedantic rgbapixel.cpp
+g++ main.o png.o rgbapixel.o -std&#x3D;c++1y -lpng -lpthread -o main
+</pre>
+  </div>
+  <div>
+    <div>stderr</div>
+    <pre style="border: solid 1px black";></pre>
+  </div>
+  <hr>
+</div>
+</body>
+</html>

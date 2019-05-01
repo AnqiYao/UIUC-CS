@@ -1,0 +1,34 @@
+#include <iostream>
+#include <png.h>
+
+int main() {
+     
+      PNG initial = new PNG("in_03.png"); 
+      int height = initial.height();
+      int width = initial.width();
+      
+      for (size_t yi = 0; yi < height/2; yi++) {
+        for (size_t xi = 0; xi < width/2; xi++) {
+                 color botton = *initial( xi,yi);
+                 *initial(xi,yi) =  *initial(width-xi,height-yi);
+                 *initial(width-xi,height-yi) = botton;
+          }
+       } 
+       
+      initial.writeToFile("out_01.png")        
+
+      return 0;
+}        
+            
+           
+       
+      
+     
+
+   
+            
+
+        
+    
+ 
+    

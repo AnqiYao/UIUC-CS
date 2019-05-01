@@ -1,0 +1,16 @@
+Grades for version committed on time
+	decrypt: 22.5 / 30
+			*Passed test: base case
+			*Partially passed test: base case (evil) (callee-saved registers were modified)
+			*Passed test: Test_Given1
+			*Partially passed test: Test_Given1 (evil) (callee-saved registers were modified)
+			*Passed test: Test_Given2
+			*Partially passed test: Test_Given2 (evil) (callee-saved registers were modified)
+			*Passed test: one_round
+			*Partially passed test: one_round (evil) (callee-saved registers were modified)
+			*Passed test: test_unsigned
+			*Partially passed test: test_unsigned (evil) (callee-saved registers were modified)
+		
+Total: 22.5 / 30
+
+Final Score: 22.5 / 30

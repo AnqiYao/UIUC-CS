@@ -1,0 +1,308 @@
+<html>
+<head>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+<script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js"></script>
+
+<style>
+tr.total {
+  border-top: solid 2px black;
+  font-weight: bold;
+}
+tr.total td:first-child {
+  text-align: right;
+}
+li.L0, li.L1, li.L2, li.L3, li.L5, li.L6, li.L7, li.L8 {
+  list-style-type: decimal !important;
+}
+pre {
+  font-size: 0.75rem;
+}
+h5 {
+  margin-top: 10px;
+}
+</style>
+</head>
+<body>
+<div class="container">
+<h3>xinruiy2's feedback report for exam6</h3>
+<hr>
+<h4>Summary and Overall Grade</h4>
+<table class="table table-sm" style="width: auto;">
+  <thead>
+    <tr>
+      <th>Problem Name</th>
+      <th colspan="4">Score</th>
+    </tr>
+  </head>
+  <tbody>
+    <tr>
+      <td>Ternary Search Tree</td>
+      <td style="text-align: right;">90</td>
+      <td>/</td>
+      <td style="text-align: right;">100</td>
+      <td></td>
+    </tr>
+    <tr class="total">
+      <td>Total:</td>
+      <td style="text-align: right;">90</td>
+      <td>/</td>
+      <td style="text-align: right;">100</td>
+      <td>90.00%</td>
+    </tr>
+  </tbody>
+</table>
+
+<hr>
+
+  <h4>&quot;Ternary Search Tree&quot; Feedback</h4>
+
+  <h5>Question Text</h5>
+  <div style="border: solid 1px black; padding: 10px;">
+    <h4 id="algorithmoverview">Algorithm Overview</h4>
+<p>Consider a ternary search tree (TST) used to store a dictionary of
+English words as shown in the example below. Each node contains a single character.
+Every path from the root to a node containing no middle child corresponds to a single
+word. The exact sequence of letters in such a path do not correspond exactly to the
+letters in a word. Rather, letters in the path that are followed by either a left or right
+traversal are NOT letters in the word.</p>
+<p>For example, consider the path in the tree below that traverses the nodes
+<code>m -&gt; t -&gt; a -&gt; g -&gt; b</code>. The letter <code>m</code> is not in the word because the next branch
+is to the right (<code>m -&gt; t</code> is a right branch). The letter <code>g</code> is also not in the word because
+the next branch is to the left (<code>g -&gt; b</code> is a left branch). All other letters are in the word, and as such, the word corresponding to that path is <code>tab</code>.</p>
+<p><img src="file/exampleTST.png"></p>
+<p>The above TST contains seven English words: <code>as</code>, <code>at</code>, <code>by</code>, <code>mix</code>, <code>mom</code>, <code>tag</code>, and <code>tab</code>.</p>
+<h4 id="problem">Problem</h4>
+<p>In <code>TST.cpp</code>, write the <code>bool TST::find(const string &amp; query)</code> function that returns
+<code>true</code> if the <code>query</code> word is stored in the TST.  You can view information about
+the structure of the TST in <code>TST.h</code>, which includes <code>TSTNode</code>.</p>
+<p>Feel free to add any helper functions to <code>TST.cpp</code> and <code>TST.h</code>.</p>
+<h4 id="potentiallyusefulreferences">Potentially Useful References</h4>
+<ul>
+<li><a href="https://prairielearn.engr.illinois.edu/pl/course_instance/470/clientFilesCourse/cpp-reference/en/cpp/string/basic_string.html">stl::string documentation</a></li>
+<li><a href="https://prairielearn.engr.illinois.edu/pl/course_instance/470/clientFilesCourse/cpp-reference/en/cpp/container/vector.html">stl::vector documentation</a></li>
+<li><a href="https://prairielearn.engr.illinois.edu/pl/course_instance/470/clientFilesCourse/cpp-reference/en/cpp/container/stack.html">stl::stack documentation</a></li>
+<li><a href="https://prairielearn.engr.illinois.edu/pl/course_instance/470/clientFilesCourse/cpp-reference/en/cpp/container/queue.html">stl::queue documentation</a></li>
+<li><a href="https://prairielearn.engr.illinois.edu/pl/course_instance/470/clientFilesCourse/cpp-reference/en/cpp/container/map.html">stl::map documentation</a></li>
+</ul>
+<h4 id="testing">Testing</h4>
+<p>A <code>Makefile</code> has been provided that compiles a simple testing suite provided
+in <code>main.cpp</code>.  To run:</p>
+<pre><code>make
+./main
+</code></pre>
+  </div>
+
+  <h5>File Submissions</h5>
+    <div>
+      TST.cpp
+    </div>
+    <div>
+      <pre class="prettyprint linenums">#include &lt;iostream&gt;
+#include &lt;vector&gt;
+#include &lt;stdexcept&gt;
+#include &quot;TST.h&quot;
+
+using namespace std;
+
+bool TST::find(const string &amp; query) {
+  // ... your code here ...
+  return helpfind(query,0,root);
+}
+
+bool TST::helpfind(const string &amp; query,int i,TSTNode* subroot){
+  if(i &#x3D;&#x3D; query.length())
+     return true;
+  if(subroot &#x3D;&#x3D; NULL)
+     return false;
+  if(query[i] &#x3D;&#x3D; subroot-&gt;c){
+     if(helpfind(query,i+1,subroot-&gt;mid))
+        return true;
+   }
+   return helpfind(query,i,subroot-&gt;left)||helpfind(query,i,subroot-&gt;right);  
+}
+
+
+//
+// The &#x60;insert&#x60; and &#x60;findLocation&#x60; functions are used to construct the
+// TST and (almost certainly) will not be useful for your find() function.
+//
+
+TST::TSTNode *&amp; TST::findLocation(TST::TSTNode *&amp;thru, int *location, int size) {
+  // base case:
+  if (size &#x3D;&#x3D; 0)          { return thru; }
+
+  // recurse down the tree, based on value at the front of the location array
+  int traverse &#x3D; location[0];
+  if (traverse &#x3D;&#x3D; 0)      { return findLocation(thru-&gt;left, location + 1, size - 1); }
+  else if (traverse &#x3D;&#x3D; 1) { return findLocation(thru-&gt;mid, location + 1, size - 1); }
+  else if (traverse &#x3D;&#x3D; 2) { return findLocation(thru-&gt;right, location + 1, size - 1); }
+  else { throw invalid_argument( &quot;unknown location&quot; ); }
+}
+
+void TST::insert(char k, vector&lt;int&gt; locationVector) {
+  // Create an array from the vector:
+  int size &#x3D; locationVector.size();
+  int *location &#x3D; new int[size];
+  for (int i &#x3D; 0; i &lt; size; i++) {
+    location[i] &#x3D; locationVector[i];
+  }
+
+  // Find the pointer to add the node at:
+  TST::TSTNode *&amp; loc &#x3D; findLocation(root, location, size);
+  loc &#x3D; new TSTNode(k);
+}
+</pre>
+    </div>
+    <div>
+      TST.h
+    </div>
+    <div>
+      <pre class="prettyprint linenums">#ifndef _TST_H
+#define _TST_H
+
+#include &lt;vector&gt;
+
+using namespace std;
+
+class TST {
+private:
+  class TSTNode {
+  public:
+    TSTNode *left;
+    TSTNode *mid;
+    TSTNode *right;
+    char c;
+
+    TSTNode(char c) : c(c) {};
+  };
+
+  TSTNode *root;
+  TSTNode *&amp; findLocation(TSTNode *&amp;thru, int *location, int size);
+
+public:
+  TST() : root(NULL) {};
+  void insert(char k, vector&lt;int&gt; location);
+  bool find(const string &amp; query);
+  bool helpfind(const string &amp; query,int i,TSTNode* subroot);
+};
+
+#endif
+</pre>
+    </div>
+
+  <h5>Results of Tests</h5>
+  <table class="table table-sm" style="width: auto;">
+    <thead>
+      <tr>
+        <th>Problem Name</th>
+        <th colspan="3">Score</th>
+      </tr>
+    </head>
+    <tbody>
+      <tr>
+        <td>Simple Tree - find will find a mid-only word?</td>
+        <td style="text-align: right;">20</td>
+        <td>/</td>
+        <td style="text-align: right;">20</td>
+      </tr>
+      <tr>
+        <td>Simple Tree - find will not match longer words than exists?</td>
+        <td style="text-align: right;">10</td>
+        <td>/</td>
+        <td style="text-align: right;">10</td>
+      </tr>
+      <tr>
+        <td>Simple Tree - find will not match shorter words than exists?</td>
+        <td style="text-align: right;">0</td>
+        <td>/</td>
+        <td style="text-align: right;">10</td>
+      </tr>
+      <tr>
+        <td>Exam-provided</td>
+        <td style="text-align: right;">60</td>
+        <td>/</td>
+        <td style="text-align: right;">60</td>
+      </tr>
+      <tr class="total">
+        <td>Total:</td>
+        <td style="text-align: right;">90</td>
+        <td>/</td>
+        <td style="text-align: right;">100</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h5>Raw Output</h5>
+  <div>
+    <div>stdout</div>
+    <pre style="border: solid 1px black";>sed -i -- &#x27;s/TSTNode(char c) : c(c) {}/TSTNode(char c) : left(NULL), mid(NULL), right(NULL), c(c) {}/g&#x27; TST.h
+g++ main.cpp TST.cpp -std&#x3D;c++1y -g -O0 -Wall -Wextra -pedantic -o main
+&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;
+All tests passed (2 assertions in 1 test case)
+
+&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;
+All tests passed (2 assertions in 1 test case)
+
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+main is a Catch v1.8.1 host application.
+Run with -? for options
+
+-------------------------------------------------------------------------------
+Simple Tree - find will not match shorter words than exists?
+-------------------------------------------------------------------------------
+main.cpp:43
+...............................................................................
+
+main.cpp:55: FAILED:
+  CHECK( tst.find(&quot;f&quot;) &#x3D;&#x3D; false )
+with expansion:
+  true &#x3D;&#x3D; false
+with messages:
+  Check if &quot;fun&quot; exists...
+  Check if &quot;f&quot; exists...
+
+&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;
+test cases: 1 | 1 failed
+assertions: 2 | 1 passed | 1 failed
+
+&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;
+All tests passed (5 assertions in 1 test case)
+
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+main is a Catch v1.8.1 host application.
+Run with -? for options
+
+-------------------------------------------------------------------------------
+Simple Tree - find will not match shorter words than exists?
+-------------------------------------------------------------------------------
+main.cpp:43
+...............................................................................
+
+main.cpp:55: FAILED:
+  CHECK( tst.find(&quot;f&quot;) &#x3D;&#x3D; false )
+with expansion:
+  true &#x3D;&#x3D; false
+with messages:
+  Check if &quot;fun&quot; exists...
+  Check if &quot;f&quot; exists...
+
+&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;
+test cases:  4 |  3 passed | 1 failed
+assertions: 11 | 10 passed | 1 failed
+
+</pre>
+  </div>
+  <div>
+    <div>stderr</div>
+    <pre style="border: solid 1px black";>TST.cpp: In member function ‘bool TST::helpfind(const string&amp;, int, TST::TSTNode*)’:
+TST.cpp:14:24: warning: comparison between signed and unsigned integer expressions [-Wsign-compare]
+   if(i &#x3D;&#x3D; query.length())
+                        ^
+</pre>
+  </div>
+  <hr>
+</div>
+</body>
+</html>

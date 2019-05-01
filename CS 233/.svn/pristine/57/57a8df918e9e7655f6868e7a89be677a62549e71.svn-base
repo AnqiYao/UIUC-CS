@@ -1,0 +1,466 @@
+.data
+# syscall constants
+PRINT_STRING = 4
+PRINT_CHAR   = 11
+PRINT_INT    = 1
+
+# debug constants
+PRINT_INT_ADDR   = 0xffff0080
+PRINT_FLOAT_ADDR = 0xffff0084
+PRINT_HEX_ADDR   = 0xffff0088
+
+# spimbot memory-mapped I/O
+VELOCITY       = 0xffff0010
+ANGLE          = 0xffff0014
+ANGLE_CONTROL  = 0xffff0018
+BOT_X          = 0xffff0020
+BOT_Y          = 0xffff0024
+OTHER_BOT_X    = 0xffff00a0
+OTHER_BOT_Y    = 0xffff00a4
+TIMER          = 0xffff001c
+SCORES_REQUEST = 0xffff1018
+
+REQUEST_JETSTREAM	= 0xffff00dc
+REQUEST_RADAR		= 0xffff00e0
+BANANA			= 0xffff0040
+MUSHROOM		= 0xffff0044
+STARCOIN		= 0xffff0048
+
+REQUEST_PUZZLE		= 0xffff00d0
+SUBMIT_SOLUTION		= 0xffff00d4
+
+# interrupt constants
+BONK_MASK	= 0x1000
+BONK_ACK	= 0xffff0060
+
+TIMER_MASK	= 0x8000
+TIMER_ACK	= 0xffff006c
+
+REQUEST_RADAR_INT_MASK	= 0x4000
+REQUEST_RADAR_ACK	= 0xffff00e4
+
+REQUEST_PUZZLE_ACK	= 0xffff00d8
+REQUEST_PUZZLE_INT_MASK	= 0x800
+
+
+# put your data things here
+.align 2
+starcoin_map: .space 4096
+jetstream_map: .space 90000
+puzzle_data: .space 4096
+
+
+.text
+main:
+
+	li 	$s0, 0
+
+	li 	$t0, REQUEST_RADAR_INT_MASK
+	li	$t1, REQUEST_PUZZLE_INT_MASK
+	or	$t1, $t0, $t1
+	or 	$t0, $t1, TIMER_MASK
+	or	$t0, $t0, BONK_MASK
+	or 	$t0, $t0, 1
+
+	mtc0 	$t0, $12
+
+
+
+	la 	$t0, jetstream_map
+	sw 	$t0, REQUEST_JETSTREAM
+
+	la 	$t0, puzzle_data
+	sw 	$t0, REQUEST_PUZZLE
+
+	bge	$s0, 4, puzzle_1
+
+	lw	$t0, TIMER		# read current time
+	add	$t0, $t0, 100		# add 100 to current time
+	sw	$t0, TIMER
+
+	li	$t5, 0
+
+
+setup:
+
+	li	$a0, 10
+	sw	$a0, VELOCITY
+
+	bge	$s0, 4, puzzle_1
+
+	lw $t1, BOT_X   #x=t1
+	lw $t2, BOT_Y 	#y=t2
+
+
+start:
+
+	bge	$s0, 4, puzzle_1
+		li	$t0, 1
+	mtc0 	$t0, $12
+	bge $t1, 150, else_1
+	bge $t2, 150, else_2_1
+
+	sub $t3, $t2, 1
+	mul $t3, $t3, 300
+	add $t3, $t3, $t1
+
+	lb $t3, jetstream_map($t3)
+	beq $t3, 2, else_3_1
+	j go_east
+	li	$t0, 1
+	mtc0 	$t0, $12
+
+else_3_1:
+
+	add $t3, $t1, 1
+	mul $t4, $t2, 300
+	add $t3, $t3, $t4
+	lb $t3, jetstream_map($t3)
+	bne $t3, 2, go_north
+	j setup
+
+else_2_1:
+
+	sub $t3, $t1, 1
+	mul $t4, $t2, 300
+	add $t3, $t3, $t4
+	lb $t3, jetstream_map($t3)
+	beq $t3, 2, else_3_2
+
+go_north:
+
+	li $t1, 1
+	sw $t1, ANGLE_CONTROL
+	li $t1, 270
+	sw $t1, ANGLE
+
+
+	j setup
+
+else_3_2:
+
+	sub $t3, $t2, 1
+	mul $t3, $t3, 300
+	add $t3, $t3, $t1
+	#add $t3, $t3, REQUEST_JETSTREAM
+	lb $t3, jetstream_map($t3)
+	bne $t3, 2, go_west
+	j setup
+
+else_1:
+	bge $t2, 150, else_2_2
+
+	add $t3, $t1, 1
+	mul $t4, $t2, 300
+	add $t3, $t3, $t4
+	#add $t3, $t3, REQUEST_JETSTREAM
+	lb $t3, jetstream_map($t3)
+	beq $t3, 2, else_3_3
+	j go_south
+
+else_3_3:
+
+	add $t3, $t2, 1
+	mul $t3, $t3, 300
+	add $t3, $t3, $t1
+	#add $t3, $t3, REQUEST_JETSTREAM
+	lb $t3, jetstream_map($t3)
+	beq $t3, 2, setup
+
+go_east:
+
+	li $t1, 1
+	sw $t1, ANGLE_CONTROL
+	sw $0, ANGLE
+	j setup
+
+else_2_2:
+
+	add $t3, $t2, 1
+	mul $t3, $t3, 300
+	add $t3, $t3, $t1
+	#add $t3, $t3, REQUEST_JETSTREAM
+	lb $t3, jetstream_map($t3)
+	beq $t3, 2, else_3_4
+
+go_west:
+
+	li $t1, 1
+	sw $t1, ANGLE_CONTROL
+	li $t1, 180
+	sw $t1, ANGLE
+
+
+	j setup
+
+else_3_4:
+
+	sub $t3, $t1, 1
+	mul $t4, $t2, 300
+	add $t3, $t3, $t4
+
+	lb $t3, jetstream_map($t3)
+	beq $t3, 2, setup
+
+go_south:
+
+	li $t1, 1
+	sw $t1, ANGLE_CONTROL
+	li $t1, 90
+	sw $t1, ANGLE
+	j setup
+
+go_northeast:
+
+	li $t1, 1
+	sw $t1, ANGLE_CONTROL
+	li $t1, 315
+	sw $t1, ANGLE
+	j setup
+
+go_northwest:
+	li $t1, 1
+	sw $t1, ANGLE_CONTROL
+	li $t1, 225
+	sw $t1, ANGLE
+	j setup
+
+go_southeast:
+
+	li $t1, 1
+	sw $t1, ANGLE_CONTROL
+	li $t1, 45
+	sw $t1, ANGLE
+	j setup
+
+go_southwest:
+	li $t1, 1
+	sw $t1, ANGLE_CONTROL
+	li $t1, 135
+	sw $t1, ANGLE
+	j setup
+
+puzzle_1:
+	la	$t7, puzzle_data
+	sw	$t7, REQUEST_PUZZLE
+	li	$t0, 1
+	mtc0 	$t0, $12
+	j	setup
+
+
+
+	.kdata
+chunkIH:	.space 44	# space for two registers
+	non_intrpt_str:	.asciiz "Non-interrupt exception\n"
+	unhandled_str:	.asciiz "Unhandled interrupt type\n"
+	three:	.float	3.0
+	five:	.float	5.0
+	PI:	.float	3.141592
+	F180:	.float  180.0
+
+	.ktext 0x80000180
+
+
+interrupt_handler:
+	.set noat
+		move	$k1, $at		# Save $at
+	.set at
+		la	$k0, chunkIH
+		sw	$a0, 0($k0)		# Get some free registers
+		sw	$a1, 4($k0)		# li $t0, 1by storing them to a global variable
+		sw 	$v0, 8($k0)
+		sw  	$t1, 12($k0)
+		sw 	$t2, 16($k0)
+		sw 	$t3, 20($k0)
+		sw 	$t4, 24($k0)
+		sw 	$t5, 28($k0)
+		sw  	$t6, 32($k0)
+		sw 	$t7, 36($k0)
+		sw 	$t8, 40($k0)
+
+
+
+		mfc0	$k0, $13		# Get Cause register
+		srl	$a0, $k0, 2
+		and	$a0, $a0, 0xf		# ExcCode field
+		bne	$a0, 0, non_intrpt
+
+interrupt_dispatch:			# Interrupt:
+	mfc0	$k0, $13		# Get Cause register, again
+	beq	$k0, 0, done		# handled all outstanding interrupts
+
+
+	and $a0, $k0, REQUEST_RADAR_INT_MASK
+	bne $a0, 0, starcoin_interrupt
+
+	and	$a0, $k0, TIMER_MASK	# is there a timer interrupt?
+	bne	$a0, 0, timer_interrupt
+
+	and	$a0, $k0, REQUEST_PUZZLE_INT_MASK	# is there a puzzle intterrupt?
+	bne	$a0, 0,	 puzzle_interrupt
+
+	and	$a0, $k0, BONK_MASK	# is there a bonk interrupt?
+	bne	$a0, 0, bonk_interrupt
+
+# add dispatch for other interrupt types here.
+
+	li	$v0, PRINT_STRING	# Unhandled interrupt types
+	la	$a0, unhandled_str
+	syscall
+	j	done
+
+bonk_interrupt:
+
+	sw      $a1, 0xffff0060($zero)   # acknowledge interrupt
+
+      	li      $a1, 10                  #  ??
+	lw      $a0, 0xffff001c($zero)   # what
+	and     $a0, $a0, 1              # does
+	bne     $a0, $zero, bonk_skip    # this
+	li      $a1, -10                 # code
+
+bonk_skip:
+	sw      $a1, 0xffff0010($zero)
+
+	j       interrupt_dispatch
+
+timer_interrupt:
+	sw	$a1, TIMER_ACK		# acknowledge interrupt
+
+	lw	$v0, TIMER
+	bge 	$v0, 50, timer_skip
+	sw 	$zero, VELOCITY
+	la 	$t3, starcoin_map
+	sw 	$t3, REQUEST_RADAR
+
+timer_skip:
+
+	lw	$v0, TIMER		# current time
+	add	$v0, $v0, 50000
+	sw	$v0, TIMER		# request timer in 50000 cycles
+
+	j	interrupt_dispatch
+
+puzzle_interrupt:
+
+	sw	$a1, REQUEST_PUZZLE_ACK
+	la	$a0, puzzle_data
+	li	$t2, 0
+	sw	$t2, VELOCITY
+	jal 	puzzle
+	sw	$v0, SUBMIT_SOLUTION
+	j	interrupt_dispatch
+
+
+
+starcoin_interrupt:
+
+	sw 	$a1, REQUEST_RADAR_ACK
+	add 	$s0, $s0, 1
+
+	lw $t1, BOT_X
+	lw $t2, BOT_Y
+	lh $t3, starcoin_map($zero) #$t3=y*
+	li $t4, 2
+	lh $t4, starcoin_map($t4) #t4=x*
+	lw $t5, starcoin_map($zero)
+	beq $t5, 0xffffffff, starcoin_interrupt_end
+	sub $a0, $t4, $t1 #a0 = x diff
+	slt $t6, $a0, 10
+	sgt $t7, $a0, -10
+	and $t6, $t6, $t7
+	beq $t6, $zero, starcoin_interrupt_end
+	sub $a1, $t3, $t2 #a1 = y diff
+	slt $t6, $a1, 10
+	sgt $t7, $a1, -10
+	and $t6, $t6, $t7
+	beq $t6, $zero, starcoin_interrupt_end
+
+getting_stars_x:
+
+	bge $a0, 0, interrupt_go_east
+	j interrupt_go_west
+
+	getting_stars_y:
+
+	sw $zero, VELOCITY
+	bge $a1, 0, interrupt_go_south
+	j interrupt_go_north
+
+interrupt_go_east:
+	li $v0, 4
+	sw $v0, VELOCITY
+	sw $0, ANGLE
+	li $v0, 1
+	sw $v0, ANGLE_CONTROL
+	j getting_stars_xx
+
+interrupt_go_west:
+	li $v0, 4
+	sw $v0, VELOCITY
+	li $v0, 180
+	sw $v0, ANGLE
+	li $v0, 1
+	sw $v0, ANGLE_CONTROL
+	j getting_stars_xx
+
+interrupt_go_south:
+	li $v0, 4
+	sw $v0, VELOCITY
+	li $v0, 90
+	sw $v0, ANGLE
+	li $v0, 1
+	sw $v0, ANGLE_CONTROL
+	j getting_stars_yy
+
+	interrupt_go_north:
+	li $v0, 4
+	sw $v0, VELOCITY
+	li $v0, 270
+	sw $v0, ANGLE
+	li $v0, 1
+	sw $v0, ANGLE_CONTROL
+	j getting_stars_yy
+
+	getting_stars_xx:
+	lw $t5, BOT_X
+	sub $a0, $t4, $t5 #a0 = x diff
+	abs $a0, $a0
+	ble $a0, 1, getting_stars_y
+	j getting_stars_xx
+
+	getting_stars_yy:
+	lw $t6, BOT_Y
+	sub $a1, $t3, $t6
+	abs $a1, $a1
+	ble $a1, 1, starcoin_interrupt_end
+	j getting_stars_yy
+
+	starcoin_interrupt_end:
+	j interrupt_dispatch
+
+non_intrpt:				# was some non-interrupt
+	li	$v0, PRINT_STRING
+	la	$a0, non_intrpt_str
+	syscall				# print out an error message
+
+	j done
+done:
+	la	$k0, chunkIH
+	lw	$a0, 0($k0)		# Restore saved registers
+	lw	$a1, 4($k0)
+	lw  $v0, 8($k0)
+	lw  $t1, 12($k0)
+	lw 	$t2, 16($k0)
+	lw 	$t3, 20($k0)
+	lw 	$t4, 24($k0)
+	lw 	$t5, 28($k0)
+	lw  $t6, 32($k0)
+	lw 	$t7, 36($k0)
+	lw 	$t8, 40($k0)
+
+
+.set noat
+	move	$at, $k1		# Restore $at
+.set at
+	eret

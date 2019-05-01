@@ -1,0 +1,330 @@
+Exam #3 score (xinruiy2): 122/200
+
+=== Grade Feedback for Problem "programming_linkedlist_animalShelter_1func" ===
+[6/6]: Test: Empty list returns NULL
+[4/4]: Test: List of 1 dog returns NULL when requesting a cat
+[4/4]: Test: List of multiple dogs returns NULL when requesting a cat
+[4/4]: Test: List of 1 cat returns NULL when requesting a dog
+[4/4]: Test: List of multiple cats returns NULL when requesting a dog
+[0/4]: Test: Removing the only element in the list (reference check)
+[0/4]: Test: Removing from a one-element list (value check)
+     Message: SIGSEGV
+[0/20]: Test: Full exam-provided example (reference)
+[0/50]: Test: Full exam-provided example (value)
+     Message: SIGSEGV
+=====
+[22/100]
+
+--- stdout ---
+g++ animal.cpp cat.cpp dog.cpp animal-test.cpp list.cpp -std=c++1y -lpng -lpthread -g -o animal-test
+===============================================================================
+All tests passed (1 assertion in 1 test case)
+
+===============================================================================
+All tests passed (1 assertion in 1 test case)
+
+===============================================================================
+All tests passed (1 assertion in 1 test case)
+
+===============================================================================
+All tests passed (1 assertion in 1 test case)
+
+===============================================================================
+All tests passed (1 assertion in 1 test case)
+
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+animal-test is a Catch v1.8.1 host application.
+Run with -? for options
+
+-------------------------------------------------------------------------------
+Removing the only element in the list (reference check)
+-------------------------------------------------------------------------------
+animal-test.cpp:78
+...............................................................................
+
+animal-test.cpp:88: FAILED:
+  CHECK( a == mia )
+with expansion:
+  NULL == 0x0000000000d23c30
+with messages:
+  Adding Mia to the animalList
+  Checking if Mia was adopted
+
+===============================================================================
+test cases: 1 | 1 failed
+assertions: 2 | 1 passed | 1 failed
+
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+animal-test is a Catch v1.8.1 host application.
+Run with -? for options
+
+-------------------------------------------------------------------------------
+Removing from a one-element list (value check)
+-------------------------------------------------------------------------------
+animal-test.cpp:95
+...............................................................................
+
+animal-test.cpp:95: FAILED:
+due to a fatal error condition:
+  Adding Mia to the animalList
+  Checking if Mia was adopted
+  SIGSEGV - Segmentation violation signal
+
+===============================================================================
+test cases: 1 | 1 failed
+assertions: 1 | 1 failed
+
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+animal-test is a Catch v1.8.1 host application.
+Run with -? for options
+
+-------------------------------------------------------------------------------
+Full exam-provided example (reference)
+-------------------------------------------------------------------------------
+animal-test.cpp:113
+...............................................................................
+
+animal-test.cpp:132: FAILED:
+  CHECK( a == chey )
+with expansion:
+  NULL == 0x00000000018920a0
+
+animal-test.cpp:135: FAILED:
+  CHECK( a == nillie )
+with expansion:
+  NULL == 0x000000000188fc30
+
+animal-test.cpp:141: FAILED:
+  CHECK( a == fiona )
+with expansion:
+  NULL == 0x0000000001892140
+
+animal-test.cpp:144: FAILED:
+  CHECK( a == mia )
+with expansion:
+  NULL == 0x0000000001891780
+
+===============================================================================
+test cases: 1 | 1 failed
+assertions: 5 | 1 passed | 4 failed
+
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+animal-test is a Catch v1.8.1 host application.
+Run with -? for options
+
+-------------------------------------------------------------------------------
+Full exam-provided example (value)
+-------------------------------------------------------------------------------
+animal-test.cpp:148
+...............................................................................
+
+animal-test.cpp:148: FAILED:
+due to a fatal error condition:
+  SIGSEGV - Segmentation violation signal
+
+===============================================================================
+test cases: 1 | 1 failed
+assertions: 1 | 1 failed
+
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+animal-test is a Catch v1.8.1 host application.
+Run with -? for options
+
+-------------------------------------------------------------------------------
+Removing the only element in the list (reference check)
+-------------------------------------------------------------------------------
+animal-test.cpp:78
+...............................................................................
+
+animal-test.cpp:88: FAILED:
+  CHECK( a == mia )
+with expansion:
+  NULL == 0x000000000197f370
+with messages:
+  Adding Mia to the animalList
+  Checking if Mia was adopted
+
+-------------------------------------------------------------------------------
+Removing from a one-element list (value check)
+-------------------------------------------------------------------------------
+animal-test.cpp:95
+...............................................................................
+
+animal-test.cpp:95: FAILED:
+due to a fatal error condition:
+  Adding Mia to the animalList
+  Checking if Mia was adopted
+  SIGSEGV - Segmentation violation signal
+
+===============================================================================
+test cases: 7 | 5 passed | 2 failed
+assertions: 8 | 6 passed | 2 failed
+
+
+
+--- stderr ---
+
+
+--- submitted file: list.cpp ---
+#define _LIST_CPP
+#include "list.h"
+#include "animal.h"
+
+#include <cstddef>
+
+
+//
+// In the `List` class, complete the `adopt` member function in `list.cpp`.
+// The `adopt` function must:
+//
+// 1. find the animal closest to the head of the list that meets the given
+//    preferences (if a suitable animal exists),
+// 2. remove that node from the list, and
+// 3. return a pointer to the `Animal` (if a suitable animal was found) **or**
+//    `NULL` if no animal was found
+//
+
+template <class T>
+const Animal *List<T>::adopt(bool willAdoptCats, bool willAdoptDogs) {
+    if(head == NULL)
+    return NULL; 
+    
+    else{
+       ListNode* temp = head;
+       while(temp!=NULL){
+       if(willAdoptCats) {
+          
+         if(temp->data->getType() == "cat")  return temp->data;
+         } 
+      else if (willAdoptDogs) {
+          
+          if (temp->data->getType() == "dog")  return temp->data;
+        
+         }
+        temp=temp->next;
+        } 
+      return NULL; 
+        }
+      
+ }     
+
+
+
+
+template <class T>
+List<T>::List() {
+  this->head = NULL;
+}
+
+template <class T>
+void List<T>::insertFront(const T& ndata) {
+  ListNode* node = new ListNode(ndata);
+  node->next = head;
+  this->head = node;
+}
+
+
+=== Grade Feedback for Problem "programming_linkedlist_gameNight_leaders4_end" ===
+[30/30]: Test: List of six people (by ref)
+[70/70]: Test: List of six people (by value)
+=====
+[100/100]
+
+--- stdout ---
+g++ gameNight-test.cpp list-p2.cpp person.cpp -std=c++1y -lpng -lpthread -g -o gameNight-test
+===============================================================================
+All tests passed (6 assertions in 1 test case)
+
+===============================================================================
+All tests passed (6 assertions in 1 test case)
+
+===============================================================================
+All tests passed (12 assertions in 2 test cases)
+
+
+
+--- stderr ---
+
+
+--- submitted file: list-p2.cpp ---
+#define _LIST_CPP
+#include "list.h"
+#include "person.h"
+
+#include <cstddef>
+
+
+//
+// In the `List` class, complete the `reorganizeList` member function in
+// `list.cpp`.  The `reorganizeList` function must place all non-leaders at the
+// front of the list followed by all leaders, while otherwise maintain the
+// same order.
+//
+
+template <class T>
+void List<T>::reorganizeList() {
+    ListNode* temp = head;
+    ListNode* temp1;
+    ListNode* temp2;
+    int count = 1;
+    int newcount = 1;
+    while(temp != NULL){ 
+       temp = temp->next;
+       count++;}
+    temp = head; 
+    int count1= count;
+     while(count>0){
+      if(temp->next ->leader) { temp2 = temp->next ; temp ->next = temp2->next;}  
+      else { temp2 = temp->next;}   
+      if( temp ->leader ) { 
+         insertBack(temp->data);
+       if(count1 == count)
+         {head = temp ->next; }
+   
+       temp1 = temp->next;
+       delete temp;
+       temp = temp1;}
+         
+        temp = temp2;
+        count--;
+        newcount ++;
+         }
+}
+
+
+template <class T>
+List<T>::List() {
+  this->head = NULL;
+}
+
+template <class T>
+void List<T>::insertBack(const T& ndata) {
+  static int ct = 0;
+
+  ListNode* node = new ListNode(ndata);
+  node->leader = (ct++ % 4 == 0);
+
+  if (!head) {
+    head = node;
+  } else {
+    ListNode *thru = head;
+    while (thru->next != NULL) { thru = thru->next; }
+    thru->next = node;
+  }
+}
+
+template <class T>
+const T *List<T>::get(int index) const {
+  ListNode *thru = head;
+  while (thru && index-- > 0) { thru = thru->next; }
+
+  if (thru) { return &(thru->data); }
+  else      { return NULL; }
+}
+
+

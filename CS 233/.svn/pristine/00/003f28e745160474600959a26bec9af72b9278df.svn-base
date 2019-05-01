@@ -1,0 +1,20 @@
+.text
+
+## unsigned int
+## my_strlen(char *in) {
+##     if (!in)
+##         return 0;
+## 
+##     unsigned int count = 0;
+##     while (*in) {
+##         count++;
+##         in++;
+##     }
+## 
+##     return count;
+## }
+
+.globl my_strlen
+my_strlen:
+	# Your code goes here :)
+	jr	$ra

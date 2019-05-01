@@ -1,0 +1,288 @@
+$date
+	Sat Oct 28 17:19:12 2017
+$end
+$version
+	Icarus Verilog
+$end
+$timescale
+	1s
+$end
+$scope module cp0_test $end
+$var wire 30 ! EPC [29:0] $end
+$var wire 1 " TakenInterrupt $end
+$var wire 32 # rd_data [31:0] $end
+$var reg 1 $ ERET $end
+$var reg 1 % MTC0 $end
+$var reg 1 & TimerInterrupt $end
+$var reg 1 ' clock $end
+$var reg 30 ( next_pc [29:0] $end
+$var reg 5 ) regnum [4:0] $end
+$var reg 1 * reset $end
+$var reg 32 + wr_data [31:0] $end
+$scope module c0 $end
+$var wire 30 , EPC [29:0] $end
+$var wire 1 - ERET $end
+$var wire 1 . MTC0 $end
+$var wire 1 " TakenInterrupt $end
+$var wire 1 / TimerInterrupt $end
+$var wire 32 0 cause_register [31:0] $end
+$var wire 1 1 clock $end
+$var wire 32 2 de_out [31:0] $end
+$var wire 32 3 epc_af [31:0] $end
+$var wire 1 4 epc_en $end
+$var wire 30 5 epc_in [29:0] $end
+$var wire 1 6 except_re $end
+$var wire 30 7 next_pc [29:0] $end
+$var wire 1 8 not_status_register $end
+$var wire 32 9 rd_data [31:0] $end
+$var wire 5 : regnum [4:0] $end
+$var wire 1 ; reset $end
+$var wire 32 < status_register [31:0] $end
+$var wire 1 = user_en $end
+$var wire 32 > user_status [31:0] $end
+$var wire 32 ? wr_data [31:0] $end
+$scope module d1 $end
+$var wire 1 . enable $end
+$var wire 5 @ in [4:0] $end
+$var wire 32 A out [31:0] $end
+$upscope $end
+$scope module m1 $end
+$var wire 30 B A [29:0] $end
+$var wire 30 C B [29:0] $end
+$var wire 30 D out [29:0] $end
+$var wire 1 " sel $end
+$var wire 30 E temp1 [29:0] $end
+$var wire 30 F temp2 [29:0] $end
+$upscope $end
+$scope module r1 $end
+$var wire 1 1 clk $end
+$var wire 32 G d [31:0] $end
+$var wire 1 = enable $end
+$var wire 1 ; reset $end
+$var reg 32 H q [31:0] $end
+$upscope $end
+$scope module r2 $end
+$var wire 1 1 clk $end
+$var wire 30 I d [29:0] $end
+$var wire 1 4 enable $end
+$var wire 1 ; reset $end
+$var reg 30 J q [29:0] $end
+$upscope $end
+$scope module df1 $end
+$var wire 1 1 clk $end
+$var wire 1 K d $end
+$var wire 1 " enable $end
+$var wire 1 6 reset $end
+$var reg 1 L q $end
+$upscope $end
+$upscope $end
+$upscope $end
+$enddefinitions $end
+#0
+$dumpvars
+xL
+1K
+bx J
+b0 I
+bx H
+b0 G
+b0 F
+b0 E
+b0 D
+b0 C
+b0 B
+b0 A
+b0 @
+b0 ?
+bx >
+0=
+b0xxxxxxxx000000xx <
+1;
+b0 :
+b0 9
+x8
+b0 7
+16
+b0 5
+04
+b0xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx 3
+b0 2
+01
+b0 0
+0/
+0.
+0-
+bx ,
+b0 +
+1*
+b0 )
+b0 (
+0'
+0&
+0%
+0$
+b0 #
+0"
+bx !
+$end
+#5
+18
+b0 H
+b0 >
+b0 J
+b0 3
+b0 !
+b0 ,
+0L
+b0 <
+1'
+11
+#10
+b111111111111111111111111111111 5
+b111111111111111111111111111111 D
+b111111111111111111111111111111 I
+b111111111111111111111111111111 E
+1=
+b111111111111111111111111111111 B
+b1000000000000 2
+b1000000000000 A
+06
+0'
+01
+b11111111111111111111111111111111 +
+b11111111111111111111111111111111 ?
+b11111111111111111111111111111111 G
+b1100 )
+b1100 :
+b1100 @
+1%
+1.
+0*
+0;
+#15
+b1111111100000001 #
+b1111111100000001 9
+b1111111100000001 <
+b11111111111111111111111111111111 H
+b11111111111111111111111111111111 >
+1'
+11
+#20
+0=
+b0 2
+b0 A
+0'
+01
+0%
+0.
+#25
+1'
+11
+#30
+b100000000000000000100 5
+b100000000000000000100 D
+b100000000000000000100 I
+b0 E
+b100000000000000000100 F
+14
+1"
+0'
+01
+b100000000000000000100 (
+b100000000000000000100 7
+b100000000000000000100 C
+1&
+b1000000000000000 0
+1/
+#35
+b111111111111111111111111111111 5
+b111111111111111111111111111111 D
+b111111111111111111111111111111 I
+b111111111111111111111111111111 E
+b0 F
+04
+0"
+b1111111100000011 #
+b1111111100000011 9
+08
+1L
+b1111111100000011 <
+b100000000000000000100 J
+b100000000000000000100 3
+b100000000000000000100 !
+b100000000000000000100 ,
+1'
+11
+#40
+0'
+01
+b100000000000000001000 (
+b100000000000000001000 7
+b100000000000000001000 C
+#45
+1'
+11
+#50
+b100000000000000000100 #
+b100000000000000000100 9
+0'
+01
+b1110 )
+b1110 :
+b1110 @
+#55
+1'
+11
+#60
+b1000000000000000 #
+b1000000000000000 9
+0'
+01
+b1101 )
+b1101 :
+b1101 @
+#65
+1'
+11
+#70
+b0 #
+b0 9
+16
+0'
+01
+1$
+1-
+0&
+b0 0
+0/
+#75
+18
+0L
+b1111111100000001 <
+1'
+11
+#80
+b1111111100000001 #
+b1111111100000001 9
+0'
+01
+b1100 )
+b1100 :
+b1100 @
+#85
+1'
+11
+#90
+b0 #
+b0 9
+0'
+01
+b1101 )
+b1101 :
+b1101 @
+#95
+1'
+11
+#100
+0'
+01

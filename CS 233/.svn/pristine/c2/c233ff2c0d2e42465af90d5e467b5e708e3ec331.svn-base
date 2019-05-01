@@ -1,0 +1,31 @@
+.data
+
+.text
+
+## struct Node {
+##     int node_id;            // Unique node ID
+##     struct Node **children; // pointer to null terminated array of children node pointers
+## };
+##
+## int
+## max_depth(Node *current) {
+##     if (current == NULL)
+##         return 0;
+## 
+##     int cur_child = 0;
+##     Node *child = current->children[cur_child];
+##     int max = 0;
+##     while (child != NULL) {
+##         int depth = max_depth(child);
+##         if (depth > max)
+##             max = depth;
+##         cur_child++;
+##         child = current->children[cur_child];
+##     }
+##     return 1 + max;
+## }
+
+.globl max_depth
+max_depth:
+	# Your code goes here :)
+	jr	$ra

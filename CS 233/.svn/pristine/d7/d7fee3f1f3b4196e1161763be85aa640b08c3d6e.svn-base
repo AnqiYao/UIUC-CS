@@ -1,0 +1,11 @@
+.text
+
+## unsigned int
+## circular_shift(unsigned int in, unsigned char s) {
+##     return (in >> 8 * s) | (in << (32 - 8 * s));
+## }
+
+.globl circular_shift
+circular_shift:
+	# Your code goes here :)
+	jr	$ra

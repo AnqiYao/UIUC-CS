@@ -1,0 +1,25 @@
+.data
+
+.text
+
+## void
+## decrypt(unsigned char *ciphertext, unsigned char *plaintext, unsigned char *key,
+##         unsigned char rounds) {
+##     unsigned char A[16], B[16], C[16], D[16];
+##     key_addition(ciphertext, &key[16 * rounds], C);
+##     inv_shift_rows(C, (unsigned int *) B);
+##     inv_byte_substitution(B, A);
+##     for (unsigned int k = rounds - 1; k > 0; k--) {
+##         key_addition(A, &key[16 * k], D);
+##         inv_mix_column(D, C);
+##         inv_shift_rows(C, (unsigned int *) B);
+##         inv_byte_substitution(B, A);
+##     }
+##     key_addition(A, key, plaintext);
+##     return;
+## }
+
+.globl decrypt
+decrypt:
+	# Your code goes here :)
+	jr $ra

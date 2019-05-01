@@ -1,0 +1,56 @@
+Grading r16778 by xinruiy2 committed on Fri Feb 17 15:02:02 CST 2017
+Monad Autograder
+Testing lab_gdb2 at 2017-02-20 00:45:11
+
+"It'll work, the stack's just not big enough." ~ Eric Rosenberg
+
+Setting up test environment...
+Compiling...
+================================================================
+
+
+Running tests...
+================================================================
+testFind1_I . . . . . . [5 pts]  - passed
+testFind1_R . . . . . . [5 pts]  - passed
+testFind2_I . . . . . . [5 pts]  - passed
+testFind2_R . . . . . . [5 pts]  - passed
+testFind3_I . . . . . . [10 pts] - passed
+testFind3_R . . . . . . [10 pts] - passed
+testInsertAscending . . [5 pts]  - passed
+testInsertAscendingBack [5 pts]  - passed
+testInsertRandom  . . . [8 pts]  - passed
+testInsertRandomBack  . [8 pts]  - passed
+testInsertTough (asan)  [10 pts] - FAILED: unit_tests.cpp:46: List sizes don't match
+testRemoveEasy  . . . . [5 pts]  - passed
+testRemoveHard (asan) . [10 pts] - passed
+testConstructor1 (asan) [4 pts]  - passed
+testConstructor2 (asan) [5 pts]  - passed
+
+
+Total score...
+================================================================
+TOTAL SCORE: 90
+
+
+
+Detailed test output...
+================================================================
+----------------------------------------------------------------
+testInsertTough (run under asan) [10 points]
+Result: FAILED: unit_tests.cpp:46: List sizes don't match
+Took unknown time (1000ms timeout)
+Output:
+----------------------------------------------------------------
+Running testInsertTough [worth 10 points, output below]
+< 1, 1, 3, 7, 34, 34, 81, 99, 99 >
+< 1, 1, 3, 7, 34, 34, 81, 99, 99 >
+Result: FAILED:
+unit_tests.cpp:46: List sizes don't match
+
+
+----------------------------------------------------------------
+Total score...
+================================================================
+TOTAL SCORE: 90
+
