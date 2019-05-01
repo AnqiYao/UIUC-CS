@@ -1,0 +1,182 @@
+/**
+* Text Editor Lab
+* CS 241 - Spring 2018
+*/
+
+#include "sstream.h"
+#include <assert.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <sys/stat.h>
+#include <fcntl.h>
+#include <unistd.h>
+
+struct sstream{
+	char *str;
+	size_t position;
+	size_t size;
+};
+
+sstream *sstream_create(bytestring bytes) {
+	sstream* result = malloc(sizeof(size_t)*2 + sizeof(char*));
+	size_t i  = 0;
+	if(bytes.str == NULL) {
+		result->str = NULL;
+		result->position = 0;
+		result->size = 0;
+		return result;
+	}
+	else if(bytes.size < 0) {
+				result-> str = malloc(strlen(bytes.str)+1);
+		while(bytes.str[i]!='\0'){
+			result->str[i] = bytes.str[i];
+			i++;
+		}
+		result->str[i] = '\0';
+		result->position = 0;
+		result->size = strlen(result->str);
+		return result;
+	}
+	else{
+	  result-> str = malloc(bytes.size+1);
+		i = 0;
+		for(; i < bytes.size; i++){
+			result->str[i] = bytes.str[i];
+		}
+		result->str[i+1] = '\0'
+		result->position = 0;
+		result->size = bytes.size;
+		return result;
+	}
+}
+
+void sstream_destroy(sstream *this) {
+	free(this->str);
+	this->str = NULL;
+	free(this);
+	this = NULL;
+}
+
+void sstream_str(sstream *this, bytestring bytes) {
+		int i = 0;
+		if(bytes.str == NULL) return;
+		else if(bytes.size < 0) {
+		  this -> str = malloc(strlen(bytes.str)+1);
+			while(bytes.str[i]!='\0'){
+				this->str[i] = bytes.str[i];
+				i++;
+			}
+			this->str[i] = '\0';
+			this->position = 0;
+			this->size = strlen(bytes.str)+1;
+			return;
+		}
+		else{
+			this -> str = malloc(bytes.size+1);
+			i = 0;
+			for(; i < bytes.size; i++){
+				this->str[i] = bytes.str[i];
+			}
+			this->position = 0;
+			this->size = bytes.size;
+			return;
+		}
+
+}
+
+bool sstream_eos(sstream *this) {
+	if((this->position) > strlen(this->str)){
+			return true;
+	}
+  return false;
+}
+
+char sstream_peek(sstream *this, ssize_t offset) {
+	assert((this->position + offset)>=0);
+	size_t place = this->position + offset;
+	if(place > strlen(this->str))
+		    return '\0';
+	else
+		return (this->str[place]);
+}
+
+char sstream_getch(sstream *this) {
+	assert((this->position)>=0);
+	if(this->position > strlen(this->str))	return '\0';
+	char temp =  (this->str[this->position]);
+	this->position ++;
+    return temp;
+
+}
+
+size_t sstream_size(sstream *this) {
+    return this->size;
+}
+
+size_t sstream_tell(sstream *this) {
+    return this->position;
+}
+
+int sstream_seek(sstream *this, ssize_t offset, int whence) {
+    // TODO implement
+		size_t newp = this->position;
+		if(whence == SEEK_SET){
+			newp = offset;
+		}
+		else if (whence == SEEK_CUR){
+			newp += offset;
+		}
+		else {
+			newp = this->size + offset;
+		}
+		if( (this->position+offset) > strlen(this->str) || (this->position - offset) < 0)
+			return -1;
+		else {
+			this->position = newp;
+			return 0;
+		}
+}
+
+size_t sstream_remain(sstream *this) {
+	if(sstream_eos(this))	return 0;
+	size_t count = 0;
+	while(!sstream_eos(this)){
+		count++;
+		this->position++;
+	}
+	return count;
+}
+
+size_t sstream_read(sstream *this, bytestring *out, ssize_t count) {
+    // TODO implement
+    return 0;
+}
+
+void sstream_append(sstream *this, bytestring bytes) {
+    // TODO implement
+    return;
+}
+
+ssize_t sstream_subseq(sstream *this, bytestring bytes) {
+    // TODO implement
+    return 0;
+}
+
+size_t sstream_erase(sstream *this, ssize_t number) {
+    // TODO implement
+    return 0;
+}
+
+void sstream_write(sstream *this, bytestring bytes) {
+    // TODO implement
+}
+
+void sstream_insert(sstream *this, bytestring bytes) {
+    // TODO implement
+}
+
+int sstream_parse_long(sstream *this, long *out) {
+
+
+}

@@ -1,0 +1,660 @@
+[
+  {
+    "revision": "52254",
+    "checksum": "a9ecdb247f1686e9ba065e2dc05c5e6d00be1f15  alloc.c\ne564275769c257435e86ccba54aad48b6acc52ff  nickname.txt\n",
+    "testcases": [
+      {
+        "log": "Trying to compile your code...\nFAILED TO COMPILE!\nalloc.c:41:1: error: unknown type name 'external'; did you mean 'extern'?\nexternal block* head;\n^~~~~~~~\nextern\nalloc.c:43:21: warning: unused parameter 'num' [-Wunused-parameter]\nvoid *calloc(size_t num, size_t size) {\n                    ^\nalloc.c:43:33: warning: unused parameter 'size' [-Wunused-parameter]\nvoid *calloc(size_t num, size_t size) {\n                                ^\nalloc.c:69:21: warning: unused parameter 'size' [-Wunused-parameter]\nvoid *malloc(size_t size) {\n                    ^\nalloc.c:90:17: warning: unused parameter 'ptr' [-Wunused-parameter]\nvoid free(void *ptr) {\n                ^\nalloc.c:139:21: warning: unused parameter 'ptr' [-Wunused-parameter]\nvoid *realloc(void *ptr, size_t size) {\n                    ^\nalloc.c:139:33: warning: unused parameter 'size' [-Wunused-parameter]\nvoid *realloc(void *ptr, size_t size) {\n                                ^\n6 warnings and 1 error generated.\nmake: *** [alloc.so] Error 1\n",
+        "ptsPossible": 1.0,
+        "description": "./mcontest testers_exe/tester-1 (timeout 60 seconds)",
+        "ptsEarned": 0.0,
+        "name": "tester-1"
+      },
+      {
+        "log": "Trying to compile your code...\nFAILED TO COMPILE!\nalloc.c:41:1: error: unknown type name 'external'; did you mean 'extern'?\nexternal block* head;\n^~~~~~~~\nextern\nalloc.c:43:21: warning: unused parameter 'num' [-Wunused-parameter]\nvoid *calloc(size_t num, size_t size) {\n                    ^\nalloc.c:43:33: warning: unused parameter 'size' [-Wunused-parameter]\nvoid *calloc(size_t num, size_t size) {\n                                ^\nalloc.c:69:21: warning: unused parameter 'size' [-Wunused-parameter]\nvoid *malloc(size_t size) {\n                    ^\nalloc.c:90:17: warning: unused parameter 'ptr' [-Wunused-parameter]\nvoid free(void *ptr) {\n                ^\nalloc.c:139:21: warning: unused parameter 'ptr' [-Wunused-parameter]\nvoid *realloc(void *ptr, size_t size) {\n                    ^\nalloc.c:139:33: warning: unused parameter 'size' [-Wunused-parameter]\nvoid *realloc(void *ptr, size_t size) {\n                                ^\n6 warnings and 1 error generated.\nmake: *** [alloc.so] Error 1\n",
+        "ptsPossible": 1.0,
+        "description": "./mcontest testers_exe/tester-2 (timeout 60 seconds)",
+        "ptsEarned": 0.0,
+        "name": "tester-2"
+      },
+      {
+        "log": "Trying to compile your code...\nFAILED TO COMPILE!\nalloc.c:41:1: error: unknown type name 'external'; did you mean 'extern'?\nexternal block* head;\n^~~~~~~~\nextern\nalloc.c:43:21: warning: unused parameter 'num' [-Wunused-parameter]\nvoid *calloc(size_t num, size_t size) {\n                    ^\nalloc.c:43:33: warning: unused parameter 'size' [-Wunused-parameter]\nvoid *calloc(size_t num, size_t size) {\n                                ^\nalloc.c:69:21: warning: unused parameter 'size' [-Wunused-parameter]\nvoid *malloc(size_t size) {\n                    ^\nalloc.c:90:17: warning: unused parameter 'ptr' [-Wunused-parameter]\nvoid free(void *ptr) {\n                ^\nalloc.c:139:21: warning: unused parameter 'ptr' [-Wunused-parameter]\nvoid *realloc(void *ptr, size_t size) {\n                    ^\nalloc.c:139:33: warning: unused parameter 'size' [-Wunused-parameter]\nvoid *realloc(void *ptr, size_t size) {\n                                ^\n6 warnings and 1 error generated.\nmake: *** [alloc.so] Error 1\n",
+        "ptsPossible": 1.0,
+        "description": "./mcontest testers_exe/tester-3 (timeout 60 seconds)",
+        "ptsEarned": 0.0,
+        "name": "tester-3"
+      },
+      {
+        "log": "Trying to compile your code...\nFAILED TO COMPILE!\nalloc.c:41:1: error: unknown type name 'external'; did you mean 'extern'?\nexternal block* head;\n^~~~~~~~\nextern\nalloc.c:43:21: warning: unused parameter 'num' [-Wunused-parameter]\nvoid *calloc(size_t num, size_t size) {\n                    ^\nalloc.c:43:33: warning: unused parameter 'size' [-Wunused-parameter]\nvoid *calloc(size_t num, size_t size) {\n                                ^\nalloc.c:69:21: warning: unused parameter 'size' [-Wunused-parameter]\nvoid *malloc(size_t size) {\n                    ^\nalloc.c:90:17: warning: unused parameter 'ptr' [-Wunused-parameter]\nvoid free(void *ptr) {\n                ^\nalloc.c:139:21: warning: unused parameter 'ptr' [-Wunused-parameter]\nvoid *realloc(void *ptr, size_t size) {\n                    ^\nalloc.c:139:33: warning: unused parameter 'size' [-Wunused-parameter]\nvoid *realloc(void *ptr, size_t size) {\n                                ^\n6 warnings and 1 error generated.\nmake: *** [alloc.so] Error 1\n",
+        "ptsPossible": 1.0,
+        "description": "./mcontest testers_exe/tester-4 (timeout 60 seconds)",
+        "ptsEarned": 0.0,
+        "name": "tester-4"
+      },
+      {
+        "log": "Trying to compile your code...\nFAILED TO COMPILE!\nalloc.c:41:1: error: unknown type name 'external'; did you mean 'extern'?\nexternal block* head;\n^~~~~~~~\nextern\nalloc.c:43:21: warning: unused parameter 'num' [-Wunused-parameter]\nvoid *calloc(size_t num, size_t size) {\n                    ^\nalloc.c:43:33: warning: unused parameter 'size' [-Wunused-parameter]\nvoid *calloc(size_t num, size_t size) {\n                                ^\nalloc.c:69:21: warning: unused parameter 'size' [-Wunused-parameter]\nvoid *malloc(size_t size) {\n                    ^\nalloc.c:90:17: warning: unused parameter 'ptr' [-Wunused-parameter]\nvoid free(void *ptr) {\n                ^\nalloc.c:139:21: warning: unused parameter 'ptr' [-Wunused-parameter]\nvoid *realloc(void *ptr, size_t size) {\n                    ^\nalloc.c:139:33: warning: unused parameter 'size' [-Wunused-parameter]\nvoid *realloc(void *ptr, size_t size) {\n                                ^\n6 warnings and 1 error generated.\nmake: *** [alloc.so] Error 1\n",
+        "ptsPossible": 1.0,
+        "description": "./mcontest testers_exe/tester-5 (timeout 60 seconds)",
+        "ptsEarned": 0.0,
+        "name": "tester-5"
+      },
+      {
+        "log": "Trying to compile your code...\nFAILED TO COMPILE!\nalloc.c:41:1: error: unknown type name 'external'; did you mean 'extern'?\nexternal block* head;\n^~~~~~~~\nextern\nalloc.c:43:21: warning: unused parameter 'num' [-Wunused-parameter]\nvoid *calloc(size_t num, size_t size) {\n                    ^\nalloc.c:43:33: warning: unused parameter 'size' [-Wunused-parameter]\nvoid *calloc(size_t num, size_t size) {\n                                ^\nalloc.c:69:21: warning: unused parameter 'size' [-Wunused-parameter]\nvoid *malloc(size_t size) {\n                    ^\nalloc.c:90:17: warning: unused parameter 'ptr' [-Wunused-parameter]\nvoid free(void *ptr) {\n                ^\nalloc.c:139:21: warning: unused parameter 'ptr' [-Wunused-parameter]\nvoid *realloc(void *ptr, size_t size) {\n                    ^\nalloc.c:139:33: warning: unused parameter 'size' [-Wunused-parameter]\nvoid *realloc(void *ptr, size_t size) {\n                                ^\n6 warnings and 1 error generated.\nmake: *** [alloc.so] Error 1\n",
+        "ptsPossible": 1.0,
+        "description": "./mcontest testers_exe/tester-6 (timeout 60 seconds)",
+        "ptsEarned": 0.0,
+        "name": "tester-6"
+      }
+    ],
+    "timestamp": "2018-02-22 20:42:11.803743"
+  },
+  {
+    "revision": "53803",
+    "checksum": "a9ecdb247f1686e9ba065e2dc05c5e6d00be1f15  alloc.c\ne564275769c257435e86ccba54aad48b6acc52ff  nickname.txt\n",
+    "testcases": [
+      {
+        "log": "Trying to compile your code...\nFAILED TO COMPILE!\nalloc.c:41:1: error: unknown type name 'external'; did you mean 'extern'?\nexternal block* head;\n^~~~~~~~\nextern\nalloc.c:43:21: warning: unused parameter 'num' [-Wunused-parameter]\nvoid *calloc(size_t num, size_t size) {\n                    ^\nalloc.c:43:33: warning: unused parameter 'size' [-Wunused-parameter]\nvoid *calloc(size_t num, size_t size) {\n                                ^\nalloc.c:69:21: warning: unused parameter 'size' [-Wunused-parameter]\nvoid *malloc(size_t size) {\n                    ^\nalloc.c:90:17: warning: unused parameter 'ptr' [-Wunused-parameter]\nvoid free(void *ptr) {\n                ^\nalloc.c:139:21: warning: unused parameter 'ptr' [-Wunused-parameter]\nvoid *realloc(void *ptr, size_t size) {\n                    ^\nalloc.c:139:33: warning: unused parameter 'size' [-Wunused-parameter]\nvoid *realloc(void *ptr, size_t size) {\n                                ^\n6 warnings and 1 error generated.\nmake: *** [alloc.so] Error 1\n",
+        "ptsPossible": 1.0,
+        "description": "./mcontest testers_exe/tester-1 (timeout 60 seconds)",
+        "ptsEarned": 0.0,
+        "name": "tester-1"
+      },
+      {
+        "log": "Trying to compile your code...\nFAILED TO COMPILE!\nalloc.c:41:1: error: unknown type name 'external'; did you mean 'extern'?\nexternal block* head;\n^~~~~~~~\nextern\nalloc.c:43:21: warning: unused parameter 'num' [-Wunused-parameter]\nvoid *calloc(size_t num, size_t size) {\n                    ^\nalloc.c:43:33: warning: unused parameter 'size' [-Wunused-parameter]\nvoid *calloc(size_t num, size_t size) {\n                                ^\nalloc.c:69:21: warning: unused parameter 'size' [-Wunused-parameter]\nvoid *malloc(size_t size) {\n                    ^\nalloc.c:90:17: warning: unused parameter 'ptr' [-Wunused-parameter]\nvoid free(void *ptr) {\n                ^\nalloc.c:139:21: warning: unused parameter 'ptr' [-Wunused-parameter]\nvoid *realloc(void *ptr, size_t size) {\n                    ^\nalloc.c:139:33: warning: unused parameter 'size' [-Wunused-parameter]\nvoid *realloc(void *ptr, size_t size) {\n                                ^\n6 warnings and 1 error generated.\nmake: *** [alloc.so] Error 1\n",
+        "ptsPossible": 1.0,
+        "description": "./mcontest testers_exe/tester-2 (timeout 60 seconds)",
+        "ptsEarned": 0.0,
+        "name": "tester-2"
+      },
+      {
+        "log": "Trying to compile your code...\nFAILED TO COMPILE!\nalloc.c:41:1: error: unknown type name 'external'; did you mean 'extern'?\nexternal block* head;\n^~~~~~~~\nextern\nalloc.c:43:21: warning: unused parameter 'num' [-Wunused-parameter]\nvoid *calloc(size_t num, size_t size) {\n                    ^\nalloc.c:43:33: warning: unused parameter 'size' [-Wunused-parameter]\nvoid *calloc(size_t num, size_t size) {\n                                ^\nalloc.c:69:21: warning: unused parameter 'size' [-Wunused-parameter]\nvoid *malloc(size_t size) {\n                    ^\nalloc.c:90:17: warning: unused parameter 'ptr' [-Wunused-parameter]\nvoid free(void *ptr) {\n                ^\nalloc.c:139:21: warning: unused parameter 'ptr' [-Wunused-parameter]\nvoid *realloc(void *ptr, size_t size) {\n                    ^\nalloc.c:139:33: warning: unused parameter 'size' [-Wunused-parameter]\nvoid *realloc(void *ptr, size_t size) {\n                                ^\n6 warnings and 1 error generated.\nmake: *** [alloc.so] Error 1\n",
+        "ptsPossible": 1.0,
+        "description": "./mcontest testers_exe/tester-3 (timeout 60 seconds)",
+        "ptsEarned": 0.0,
+        "name": "tester-3"
+      },
+      {
+        "log": "Trying to compile your code...\nFAILED TO COMPILE!\nalloc.c:41:1: error: unknown type name 'external'; did you mean 'extern'?\nexternal block* head;\n^~~~~~~~\nextern\nalloc.c:43:21: warning: unused parameter 'num' [-Wunused-parameter]\nvoid *calloc(size_t num, size_t size) {\n                    ^\nalloc.c:43:33: warning: unused parameter 'size' [-Wunused-parameter]\nvoid *calloc(size_t num, size_t size) {\n                                ^\nalloc.c:69:21: warning: unused parameter 'size' [-Wunused-parameter]\nvoid *malloc(size_t size) {\n                    ^\nalloc.c:90:17: warning: unused parameter 'ptr' [-Wunused-parameter]\nvoid free(void *ptr) {\n                ^\nalloc.c:139:21: warning: unused parameter 'ptr' [-Wunused-parameter]\nvoid *realloc(void *ptr, size_t size) {\n                    ^\nalloc.c:139:33: warning: unused parameter 'size' [-Wunused-parameter]\nvoid *realloc(void *ptr, size_t size) {\n                                ^\n6 warnings and 1 error generated.\nmake: *** [alloc.so] Error 1\n",
+        "ptsPossible": 1.0,
+        "description": "./mcontest testers_exe/tester-4 (timeout 60 seconds)",
+        "ptsEarned": 0.0,
+        "name": "tester-4"
+      },
+      {
+        "log": "Trying to compile your code...\nFAILED TO COMPILE!\nalloc.c:41:1: error: unknown type name 'external'; did you mean 'extern'?\nexternal block* head;\n^~~~~~~~\nextern\nalloc.c:43:21: warning: unused parameter 'num' [-Wunused-parameter]\nvoid *calloc(size_t num, size_t size) {\n                    ^\nalloc.c:43:33: warning: unused parameter 'size' [-Wunused-parameter]\nvoid *calloc(size_t num, size_t size) {\n                                ^\nalloc.c:69:21: warning: unused parameter 'size' [-Wunused-parameter]\nvoid *malloc(size_t size) {\n                    ^\nalloc.c:90:17: warning: unused parameter 'ptr' [-Wunused-parameter]\nvoid free(void *ptr) {\n                ^\nalloc.c:139:21: warning: unused parameter 'ptr' [-Wunused-parameter]\nvoid *realloc(void *ptr, size_t size) {\n                    ^\nalloc.c:139:33: warning: unused parameter 'size' [-Wunused-parameter]\nvoid *realloc(void *ptr, size_t size) {\n                                ^\n6 warnings and 1 error generated.\nmake: *** [alloc.so] Error 1\n",
+        "ptsPossible": 1.0,
+        "description": "./mcontest testers_exe/tester-5 (timeout 60 seconds)",
+        "ptsEarned": 0.0,
+        "name": "tester-5"
+      },
+      {
+        "log": "Trying to compile your code...\nFAILED TO COMPILE!\nalloc.c:41:1: error: unknown type name 'external'; did you mean 'extern'?\nexternal block* head;\n^~~~~~~~\nextern\nalloc.c:43:21: warning: unused parameter 'num' [-Wunused-parameter]\nvoid *calloc(size_t num, size_t size) {\n                    ^\nalloc.c:43:33: warning: unused parameter 'size' [-Wunused-parameter]\nvoid *calloc(size_t num, size_t size) {\n                                ^\nalloc.c:69:21: warning: unused parameter 'size' [-Wunused-parameter]\nvoid *malloc(size_t size) {\n                    ^\nalloc.c:90:17: warning: unused parameter 'ptr' [-Wunused-parameter]\nvoid free(void *ptr) {\n                ^\nalloc.c:139:21: warning: unused parameter 'ptr' [-Wunused-parameter]\nvoid *realloc(void *ptr, size_t size) {\n                    ^\nalloc.c:139:33: warning: unused parameter 'size' [-Wunused-parameter]\nvoid *realloc(void *ptr, size_t size) {\n                                ^\n6 warnings and 1 error generated.\nmake: *** [alloc.so] Error 1\n",
+        "ptsPossible": 1.0,
+        "description": "./mcontest testers_exe/tester-6 (timeout 60 seconds)",
+        "ptsEarned": 0.0,
+        "name": "tester-6"
+      }
+    ],
+    "timestamp": "2018-02-24 20:55:06.561325"
+  },
+  {
+    "revision": "54854",
+    "checksum": "f017015d2f9d131e6c898cce81c042fa797d2d72  alloc.c\nc26891212917f80235ca7657ad975e8f2788f484  nickname.txt\n",
+    "testcases": [
+      {
+        "log": "Trying to compile your code...\nSuccessfully compiled your code.\nFailed the test\n\nstdout:\n[mcontest]: STATUS: FAILED. SIGNAL=(11)\n[mcontest]: MAX: 36\n[mcontest]: AVG: 36.000000\n[mcontest]: TIME: 0.000000\n\n\nstderr:\n",
+        "ptsPossible": 1.0,
+        "description": "./mcontest testers_exe/tester-1 (timeout 60 seconds)",
+        "ptsEarned": 0.0,
+        "name": "tester-1"
+      },
+      {
+        "log": "Trying to compile your code...\nSuccessfully compiled your code.\nFailed the test\n\nstdout:\n[mcontest]: STATUS: FAILED. SIGNAL=(15)\n[mcontest]: MAX: 46218789\n[mcontest]: AVG: 44080575.857937\n[mcontest]: TIME: 29.992000\n\n\nstderr:\n",
+        "ptsPossible": 1.0,
+        "description": "./mcontest testers_exe/tester-2 (timeout 60 seconds)",
+        "ptsEarned": 0.0,
+        "name": "tester-2"
+      },
+      {
+        "log": "Trying to compile your code...\nSuccessfully compiled your code.\nFailed the test\n\nstdout:\n[mcontest]: STATUS: FAILED. SIGNAL=(11)\n[mcontest]: MAX: 1048641\n[mcontest]: AVG: 699105.000000\n[mcontest]: TIME: 0.000000\n\n\nstderr:\n",
+        "ptsPossible": 1.0,
+        "description": "./mcontest testers_exe/tester-3 (timeout 60 seconds)",
+        "ptsEarned": 0.0,
+        "name": "tester-3"
+      },
+      {
+        "log": "Trying to compile your code...\nSuccessfully compiled your code.\nFailed the test\n\nstdout:\n[mcontest]: STATUS: FAILED=(91)\n[mcontest]: MAX: 1073741889\n[mcontest]: AVG: 536870961.000000\n[mcontest]: TIME: 0.000000\n\n\nstderr:\nData allocated outside of heap.\nCalloc/Malloc/Realloc returns a ptr: (nil) with allocated size: 268435456.\nYour heap starts from 0x174a000, ends at 0xa174a000\n",
+        "ptsPossible": 1.0,
+        "description": "./mcontest testers_exe/tester-4 (timeout 60 seconds)",
+        "ptsEarned": 0.0,
+        "name": "tester-4"
+      },
+      {
+        "log": "Trying to compile your code...\nSuccessfully compiled your code.\nFailed the test\n\nstdout:\n[mcontest]: STATUS: FAILED. SIGNAL=(11)\n[mcontest]: MAX: 4810967\n[mcontest]: AVG: 3524425.800000\n[mcontest]: TIME: 0.000000\n\n\nstderr:\n",
+        "ptsPossible": 1.0,
+        "description": "./mcontest testers_exe/tester-5 (timeout 60 seconds)",
+        "ptsEarned": 0.0,
+        "name": "tester-5"
+      },
+      {
+        "log": "Trying to compile your code...\nSuccessfully compiled your code.\nFailed the test\n\nstdout:\n[mcontest]: STATUS: FAILED=(91)\n[mcontest]: MAX: 1073741889\n[mcontest]: AVG: 536870961.000000\n[mcontest]: TIME: 0.252000\n\n\nstderr:\nData allocated outside of heap.\nCalloc/Malloc/Realloc returns a ptr: (nil) with allocated size: 357913941.\nYour heap starts from 0x25f2000, ends at 0xa25f2000\n",
+        "ptsPossible": 1.0,
+        "description": "./mcontest testers_exe/tester-6 (timeout 60 seconds)",
+        "ptsEarned": 0.0,
+        "name": "tester-6"
+      }
+    ],
+    "timestamp": "2018-02-24 23:23:24.550774"
+  },
+  {
+    "revision": "56062",
+    "checksum": "e557b06e7784aaec869695d19e88fd2f75af0e88  alloc.c\nc26891212917f80235ca7657ad975e8f2788f484  nickname.txt\n",
+    "testcases": [
+      {
+        "ptsPossible": 1.0,
+        "log": "Trying to compile your code...\nSuccessfully compiled your code.\n\nstdout:\n[mcontest]: STATUS: OK\n[mcontest]: MAX: 36\n[mcontest]: AVG: 36.000000\n[mcontest]: TIME: 0.708000\n\n\nstderr:\nMemory was allocated, used, and freed!\n",
+        "description": "./mcontest testers_exe/tester-1 (timeout 60 seconds)",
+        "ptsEarned": 1.0,
+        "name": "tester-1"
+      },
+      {
+        "ptsPossible": 1.0,
+        "log": "Trying to compile your code...\nSuccessfully compiled your code.\n\nstdout:\n[mcontest]: STATUS: OK\n[mcontest]: MAX: 230686785\n[mcontest]: AVG: 183500847.500002\n[mcontest]: TIME: 3.164000\n\n\nstderr:\nMemory was allocated, used, and freed!\n",
+        "description": "./mcontest testers_exe/tester-2 (timeout 60 seconds)",
+        "ptsEarned": 1.0,
+        "name": "tester-2"
+      },
+      {
+        "ptsPossible": 1.0,
+        "log": "Trying to compile your code...\nSuccessfully compiled your code.\n\nstdout:\n[mcontest]: STATUS: OK\n[mcontest]: MAX: 1048641\n[mcontest]: AVG: 1048553.623281\n[mcontest]: TIME: 0.320000\n\n\nstderr:\nMemory was allocated and freed!\n",
+        "description": "./mcontest testers_exe/tester-3 (timeout 60 seconds)",
+        "ptsEarned": 1.0,
+        "name": "tester-3"
+      },
+      {
+        "ptsPossible": 1.0,
+        "log": "Trying to compile your code...\nSuccessfully compiled your code.\n\nstdout:\n[mcontest]: STATUS: OK\n[mcontest]: MAX: 1610618593\n[mcontest]: AVG: 1610617901.736644\n[mcontest]: TIME: 1.824000\n\n\nstderr:\nMemory was allocated, used, and freed!\n",
+        "description": "./mcontest testers_exe/tester-4 (timeout 60 seconds)",
+        "ptsEarned": 1.0,
+        "name": "tester-4"
+      },
+      {
+        "ptsPossible": 1.0,
+        "log": "Trying to compile your code...\nSuccessfully compiled your code.\nFailed the test\n\nstdout:\n[mcontest]: STATUS: FAILED. SIGNAL=(11)\n[mcontest]: MAX: 7084719\n[mcontest]: AVG: 5945642.737345\n[mcontest]: TIME: 0.004000\n\n\nstderr:\n",
+        "description": "./mcontest testers_exe/tester-5 (timeout 60 seconds)",
+        "ptsEarned": 0.0,
+        "name": "tester-5"
+      },
+      {
+        "ptsPossible": 1.0,
+        "log": "Trying to compile your code...\nSuccessfully compiled your code.\n\nstdout:\n[mcontest]: STATUS: OK\n[mcontest]: MAX: 1789569835\n[mcontest]: AVG: 1723493410.184615\n[mcontest]: TIME: 9.776000\n\n\nstderr:\nMemory was allocated and freed!\n",
+        "description": "./mcontest testers_exe/tester-6 (timeout 60 seconds)",
+        "ptsEarned": 1.0,
+        "name": "tester-6"
+      }
+    ],
+    "timestamp": "2018-02-25 22:00:49.080823"
+  },
+  {
+    "revision": "56819",
+    "checksum": "e557b06e7784aaec869695d19e88fd2f75af0e88  alloc.c\nc26891212917f80235ca7657ad975e8f2788f484  nickname.txt\n",
+    "testcases": [
+      {
+        "ptsPossible": 1.0,
+        "log": "Trying to compile your code...\nSuccessfully compiled your code.\n\nstdout:\n[mcontest]: STATUS: OK\n[mcontest]: MAX: 36\n[mcontest]: AVG: 36.000000\n[mcontest]: TIME: 0.704000\n\n\nstderr:\nMemory was allocated, used, and freed!\n",
+        "description": "./mcontest testers_exe/tester-1 (timeout 60 seconds)",
+        "ptsEarned": 1.0,
+        "name": "tester-1"
+      },
+      {
+        "ptsPossible": 1.0,
+        "log": "Trying to compile your code...\nSuccessfully compiled your code.\n\nstdout:\n[mcontest]: STATUS: OK\n[mcontest]: MAX: 230686785\n[mcontest]: AVG: 183500847.500002\n[mcontest]: TIME: 3.188000\n\n\nstderr:\nMemory was allocated, used, and freed!\n",
+        "description": "./mcontest testers_exe/tester-2 (timeout 60 seconds)",
+        "ptsEarned": 1.0,
+        "name": "tester-2"
+      },
+      {
+        "ptsPossible": 1.0,
+        "log": "Trying to compile your code...\nSuccessfully compiled your code.\n\nstdout:\n[mcontest]: STATUS: OK\n[mcontest]: MAX: 1048641\n[mcontest]: AVG: 1048553.623281\n[mcontest]: TIME: 0.320000\n\n\nstderr:\nMemory was allocated and freed!\n",
+        "description": "./mcontest testers_exe/tester-3 (timeout 60 seconds)",
+        "ptsEarned": 1.0,
+        "name": "tester-3"
+      },
+      {
+        "ptsPossible": 1.0,
+        "log": "Trying to compile your code...\nSuccessfully compiled your code.\n\nstdout:\n[mcontest]: STATUS: OK\n[mcontest]: MAX: 1610618593\n[mcontest]: AVG: 1610617901.736644\n[mcontest]: TIME: 1.848000\n\n\nstderr:\nMemory was allocated, used, and freed!\n",
+        "description": "./mcontest testers_exe/tester-4 (timeout 60 seconds)",
+        "ptsEarned": 1.0,
+        "name": "tester-4"
+      },
+      {
+        "ptsPossible": 1.0,
+        "log": "Trying to compile your code...\nSuccessfully compiled your code.\nFailed the test\n\nstdout:\n[mcontest]: STATUS: FAILED. SIGNAL=(11)\n[mcontest]: MAX: 12136585\n[mcontest]: AVG: 8323903.669684\n[mcontest]: TIME: 0.012000\n\n\nstderr:\n",
+        "description": "./mcontest testers_exe/tester-5 (timeout 60 seconds)",
+        "ptsEarned": 0.0,
+        "name": "tester-5"
+      },
+      {
+        "ptsPossible": 1.0,
+        "log": "Trying to compile your code...\nSuccessfully compiled your code.\n\nstdout:\n[mcontest]: STATUS: OK\n[mcontest]: MAX: 1789569835\n[mcontest]: AVG: 1723493410.184615\n[mcontest]: TIME: 9.744000\n\n\nstderr:\nMemory was allocated and freed!\n",
+        "description": "./mcontest testers_exe/tester-6 (timeout 60 seconds)",
+        "ptsEarned": 1.0,
+        "name": "tester-6"
+      }
+    ],
+    "timestamp": "2018-02-26 12:00:49.759614"
+  },
+  {
+    "revision": "58614",
+    "checksum": "e557b06e7784aaec869695d19e88fd2f75af0e88  alloc.c\nc26891212917f80235ca7657ad975e8f2788f484  nickname.txt\n",
+    "testcases": [
+      {
+        "ptsPossible": 1.0,
+        "log": "Trying to compile your code...\nSuccessfully compiled your code.\n\nstdout:\n[mcontest]: STATUS: OK\n[mcontest]: MAX: 36\n[mcontest]: AVG: 36.000000\n[mcontest]: TIME: 0.712000\n\n\nstderr:\nMemory was allocated, used, and freed!\n",
+        "description": "./mcontest testers_exe/tester-1 (timeout 60 seconds)",
+        "ptsEarned": 1.0,
+        "name": "tester-1"
+      },
+      {
+        "ptsPossible": 1.0,
+        "log": "Trying to compile your code...\nSuccessfully compiled your code.\n\nstdout:\n[mcontest]: STATUS: OK\n[mcontest]: MAX: 230686785\n[mcontest]: AVG: 183500847.500002\n[mcontest]: TIME: 3.228000\n\n\nstderr:\nMemory was allocated, used, and freed!\n",
+        "description": "./mcontest testers_exe/tester-2 (timeout 60 seconds)",
+        "ptsEarned": 1.0,
+        "name": "tester-2"
+      },
+      {
+        "ptsPossible": 1.0,
+        "log": "Trying to compile your code...\nSuccessfully compiled your code.\n\nstdout:\n[mcontest]: STATUS: OK\n[mcontest]: MAX: 1048641\n[mcontest]: AVG: 1048553.623281\n[mcontest]: TIME: 0.320000\n\n\nstderr:\nMemory was allocated and freed!\n",
+        "description": "./mcontest testers_exe/tester-3 (timeout 60 seconds)",
+        "ptsEarned": 1.0,
+        "name": "tester-3"
+      },
+      {
+        "ptsPossible": 1.0,
+        "log": "Trying to compile your code...\nSuccessfully compiled your code.\n\nstdout:\n[mcontest]: STATUS: OK\n[mcontest]: MAX: 1610618593\n[mcontest]: AVG: 1610617901.736644\n[mcontest]: TIME: 1.852000\n\n\nstderr:\nMemory was allocated, used, and freed!\n",
+        "description": "./mcontest testers_exe/tester-4 (timeout 60 seconds)",
+        "ptsEarned": 1.0,
+        "name": "tester-4"
+      },
+      {
+        "ptsPossible": 1.0,
+        "log": "Trying to compile your code...\nSuccessfully compiled your code.\nFailed the test\n\nstdout:\n[mcontest]: STATUS: FAILED. SIGNAL=(11)\n[mcontest]: MAX: 6808064\n[mcontest]: AVG: 5785651.989762\n[mcontest]: TIME: 0.000000\n\n\nstderr:\n",
+        "description": "./mcontest testers_exe/tester-5 (timeout 60 seconds)",
+        "ptsEarned": 0.0,
+        "name": "tester-5"
+      },
+      {
+        "ptsPossible": 1.0,
+        "log": "Trying to compile your code...\nSuccessfully compiled your code.\n\nstdout:\n[mcontest]: STATUS: OK\n[mcontest]: MAX: 1789569835\n[mcontest]: AVG: 1723493410.184615\n[mcontest]: TIME: 9.732000\n\n\nstderr:\nMemory was allocated and freed!\n",
+        "description": "./mcontest testers_exe/tester-6 (timeout 60 seconds)",
+        "ptsEarned": 1.0,
+        "name": "tester-6"
+      }
+    ],
+    "timestamp": "2018-02-27 00:00:49.221643"
+  },
+  {
+    "timestamp": "2018-02-28 22:02:03.155479",
+    "revision": "60396",
+    "checksum": "e557b06e7784aaec869695d19e88fd2f75af0e88  alloc.c\nc26891212917f80235ca7657ad975e8f2788f484  nickname.txt\n",
+    "testcases": [
+      {
+        "ptsPossible": 1.0,
+        "log": "Trying to compile your code...\nSuccessfully compiled your code.\n\nstdout:\n[mcontest]: STATUS: OK\n[mcontest]: MAX: 36\n[mcontest]: AVG: 36.000000\n[mcontest]: TIME: 0.708000\n\n\nstderr:\nMemory was allocated, used, and freed!\n",
+        "description": "DEFAULT DESCRIPTION",
+        "ptsEarned": 1.0,
+        "name": "tester-1"
+      },
+      {
+        "ptsPossible": 1.0,
+        "log": "Trying to compile your code...\nSuccessfully compiled your code.\n\nstdout:\n[mcontest]: STATUS: OK\n[mcontest]: MAX: 230686785\n[mcontest]: AVG: 183500847.500002\n[mcontest]: TIME: 3.368000\n\n\nstderr:\nMemory was allocated, used, and freed!\n",
+        "description": "DEFAULT DESCRIPTION",
+        "ptsEarned": 1.0,
+        "name": "tester-2"
+      },
+      {
+        "ptsPossible": 1.0,
+        "log": "Trying to compile your code...\nSuccessfully compiled your code.\n\nstdout:\n[mcontest]: STATUS: OK\n[mcontest]: MAX: 1048641\n[mcontest]: AVG: 1048553.623281\n[mcontest]: TIME: 0.320000\n\n\nstderr:\nMemory was allocated and freed!\n",
+        "description": "DEFAULT DESCRIPTION",
+        "ptsEarned": 1.0,
+        "name": "tester-3"
+      },
+      {
+        "ptsPossible": 1.0,
+        "log": "Trying to compile your code...\nSuccessfully compiled your code.\n\nstdout:\n[mcontest]: STATUS: OK\n[mcontest]: MAX: 1610618593\n[mcontest]: AVG: 1610617901.736644\n[mcontest]: TIME: 1.812000\n\n\nstderr:\nMemory was allocated, used, and freed!\n",
+        "description": "DEFAULT DESCRIPTION",
+        "ptsEarned": 1.0,
+        "name": "tester-4"
+      },
+      {
+        "ptsPossible": 1.0,
+        "log": "Trying to compile your code...\nSuccessfully compiled your code.\nFailed the test\n\nstdout:\n[mcontest]: STATUS: FAILED. SIGNAL=(11)\n[mcontest]: MAX: 6781088\n[mcontest]: AVG: 5790948.423172\n[mcontest]: TIME: 0.004000\n\n\nstderr:\n",
+        "description": "DEFAULT DESCRIPTION",
+        "ptsEarned": 0.0,
+        "name": "tester-5"
+      },
+      {
+        "ptsPossible": 1.0,
+        "log": "Trying to compile your code...\nSuccessfully compiled your code.\n\nstdout:\n[mcontest]: STATUS: OK\n[mcontest]: MAX: 1789569835\n[mcontest]: AVG: 1723493410.184615\n[mcontest]: TIME: 9.716000\n\n\nstderr:\nMemory was allocated and freed!\n",
+        "description": "DEFAULT DESCRIPTION",
+        "ptsEarned": 1.0,
+        "name": "tester-6"
+      },
+      {
+        "ptsPossible": 1.0,
+        "log": "Trying to compile your code...\nSuccessfully compiled your code.\nFailed the test\n\nstdout:\n[mcontest]: STATUS: FAILED=(91)\n[mcontest]: MAX: 1789569835\n[mcontest]: AVG: 1536924681.294118\n[mcontest]: TIME: 1.992000\n\n\nstderr:\nData allocated outside of heap.\nCalloc/Malloc/Realloc returns a ptr: 0x6b223b4b with allocated size: 1073741824.\nYour heap starts from 0x758000, ends at 0xa0758000\n",
+        "description": "DEFAULT DESCRIPTION",
+        "ptsEarned": 0.0,
+        "name": "tester-7"
+      },
+      {
+        "ptsPossible": 1.0,
+        "log": "Trying to compile your code...\nSuccessfully compiled your code.\nFailed the test\n\nstdout:\n[mcontest]: STATUS: FAILED. SIGNAL=(11)\n[mcontest]: MAX: 2028179193\n[mcontest]: AVG: 1893644147.127660\n[mcontest]: TIME: 5.748000\n\n\nstderr:\n",
+        "description": "DEFAULT DESCRIPTION",
+        "ptsEarned": 0.0,
+        "name": "tester-8"
+      },
+      {
+        "ptsPossible": 1.0,
+        "log": "Trying to compile your code...\nSuccessfully compiled your code.\nFailed the test\n\nstdout:\n[mcontest]: STATUS: FAILED. SIGNAL=(11)\n[mcontest]: MAX: 1717378\n[mcontest]: AVG: 1609807.477833\n[mcontest]: TIME: 0.000000\n\n\nstderr:\n",
+        "description": "DEFAULT DESCRIPTION",
+        "ptsEarned": 0.0,
+        "name": "tester-9"
+      },
+      {
+        "ptsPossible": 1.0,
+        "log": "Trying to compile your code...\nSuccessfully compiled your code.\n\nstdout:\n[mcontest]: STATUS: OK\n[mcontest]: MAX: 402653314\n[mcontest]: AVG: 402650853.345154\n[mcontest]: TIME: 0.036000\n\n\nstderr:\nMemory was allocated, used, and freed!\n",
+        "description": "DEFAULT DESCRIPTION",
+        "ptsEarned": 1.0,
+        "name": "tester-10"
+      },
+      {
+        "ptsPossible": 1.0,
+        "log": "Trying to compile your code...\nSuccessfully compiled your code.\n\nstdout:\n[mcontest]: STATUS: OK\n[mcontest]: MAX: 2147483714\n[mcontest]: AVG: 2147447923.201830\n[mcontest]: TIME: 0.024000\n\n\nstderr:\nMemory was allocated, used, and freed!\n",
+        "description": "DEFAULT DESCRIPTION",
+        "ptsEarned": 1.0,
+        "name": "tester-11"
+      },
+      {
+        "ptsPossible": 1.0,
+        "log": "Trying to compile your code...\nSuccessfully compiled your code.\n\nstdout:\n[mcontest]: STATUS: OK\n[mcontest]: MAX: 1073741890\n[mcontest]: AVG: 1061942528.934066\n[mcontest]: TIME: 12.940000\n\n\nstderr:\nMemory was allocated, used, and freed!\n",
+        "description": "DEFAULT DESCRIPTION",
+        "ptsEarned": 1.0,
+        "name": "tester-12"
+      }
+    ]
+  },
+  {
+    "revision": "61249",
+    "checksum": "e557b06e7784aaec869695d19e88fd2f75af0e88  alloc.c\nc26891212917f80235ca7657ad975e8f2788f484  nickname.txt\n",
+    "testcases": [
+      {
+        "ptsPossible": 1.0,
+        "log": "Trying to compile your code...\nSuccessfully compiled your code.\n\nstdout:\n[mcontest]: STATUS: OK\n[mcontest]: MAX: 36\n[mcontest]: AVG: 36.000000\n[mcontest]: TIME: 0.720000\n\n\nstderr:\nMemory was allocated, used, and freed!\n",
+        "description": "DEFAULT DESCRIPTION",
+        "ptsEarned": 1.0,
+        "name": "tester-1"
+      },
+      {
+        "ptsPossible": 1.0,
+        "log": "Trying to compile your code...\nSuccessfully compiled your code.\n\nstdout:\n[mcontest]: STATUS: OK\n[mcontest]: MAX: 230686785\n[mcontest]: AVG: 183500847.500002\n[mcontest]: TIME: 3.212000\n\n\nstderr:\nMemory was allocated, used, and freed!\n",
+        "description": "DEFAULT DESCRIPTION",
+        "ptsEarned": 1.0,
+        "name": "tester-2"
+      },
+      {
+        "ptsPossible": 1.0,
+        "log": "Trying to compile your code...\nSuccessfully compiled your code.\n\nstdout:\n[mcontest]: STATUS: OK\n[mcontest]: MAX: 1048641\n[mcontest]: AVG: 1048553.623281\n[mcontest]: TIME: 0.320000\n\n\nstderr:\nMemory was allocated and freed!\n",
+        "description": "DEFAULT DESCRIPTION",
+        "ptsEarned": 1.0,
+        "name": "tester-3"
+      },
+      {
+        "ptsPossible": 1.0,
+        "log": "Trying to compile your code...\nSuccessfully compiled your code.\n\nstdout:\n[mcontest]: STATUS: OK\n[mcontest]: MAX: 1610618593\n[mcontest]: AVG: 1610617901.736644\n[mcontest]: TIME: 1.840000\n\n\nstderr:\nMemory was allocated, used, and freed!\n",
+        "description": "DEFAULT DESCRIPTION",
+        "ptsEarned": 1.0,
+        "name": "tester-4"
+      },
+      {
+        "ptsPossible": 1.0,
+        "log": "Trying to compile your code...\nSuccessfully compiled your code.\nFailed the test\n\nstdout:\n[mcontest]: STATUS: FAILED. SIGNAL=(11)\n[mcontest]: MAX: 12815555\n[mcontest]: AVG: 9169412.019925\n[mcontest]: TIME: 0.012000\n\n\nstderr:\n",
+        "description": "DEFAULT DESCRIPTION",
+        "ptsEarned": 0.0,
+        "name": "tester-5"
+      },
+      {
+        "ptsPossible": 1.0,
+        "log": "Trying to compile your code...\nSuccessfully compiled your code.\n\nstdout:\n[mcontest]: STATUS: OK\n[mcontest]: MAX: 1789569835\n[mcontest]: AVG: 1723493410.184615\n[mcontest]: TIME: 9.752000\n\n\nstderr:\nMemory was allocated and freed!\n",
+        "description": "DEFAULT DESCRIPTION",
+        "ptsEarned": 1.0,
+        "name": "tester-6"
+      },
+      {
+        "ptsPossible": 1.0,
+        "log": "Trying to compile your code...\nSuccessfully compiled your code.\nFailed the test\n\nstdout:\n[mcontest]: STATUS: FAILED=(91)\n[mcontest]: MAX: 1789569835\n[mcontest]: AVG: 1536924681.294118\n[mcontest]: TIME: 1.984000\n\n\nstderr:\nData allocated outside of heap.\nCalloc/Malloc/Realloc returns a ptr: 0x6c981b4b with allocated size: 1073741824.\nYour heap starts from 0x1eb6000, ends at 0xa1eb6000\n",
+        "description": "DEFAULT DESCRIPTION",
+        "ptsEarned": 0.0,
+        "name": "tester-7"
+      },
+      {
+        "ptsPossible": 1.0,
+        "log": "Trying to compile your code...\nSuccessfully compiled your code.\nFailed the test\n\nstdout:\n[mcontest]: STATUS: FAILED. SIGNAL=(11)\n[mcontest]: MAX: 2028179193\n[mcontest]: AVG: 1893644147.127660\n[mcontest]: TIME: 5.768000\n\n\nstderr:\n",
+        "description": "DEFAULT DESCRIPTION",
+        "ptsEarned": 0.0,
+        "name": "tester-8"
+      },
+      {
+        "ptsPossible": 1.0,
+        "log": "Trying to compile your code...\nSuccessfully compiled your code.\nFailed the test\n\nstdout:\n[mcontest]: STATUS: FAILED. SIGNAL=(11)\n[mcontest]: MAX: 2009092\n[mcontest]: AVG: 1563294.361011\n[mcontest]: TIME: 0.000000\n\n\nstderr:\n",
+        "description": "DEFAULT DESCRIPTION",
+        "ptsEarned": 0.0,
+        "name": "tester-9"
+      },
+      {
+        "ptsPossible": 1.0,
+        "log": "Trying to compile your code...\nSuccessfully compiled your code.\n\nstdout:\n[mcontest]: STATUS: OK\n[mcontest]: MAX: 402653314\n[mcontest]: AVG: 402650853.345154\n[mcontest]: TIME: 0.032000\n\n\nstderr:\nMemory was allocated, used, and freed!\n",
+        "description": "DEFAULT DESCRIPTION",
+        "ptsEarned": 1.0,
+        "name": "tester-10"
+      },
+      {
+        "ptsPossible": 1.0,
+        "log": "Trying to compile your code...\nSuccessfully compiled your code.\n\nstdout:\n[mcontest]: STATUS: OK\n[mcontest]: MAX: 2147483714\n[mcontest]: AVG: 2147447923.201830\n[mcontest]: TIME: 0.024000\n\n\nstderr:\nMemory was allocated, used, and freed!\n",
+        "description": "DEFAULT DESCRIPTION",
+        "ptsEarned": 1.0,
+        "name": "tester-11"
+      },
+      {
+        "ptsPossible": 1.0,
+        "log": "Trying to compile your code...\nSuccessfully compiled your code.\n\nstdout:\n[mcontest]: STATUS: OK\n[mcontest]: MAX: 1073741890\n[mcontest]: AVG: 1061942528.934066\n[mcontest]: TIME: 12.868000\n\n\nstderr:\nMemory was allocated, used, and freed!\n",
+        "description": "DEFAULT DESCRIPTION",
+        "ptsEarned": 1.0,
+        "name": "tester-12"
+      }
+    ],
+    "timestamp": "2018-03-02 22:02:02.069875"
+  },
+  {
+    "revision": "61626",
+    "checksum": "bd40b7ed0fbcdb92b2ac544ba13f38d7520aa950  alloc.c\nc26891212917f80235ca7657ad975e8f2788f484  nickname.txt\n",
+    "testcases": [
+      {
+        "ptsPossible": 1.0,
+        "log": "Trying to compile your code...\nFAILED TO COMPILE!\nalloc.c:143:13: error: implicit declaration of function 'check_connect' is invalid in C99 [-Werror,-Wimplicit-function-declaration]\n        int flag = check_connect(ptr,size);\n                   ^\n1 error generated.\nmake: *** [alloc.so] Error 1\n",
+        "description": "DEFAULT DESCRIPTION",
+        "ptsEarned": 0.0,
+        "name": "tester-1"
+      },
+      {
+        "ptsPossible": 1.0,
+        "log": "Trying to compile your code...\nFAILED TO COMPILE!\nalloc.c:143:13: error: implicit declaration of function 'check_connect' is invalid in C99 [-Werror,-Wimplicit-function-declaration]\n        int flag = check_connect(ptr,size);\n                   ^\n1 error generated.\nmake: *** [alloc.so] Error 1\n",
+        "description": "DEFAULT DESCRIPTION",
+        "ptsEarned": 0.0,
+        "name": "tester-2"
+      },
+      {
+        "ptsPossible": 1.0,
+        "log": "Trying to compile your code...\nFAILED TO COMPILE!\nalloc.c:143:13: error: implicit declaration of function 'check_connect' is invalid in C99 [-Werror,-Wimplicit-function-declaration]\n        int flag = check_connect(ptr,size);\n                   ^\n1 error generated.\nmake: *** [alloc.so] Error 1\n",
+        "description": "DEFAULT DESCRIPTION",
+        "ptsEarned": 0.0,
+        "name": "tester-3"
+      },
+      {
+        "ptsPossible": 1.0,
+        "log": "Trying to compile your code...\nFAILED TO COMPILE!\nalloc.c:143:13: error: implicit declaration of function 'check_connect' is invalid in C99 [-Werror,-Wimplicit-function-declaration]\n        int flag = check_connect(ptr,size);\n                   ^\n1 error generated.\nmake: *** [alloc.so] Error 1\n",
+        "description": "DEFAULT DESCRIPTION",
+        "ptsEarned": 0.0,
+        "name": "tester-4"
+      },
+      {
+        "ptsPossible": 1.0,
+        "log": "Trying to compile your code...\nFAILED TO COMPILE!\nalloc.c:143:13: error: implicit declaration of function 'check_connect' is invalid in C99 [-Werror,-Wimplicit-function-declaration]\n        int flag = check_connect(ptr,size);\n                   ^\n1 error generated.\nmake: *** [alloc.so] Error 1\n",
+        "description": "DEFAULT DESCRIPTION",
+        "ptsEarned": 0.0,
+        "name": "tester-5"
+      },
+      {
+        "ptsPossible": 1.0,
+        "log": "Trying to compile your code...\nFAILED TO COMPILE!\nalloc.c:143:13: error: implicit declaration of function 'check_connect' is invalid in C99 [-Werror,-Wimplicit-function-declaration]\n        int flag = check_connect(ptr,size);\n                   ^\n1 error generated.\nmake: *** [alloc.so] Error 1\n",
+        "description": "DEFAULT DESCRIPTION",
+        "ptsEarned": 0.0,
+        "name": "tester-6"
+      },
+      {
+        "ptsPossible": 1.0,
+        "log": "Trying to compile your code...\nFAILED TO COMPILE!\nalloc.c:143:13: error: implicit declaration of function 'check_connect' is invalid in C99 [-Werror,-Wimplicit-function-declaration]\n        int flag = check_connect(ptr,size);\n                   ^\n1 error generated.\nmake: *** [alloc.so] Error 1\n",
+        "description": "DEFAULT DESCRIPTION",
+        "ptsEarned": 0.0,
+        "name": "tester-7"
+      },
+      {
+        "ptsPossible": 1.0,
+        "log": "Trying to compile your code...\nFAILED TO COMPILE!\nalloc.c:143:13: error: implicit declaration of function 'check_connect' is invalid in C99 [-Werror,-Wimplicit-function-declaration]\n        int flag = check_connect(ptr,size);\n                   ^\n1 error generated.\nmake: *** [alloc.so] Error 1\n",
+        "description": "DEFAULT DESCRIPTION",
+        "ptsEarned": 0.0,
+        "name": "tester-8"
+      },
+      {
+        "ptsPossible": 1.0,
+        "log": "Trying to compile your code...\nFAILED TO COMPILE!\nalloc.c:143:13: error: implicit declaration of function 'check_connect' is invalid in C99 [-Werror,-Wimplicit-function-declaration]\n        int flag = check_connect(ptr,size);\n                   ^\n1 error generated.\nmake: *** [alloc.so] Error 1\n",
+        "description": "DEFAULT DESCRIPTION",
+        "ptsEarned": 0.0,
+        "name": "tester-9"
+      },
+      {
+        "ptsPossible": 1.0,
+        "log": "Trying to compile your code...\nFAILED TO COMPILE!\nalloc.c:143:13: error: implicit declaration of function 'check_connect' is invalid in C99 [-Werror,-Wimplicit-function-declaration]\n        int flag = check_connect(ptr,size);\n                   ^\n1 error generated.\nmake: *** [alloc.so] Error 1\n",
+        "description": "DEFAULT DESCRIPTION",
+        "ptsEarned": 0.0,
+        "name": "tester-10"
+      },
+      {
+        "ptsPossible": 1.0,
+        "log": "Trying to compile your code...\nFAILED TO COMPILE!\nalloc.c:143:13: error: implicit declaration of function 'check_connect' is invalid in C99 [-Werror,-Wimplicit-function-declaration]\n        int flag = check_connect(ptr,size);\n                   ^\n1 error generated.\nmake: *** [alloc.so] Error 1\n",
+        "description": "DEFAULT DESCRIPTION",
+        "ptsEarned": 0.0,
+        "name": "tester-11"
+      },
+      {
+        "ptsPossible": 1.0,
+        "log": "Trying to compile your code...\nFAILED TO COMPILE!\nalloc.c:143:13: error: implicit declaration of function 'check_connect' is invalid in C99 [-Werror,-Wimplicit-function-declaration]\n        int flag = check_connect(ptr,size);\n                   ^\n1 error generated.\nmake: *** [alloc.so] Error 1\n",
+        "description": "DEFAULT DESCRIPTION",
+        "ptsEarned": 0.0,
+        "name": "tester-12"
+      }
+    ],
+    "timestamp": "2018-03-03 22:02:04.053894"
+  },
+  {
+    "revision": "64625",
+    "checksum": "55824f1b64987dedae3d5689e0a8bbc32adff3f4  alloc.c\nc26891212917f80235ca7657ad975e8f2788f484  nickname.txt\n",
+    "testcases": [
+      {
+        "ptsPossible": 1.0,
+        "log": "Trying to compile your code...\nSuccessfully compiled your code.\n\nstdout:\n[mcontest]: STATUS: OK\n[mcontest]: MAX: 28\n[mcontest]: AVG: 28.000000\n[mcontest]: TIME: 0.456000\n\n\nstderr:\nMemory was allocated, used, and freed!\n",
+        "description": "DEFAULT DESCRIPTION",
+        "ptsEarned": 1.0,
+        "name": "tester-1"
+      },
+      {
+        "ptsPossible": 1.0,
+        "log": "Trying to compile your code...\nSuccessfully compiled your code.\n\nstdout:\n[mcontest]: STATUS: OK\n[mcontest]: MAX: 188743729\n[mcontest]: AVG: 152043554.500002\n[mcontest]: TIME: 3.208000\n\n\nstderr:\nMemory was allocated, used, and freed!\n",
+        "description": "DEFAULT DESCRIPTION",
+        "ptsEarned": 1.0,
+        "name": "tester-2"
+      },
+      {
+        "ptsPossible": 1.0,
+        "log": "Trying to compile your code...\nSuccessfully compiled your code.\n\nstdout:\n[mcontest]: STATUS: OK\n[mcontest]: MAX: 1048625\n[mcontest]: AVG: 1048537.623948\n[mcontest]: TIME: 0.320000\n\n\nstderr:\nMemory was allocated and freed!\n",
+        "description": "DEFAULT DESCRIPTION",
+        "ptsEarned": 1.0,
+        "name": "tester-3"
+      },
+      {
+        "ptsPossible": 1.0,
+        "log": "Trying to compile your code...\nSuccessfully compiled your code.\n\nstdout:\n[mcontest]: STATUS: OK\n[mcontest]: MAX: 1610612217\n[mcontest]: AVG: 1610611320.999023\n[mcontest]: TIME: 0.156000\n\n\nstderr:\nMemory was allocated, used, and freed!\n",
+        "description": "DEFAULT DESCRIPTION",
+        "ptsEarned": 1.0,
+        "name": "tester-4"
+      },
+      {
+        "ptsPossible": 1.0,
+        "log": "Trying to compile your code...\nSuccessfully compiled your code.\n\nstdout:\n[mcontest]: STATUS: OK\n[mcontest]: MAX: 517437006\n[mcontest]: AVG: 265303232.180796\n[mcontest]: TIME: 0.756000\n\n\nstderr:\nMemory was allocated and freed!\n",
+        "description": "DEFAULT DESCRIPTION",
+        "ptsEarned": 1.0,
+        "name": "tester-5"
+      },
+      {
+        "ptsPossible": 1.0,
+        "log": "Trying to compile your code...\nSuccessfully compiled your code.\n\nstdout:\n[mcontest]: STATUS: OK\n[mcontest]: MAX: 1789569803\n[mcontest]: AVG: 1710033367.377778\n[mcontest]: TIME: 9.264000\n\n\nstderr:\nMemory was allocated and freed!\n",
+        "description": "DEFAULT DESCRIPTION",
+        "ptsEarned": 1.0,
+        "name": "tester-6"
+      },
+      {
+        "ptsPossible": 1.0,
+        "log": "Trying to compile your code...\nSuccessfully compiled your code.\n\nstdout:\n[mcontest]: STATUS: OK\n[mcontest]: MAX: 1789569803\n[mcontest]: AVG: 1666151196.000000\n[mcontest]: TIME: 4.216000\n\n\nstderr:\nMemory was allocated and freed!\n",
+        "description": "DEFAULT DESCRIPTION",
+        "ptsEarned": 1.0,
+        "name": "tester-7"
+      },
+      {
+        "ptsPossible": 1.0,
+        "log": "Trying to compile your code...\nSuccessfully compiled your code.\n\nstdout:\n[mcontest]: STATUS: OK\n[mcontest]: MAX: 2028179145\n[mcontest]: AVG: 1914176915.533333\n[mcontest]: TIME: 5.772000\n\n\nstderr:\nMemory was allocated and freed!\n",
+        "description": "DEFAULT DESCRIPTION",
+        "ptsEarned": 1.0,
+        "name": "tester-8"
+      },
+      {
+        "ptsPossible": 1.0,
+        "log": "Trying to compile your code...\nSuccessfully compiled your code.\n\nstdout:\n[mcontest]: STATUS: OK\n[mcontest]: MAX: 821110502\n[mcontest]: AVG: 432185341.204403\n[mcontest]: TIME: 0.848000\n\n\nstderr:\nMemory was allocated and freed!\n",
+        "description": "DEFAULT DESCRIPTION",
+        "ptsEarned": 1.0,
+        "name": "tester-9"
+      },
+      {
+        "ptsPossible": 1.0,
+        "log": "Trying to compile your code...\nSuccessfully compiled your code.\n\nstdout:\n[mcontest]: STATUS: OK\n[mcontest]: MAX: 402653282\n[mcontest]: AVG: 402650821.345301\n[mcontest]: TIME: 0.036000\n\n\nstderr:\nMemory was allocated, used, and freed!\n",
+        "description": "DEFAULT DESCRIPTION",
+        "ptsEarned": 1.0,
+        "name": "tester-10"
+      },
+      {
+        "ptsPossible": 1.0,
+        "log": "Trying to compile your code...\nSuccessfully compiled your code.\n\nstdout:\n[mcontest]: STATUS: OK\n[mcontest]: MAX: 2147483697\n[mcontest]: AVG: 2147447906.201980\n[mcontest]: TIME: 0.020000\n\n\nstderr:\nMemory was allocated, used, and freed!\n",
+        "description": "DEFAULT DESCRIPTION",
+        "ptsEarned": 1.0,
+        "name": "tester-11"
+      },
+      {
+        "ptsPossible": 1.0,
+        "log": "Trying to compile your code...\nSuccessfully compiled your code.\n\nstdout:\n[mcontest]: STATUS: OK\n[mcontest]: MAX: 1073741873\n[mcontest]: AVG: 1061942512.032967\n[mcontest]: TIME: 12.964000\n\n\nstderr:\nMemory was allocated, used, and freed!\n",
+        "description": "DEFAULT DESCRIPTION",
+        "ptsEarned": 1.0,
+        "name": "tester-12"
+      }
+    ],
+    "timestamp": "2018-03-06 13:00:40.957811"
+  }
+]

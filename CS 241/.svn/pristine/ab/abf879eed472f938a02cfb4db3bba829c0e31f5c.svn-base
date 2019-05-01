@@ -1,0 +1,232 @@
+/**
+* Text Editor Lab
+* CS 241 - Spring 2018
+*/
+
+#include "document.h"
+#include "editor.h"
+#include "format.h"
+#include "sstream.h"
+
+#include <assert.h>
+#include <limits.h>
+#include <math.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+#define CSTRING(x) ((bytestring){(char *)x, -1})
+#define DECLARE_BUFFER(name) bytestring name = {NULL, 0};
+#define EMPTY_BYTES ((bytestring){NULL, 0})
+
+char *get_filename(int argc, char *argv[]) {
+	assert(argc>1);
+	return argv[argc-1];
+}
+
+sstream *handle_create_stream() {
+	sstream* temp = sstream_create(EMPTY_BYTES);
+   	return temp;
+}
+document *handle_create_document(const char *path_to_file) {
+    return document_create_from_file(path_to_file);
+}
+
+void handle_cleanup(editor *editor) {
+	document_destroy((*editor).document);
+}
+
+void handle_display_command(editor *editor, size_t start_line,
+                            ssize_t max_lines, size_t start_col_index,
+                            ssize_t max_cols) {
+	if((ssize_t)document_size(editor->document)<=0){
+		print_usage_error();
+		return;
+	}
+	if(max_lines == -1){
+		for(size_t i = start_line; i <= document_size(editor->document); i++){
+			print_line(editor->document, i, start_col_index, max_cols);
+		}
+	}
+	else{
+		size_t temp;
+		if((size_t)max_lines < document_size(editor->document))	temp = max_lines;
+		else temp = document_size(editor->document) - 1;
+		for(size_t j = start_line; j <= temp; j++){
+			print_line(editor->document, j, start_col_index, max_cols);
+		}
+	}
+}
+
+void handle_insert_command(editor *editor, location loc, const char *line) {
+	if(loc.line_no > document_size(editor->document)){
+		document_insert_line(editor->document, loc.line_no, line);
+		return;
+	}
+	const char* temp = document_get_line(editor->document,loc.line_no);
+	size_t length = strlen(temp) + strlen(line) + 1;
+	char* str = malloc(length);
+	strncpy(str, temp, loc.idx);
+	str[loc.idx] = '\0';
+	strcat(str, line);
+	strcat(str, temp + loc.idx);
+	document_delete_line(editor->document, loc.line_no);
+	document_insert_line(editor->document, loc.line_no, str);
+	free(str);
+}
+
+void handle_append_command(editor *editor, size_t line_no, const char *line) {
+    // TODO implement handle_append_command
+	// if(line_no > document_size(editor->document))
+	// 	document_insert_line(editor->document, line_no, line);
+	// else{
+	// 	const char* old = document_get_line(editor->document, line_no);
+	// 	old += strlen(old);
+	// 	while(*line){
+	// 		if((*line == '\\')&&(line[1] == '\0')){
+	// 			line++;
+	// 		}
+	// 		else if(*line == '\n'){
+	// 			*old = '\\';
+	// 			old++;
+	// 			line++;
+	// 		}
+	// 		else{
+	// 		*old = *line;
+	// 		old++;
+	// 		line++;
+	// 		}
+	// 	}
+	// 	*old = '\0';
+	// }
+	location loc = (location){line_no, strlen(document_get_line(editor->document, line_no))};
+	handle_insert_command(editor, loc, line);
+}
+
+void handle_write_command(editor *editor, size_t line_no, const char *line) {
+    // TODO implement handle_write_command
+	// if(line_no > document_size(editor->document))
+	// 	document_insert_line(editor->document, line_no, line);
+	// else{
+	// 	char* old = document_get_line(editor->document, line_no);
+	// 	while(*line){
+	// 		if((*line == '\\')&&(line[1] == '\0')){
+	// 			line++;
+	// 		}
+	// 		else if(*line == '\n'){
+	// 			*old = '\\';
+	// 			old++;
+	// 			line++;
+	// 		}
+	// 		else{
+	// 		*old = *line;
+	// 		old++;
+	// 		line++;
+	// 		}
+	// 	}
+	// 	if(*old) old[0] = '\0';
+	// }
+	document_delete_line(editor->document, line_no);
+	document_insert_line(editor->document, line_no, line);
+}
+
+void handle_delete_command(editor *editor, location loc, size_t num_chars) {
+    	// TODO implement handle_delete_command
+	if(loc.line_no > document_size(editor->document)){
+		// ?????Can we get the Angrave's answer here?
+		size_t max = document_size(editor->document);
+		size_t num = loc.line_no;
+		while(num > max){
+			document_delete_line(editor->document, num);
+			num--;
+		}
+		return;
+	}
+	const char* line_orig = document_get_line(editor->document, loc.line_no);
+	char * line = malloc(strlen(line_orig));
+	strncpy(line, line_orig, loc.idx);
+	if(strlen(line) - loc.idx <= num_chars){
+		line[loc.idx] = '\0';
+	}else{
+		line += loc.idx;
+		while(line[num_chars]){
+			*line = line[num_chars];
+			line++;
+		}
+		*line = '\0';
+	}
+	document_delete_line(editor->document,loc.line_no);
+	document_insert_line(editor->document,loc.line_no, line);
+	free(line);
+	line = NULL;
+}
+
+void handle_delete_line(editor *editor, size_t line_no) {
+	if(line_no <= document_size(editor->document))
+		document_delete_line(editor->document, line_no);
+}
+
+location handle_search_command(editor *editor, location loc,
+                               const char *search_str) {
+    // TODO implement handle_search_command
+    	if(*search_str == '\0') return (location){0, 0};
+	if(loc.line_no > document_size(editor->document)) return (location){0, 0};
+	const char * line = document_get_line(editor->document, loc.line_no);
+	if(strlen(search_str) > (strlen(line)-loc.idx)) return (location){0, 0};
+	line += loc.idx;
+	int new_idx = 0;
+	int found = 1;
+	while(line[new_idx]){
+		if(line[new_idx] == search_str[0]){
+			for(size_t i = 1; i < strlen(search_str);i++){
+				if(found!=1)
+					break;
+				else {
+					if(line[new_idx+i] != search_str[i])
+						found = 0;
+				}
+			}
+			if (found == 1) return (location) {loc.line_no,loc.idx+new_idx};
+		}
+		found = 1;
+		new_idx += 1;
+	}
+	return (location){0, 0};
+}
+
+void handle_merge_line(editor *editor, size_t line_no) {
+    // TODO implement handle_merge_line
+	const char* old_orig = document_get_line(editor->document, line_no);
+	const char* line = document_get_line(editor->document, line_no+1);
+	char * old = malloc(strlen(old_orig) + strlen(line) + 1);
+	strcpy(old, old_orig);
+	document_delete_line(editor->document, line_no+1);
+	old += strlen(old);
+	while(*line){
+		*old = *line;
+		old++;
+		line++;
+	}
+	*old = '\0';
+	document_delete_line(editor->document, line_no);
+	document_insert_line(editor->document, line_no, old);
+}
+
+void handle_split_line(editor *editor, location loc) {
+    // TODO implement handle_split_line
+	const char* old_orig = document_get_line(editor->document, loc.line_no);
+	char *old = malloc(strlen(old_orig) + 1);
+	char *new = malloc(strlen(old_orig) + 1);
+	strcpy(new, old_orig);
+	new[loc.idx] = '\0';
+	strncpy(old, old_orig, loc.idx);
+	document_delete_line(editor->document, loc.line_no);
+	document_insert_line(editor->document, loc.line_no, old);
+	document_insert_line(editor->document, loc.line_no + 1, new);
+	*old = '\0';
+	return;
+}
+
+void handle_save_command(editor *editor) {
+	document_write_to_file(editor->document, editor->filename);
+}

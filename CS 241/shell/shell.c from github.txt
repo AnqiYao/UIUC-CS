@@ -1,0 +1,350 @@
+/**
+ * Machine Problem: Shell
+ * CS 241 - Fall 2017
+ */
+#include <ctype.h>
+#include <signal.h>
+#include <string.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <sys/types.h>
+#include <sys/wait.h>
+#include <unistd.h>
+
+#include "format.h"
+#include "shell.h"
+#include "vector.h"
+
+typedef struct process {
+    char *command;
+    char *status;
+    pid_t pid;
+} process;
+
+static vector *history;
+static vector *file_command;
+static char **two_parts;
+static char *_command;
+static char optarg_flag;
+static int previous_exit_status;
+static int history_stored;
+static int two_commands;
+
+void analyze_command(char *command);
+
+void initialize() {
+    history = vector_create(string_copy_constructor, string_destructor,
+                                  string_default_constructor);
+    previous_exit_status = 0;
+    history_stored = 0;
+}
+
+void check_optional_arg_f(char *optarg) {
+    FILE *file_stream = fopen(optarg, "r");
+    if (file_stream == NULL) {
+        print_script_file_error();
+        exit(1);
+    }
+
+    file_command = vector_create(string_copy_constructor, string_destructor,
+                                 string_default_constructor);
+    char *buffer = NULL;
+    size_t capacity = 0;
+    while (getline(&buffer, &capacity, file_stream) > 0) {
+        buffer[strlen(buffer) - 1] = '\0';
+        vector_push_back(file_command, buffer);
+    }
+    free(buffer);
+    fclose(file_stream);
+}
+
+void check_optional_arg_h(char *optarg) {
+    FILE *file_stream = fopen(optarg, "r");
+    if (file_stream == NULL) {
+        print_history_file_error();
+        exit(1);
+    }
+
+    char *buffer = NULL;
+    size_t capacity = 0;
+    while (getline(&buffer, &capacity, file_stream) > 0) {
+        buffer[strlen(buffer) - 1] = '\0';
+        vector_push_back(history, buffer);
+    }
+    free(buffer);
+    fclose(file_stream);
+}
+
+void check_optional_arg(int argc, char *argv[]) {
+    int opt;
+    while ((opt = getopt(argc, argv, "f:h:")) != -1) {
+        switch (opt) {
+            case 'f':
+                check_optional_arg_f(optarg);
+                if (argc != 3) print_usage();
+                optarg_flag = 'f';
+                return;
+            case 'h':
+                check_optional_arg_h(optarg);
+                optarg_flag = 'h';
+                return;
+            default:
+                exit(1);
+        }
+    }
+    optarg_flag = 'n';
+    return;
+}
+
+void give_prompt() {
+    pid_t curr_pid = getpid();
+    char *buffer = get_current_dir_name();
+    print_prompt(buffer, curr_pid);
+    free(buffer);
+}
+
+void execute_builtin_cd(char *command) {
+    if (!history_stored) {
+        vector_push_back(history, command);
+        history_stored = 1;
+    }
+    if (strlen(command) <= 3) {
+        print_no_directory("");
+        previous_exit_status = 1;
+    }
+    char *full_path = get_full_path(command + 3);
+    if (chdir(full_path) == -1) {
+        print_no_directory(command + 3);
+        previous_exit_status = 1;
+    }
+    else {
+        previous_exit_status = 0;
+    }
+    free(full_path);
+}
+
+void execute_builtin_history() {
+    history_stored = 0;
+    for (size_t i = 0; i < vector_size(history); i++) {
+        print_history_line(i, vector_get(history, i));
+    }
+    previous_exit_status = 0;
+}
+
+void execute_builtin_nthcommand(char *command) {
+    history_stored = 0;
+    int index = atoi(command + 1);
+    if (index < 0 || (size_t)index >= vector_size(history)) {
+        print_invalid_index();
+        previous_exit_status = 1;
+    }
+    else {
+        char *nth_command = vector_get(history, (size_t)index);
+        previous_exit_status = 0;
+        print_command(nth_command);
+        analyze_command(nth_command);
+    }
+}
+
+void execute_builtin_prefix(char *command) {
+    history_stored = 0;
+    char *prefix;
+    if (strlen(command) <= 1) {
+        prefix = strdup(vector_get(history, vector_size(history) - 1));
+    }
+    prefix = strdup(command + 1);
+    int found = 0;
+    for (int i = vector_size(history) - 1; i >= 0; i--) {
+        char *ith_command = vector_get(history, i);
+        if (strstr(ith_command, prefix) == ith_command) {
+            found = 1;
+            previous_exit_status = 0;
+            print_command(ith_command);
+            analyze_command(ith_command);
+            break;
+        }
+    }
+    if (found == 0) {
+        print_no_history_match();
+        previous_exit_status = 1;
+    }
+    free(prefix);
+}
+
+void free_resource() {
+    vector_destroy(history);
+    if (file_command != NULL) {
+        vector_destroy(file_command);
+    }
+}
+
+void execute_builtin_exit(char *command) {
+    if (!history_stored) {
+        vector_push_back(history, command);
+        history_stored = 1;
+    }
+    free_resource();
+    previous_exit_status = 0;
+    if (two_commands == 0 && command != NULL) free(command);
+    if (two_commands != 0) free_args(two_parts);
+    if (two_commands != 0 && _command != NULL) free(_command);
+    exit(0);
+}
+
+void execute_external(char *command) {
+    if (!history_stored) {
+        vector_push_back(history, command);
+        history_stored = 1;
+    }
+    size_t numtokens;
+    char **external_command = strsplit(command, " ", &numtokens);
+    pid_t child = fork();
+    if (child == -1) {
+        print_fork_failed();
+    }
+    if (child == 0) {
+        print_command_executed(getpid());
+        execvp(external_command[0], external_command);
+        print_exec_failed(command);
+        free_resource();
+        free_args(external_command);
+        if (two_commands) {
+            free_args(two_parts);
+        }
+        free(_command);
+        exit(1);
+    }
+    else {
+        int status;
+        waitpid(child, &status, 0);
+        if (!WIFEXITED(status)) {
+            print_fork_failed();
+            previous_exit_status = 1;
+        }
+        else {
+            if (WEXITSTATUS(status)) {
+                previous_exit_status = 1;
+            }
+            else {
+                previous_exit_status = 0;
+            }
+        }
+    }
+    free_args(external_command);
+}
+
+void analyze_single_command(char *command) {
+    if (strstr(command, "cd ") == command) {
+        execute_builtin_cd(command);
+    }
+    else if (strcmp(command, "!history") == 0) {
+        execute_builtin_history();
+    }
+    else if (strstr(command, "#") == command) {
+        execute_builtin_nthcommand(command);
+    }
+    else if (strstr(command, "!") == command) {
+        execute_builtin_prefix(command);
+    }
+    else if (strcmp(command, "exit") == 0) {
+        execute_builtin_exit(command);
+    }
+    else {
+        execute_external(command);
+    }
+}
+
+void analyze_command(char *command) {
+    history_stored = 0;
+    char *logical_operator_ptr;
+    if ((logical_operator_ptr = strstr(command, " && ")) != NULL) {
+        vector_push_back(history, command);
+        history_stored = 1;
+        two_commands = 1;
+        size_t numtokens;
+        two_parts = strsplit(command, "&&", &numtokens);
+        two_parts[0][strlen(two_parts[0]) - 1] = 0;
+        analyze_single_command(two_parts[0]);
+        if (previous_exit_status == 0) analyze_single_command(two_parts[1] + 1);
+        free_args(two_parts);
+    }
+    else if ((logical_operator_ptr = strstr(command, " || ")) != NULL) {
+        vector_push_back(history, command);
+        history_stored = 1;
+        two_commands = 1;
+        size_t numtokens;
+        two_parts = strsplit(command, "||", &numtokens);
+        two_parts[0][strlen(two_parts[0]) - 1] = 0;
+        analyze_single_command(two_parts[0]);
+        if (previous_exit_status != 0) analyze_single_command(two_parts[1] + 1);
+        free_args(two_parts);
+    }
+    else if ((logical_operator_ptr = strstr(command, ";")) != NULL) {
+        vector_push_back(history, command);
+        two_commands = 1;
+        history_stored = 1;
+        size_t numtokens;
+        two_parts = strsplit(command, ";", &numtokens);
+        if (two_parts[0][strlen(two_parts[0]) - 1] == ' ') {
+            two_parts[0][strlen(two_parts[0]) - 1] = 0;
+        }
+        analyze_single_command(two_parts[0]);
+        if (two_parts[1][0] == ' ') {
+            analyze_single_command(two_parts[1] + 1);
+        }
+        else {
+            analyze_single_command(two_parts[1]);
+        }
+        free_args(two_parts);
+    }
+    else {
+        history_stored = 0;
+        two_commands = 0;
+        analyze_single_command(command);
+    }
+}
+
+void parent_signal_handler() {
+    return;
+}
+
+void run_file() {
+    signal(SIGINT, parent_signal_handler);
+    for (size_t i = 0; i < vector_size(file_command); i++) {
+        give_prompt();
+        char *command = vector_get(file_command, i);
+        if (strcmp(command, "") == 0) continue;
+        print_command(command);
+        analyze_command(command);
+    }
+    execute_builtin_exit(NULL);
+}
+
+void run_stdin() {
+    signal(SIGINT, parent_signal_handler);
+    while(1) {
+        give_prompt();
+        _command = NULL;
+        size_t n = 0;
+        getline(&_command, &n, stdin);
+        _command[strlen(_command) - 1] = 0;
+        if (strcmp(_command, "") != 0) analyze_command(_command);
+        if (_command != NULL) free(_command);
+    }
+}
+
+int shell(int argc, char *argv[]) {
+    // TODO: This is the entry point for your shell.
+    initialize();
+    check_optional_arg(argc, argv);
+
+    if (optarg_flag == 'f') {
+        run_file();
+    }
+    else {
+        run_stdin();
+    }
+
+    free_resource();
+    return 0;
+}

@@ -1,0 +1,390 @@
+/**
+* Text Editor Lab
+* CS 241 - Spring 2018
+*/
+
+#include "sstream.h"
+#include <assert.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <sys/stat.h>
+#include <fcntl.h>
+#include <unistd.h>
+#define MIN(a,b) (((a)<(b))?(a):(b))
+#include <limits.h>
+struct sstream{
+	char *str;
+	size_t position;
+	size_t size;
+};
+
+sstream *sstream_create(bytestring bytes) {
+	sstream* result = malloc(sizeof(sstream));
+	int i  = 0;
+	if(bytes.str == NULL) {
+		result->str = NULL;
+		result->position = 0;
+		result->size = 0;
+		return result;
+	}
+	else if(bytes.size < 0) {
+		result-> str = malloc(strlen(bytes.str)+1);
+		while(bytes.str[i]!='\0'){
+			result->str[i] = bytes.str[i];
+			i++;
+		}
+		result->str[i] = '\0';
+		result->position = 0;
+		result->size = strlen(result->str);
+		return result;
+	}
+	else{
+	  	result-> str = malloc(bytes.size);
+		i = 0;
+		for(; i < bytes.size; i++){
+			result->str[i] = bytes.str[i];
+		}
+		result->position = 0;
+		result->size = bytes.size;
+		return result;
+	}
+}
+
+void sstream_destroy(sstream *this) {
+	assert(this);
+	if(this->str!=NULL){
+		free(this->str);
+		this->str = NULL;
+	}
+	free(this);
+	this = NULL;
+}
+
+void sstream_str(sstream *this, bytestring bytes) {
+		assert(this);
+		int i = 0;
+		if(bytes.str == NULL) {
+			this->str[0] = '\0';
+			this->str = realloc(this->str,0);
+			this->position = 0;
+			this->size = 0;
+			return;
+		}
+		else if(bytes.size < 0) {
+			if(this->size < strlen(bytes.str)+1){
+		  		this->str = realloc(this -> str,strlen(bytes.str)+1);
+				while(bytes.str[i]!='\0'){
+					this->str[i] = bytes.str[i];
+					i++;
+				}
+				this->str[i] = '\0';
+			}
+			else {  
+				i = 0;
+				while(bytes.str[i]!='\0'){
+					this->str[i] = bytes.str[i];
+					i++;
+				}
+				this->str[i] = '\0';
+			}
+			this->position = 0;
+			this->size = strlen(bytes.str)+1;
+			return;
+		}
+		else{
+			if(this->size < (size_t)bytes.size+1){
+				this->str = realloc(this -> str,bytes.size+1);
+				i = 0;
+				for(; i < bytes.size; i++){
+					this->str[i] = bytes.str[i];
+				}
+				this->str[bytes.size] = '\0';
+			}
+			else{
+				i = 0;
+				for(; i < bytes.size; i++){
+					this->str[i] = bytes.str[i];
+				}
+				this->str[bytes.size] = '\0';
+			}
+			this->position = 0;
+			this->size = bytes.size;
+			return;
+		}
+
+}
+
+bool sstream_eos(sstream *this) {
+	if(this == NULL)	return true;	
+	if(this->position >= (this->size))	return true;
+	return false;
+}
+
+char sstream_peek(sstream *this, ssize_t offset) {
+	assert((this->position + offset)>=0);
+	size_t place = this->position + offset;
+	assert(place < this->size);
+	return (this->str[place]);
+}
+
+char sstream_getch(sstream *this) {
+	assert((this->position)>=0);
+	assert(!sstream_eos(this));
+	char temp =  (this->str[this->position]);
+	this->position ++;
+	return temp;
+
+}
+
+size_t sstream_size(sstream *this) {
+	assert(this);
+    return this->size;
+}
+
+size_t sstream_tell(sstream *this) {
+	assert(this);
+    return this->position;
+}
+
+int sstream_seek(sstream *this, ssize_t offset, int whence) {
+		int newp = this->position;
+		if(whence == SEEK_SET){
+			newp = offset;
+		}
+		else if (whence == SEEK_CUR){
+			newp = this->position + offset;
+		}
+		else {
+			newp = this->size + offset;
+		}
+		if((size_t)newp >= this->size || newp < 0)
+			return -1;
+		else {
+			this->position = newp;
+			return 0;
+		}
+}
+
+size_t sstream_remain(sstream *this) {
+	assert(this);
+	if(sstream_eos(this))	return 0;
+	size_t count = 0;
+	while(!sstream_eos(this)){
+		count++;
+		this->position++;
+	}
+	return count;
+}
+
+size_t sstream_read(sstream *this, bytestring *out, ssize_t count) {
+    	assert(this);
+	size_t count_t;
+	if(count < 0)	count_t =  MIN((size_t)abs((int)count), sstream_tell(this));
+	else		count_t =  MIN((size_t)abs((int)count), sstream_remain(this));
+	
+	if(out->str == NULL){
+		out->str = malloc(count_t + 1);
+		out->size = count_t;
+    	}else{
+		if((size_t)out->size < count_t){
+	    		out->str = realloc(out->str, count_t + 1);
+	    		out->size = count_t;
+		}
+	}
+
+	if(count < 0){
+		size_t temp = count_t;
+		size_t i = 0;
+        	while(temp > 0){
+			out->str[i] = this->str[this->position - temp];
+			i++;
+			temp--;
+	}
+	}else{
+		strncpy(out->str, this->str, count_t);
+		this->position += count_t;
+	}    
+	out->str[count_t] = '\0';
+	return count_t;
+}
+
+void sstream_append(sstream *this, bytestring bytes) {
+	this->str = realloc(this->str, this->size + (size_t)bytes.size + 1);
+	if(bytes.size < 0){
+		strcat(this->str, bytes.str);
+		this->size += strlen(bytes.str);
+		this->str[strlen(this->str) + strlen(bytes.str)] = '\0';
+	}
+	else{
+		int t = strlen(this->str);
+		int i = 0;
+		while(i < bytes.size){
+	    		this->str[t] = bytes.str[i];
+	    		t++;
+	    		i++;
+		}
+		this->str[this->size + bytes.size] = '\0';
+		this->size += bytes.size;
+    }
+}
+
+ssize_t sstream_subseq(sstream *this, bytestring bytes) {
+	assert(this);
+	size_t i = 0;
+	size_t temp = 0;
+	int isok = 1;	
+	size_t k = 1;
+	int a;
+	if(bytes.size < 0)
+		a = strlen(bytes.str);
+	else 
+		a = bytes.size; 
+	for(; (this->size - this->position - i) >= (size_t)a; i++){
+		if(this->str[this->position+i] == bytes.str[0]){
+			temp = i;
+			isok = 1;
+			if(bytes.size < 0){
+				k = 1;
+				while(bytes.str[k]!='\0'){
+					if(this->str[this->position+i+k] != bytes.str[k])
+						isok = 0;
+					k++;
+				}
+				if(isok) return temp; 
+					
+			}
+			else{
+				k = 1;
+				for(; i < (size_t)bytes.size; i++){
+					if(this->str[this->position+i+k] != bytes.str[k])
+						isok = 0;
+				}
+				if(isok) return temp; 
+			}
+		}
+	}	
+	return -1;
+}
+
+size_t sstream_erase(sstream *this, ssize_t number) {
+	if(number>0){
+		if(this->size < this->position+number){
+			this->size = this->position;
+			this->str[this->position] = '\0';
+			return sstream_remain(this);
+		}
+		else{
+			size_t k = 0;
+			while(this->position + number +k < this->size){
+				this->str[this->position+k] = this->str[this->position+number+k];
+				k++;
+			}
+			this->size = this->size - number;
+			return number;	
+		}
+	}
+	else {
+		size_t temp =  MIN((size_t)abs((int)number), sstream_tell(this));
+		size_t k = 0;
+		while((this->position+k)<this->size){
+			this->str[this->position - temp + k] = this->str[this->position+k];
+		}
+		this->str[this->size - temp ] = '\0';
+		this->size = this->size - temp;
+		return temp;
+	}
+	return 0;
+}
+
+void sstream_write(sstream *this, bytestring bytes) {
+	size_t space = sstream_remain(this);
+	if(bytes.size >= 0){
+		if(space < (size_t)bytes.size){
+	    		this->str = realloc(this->str,this->position + bytes.size + 1);
+			this->size = this->position + bytes.size;
+			this->str[this->position + bytes.size] = '\0';
+		}
+		for(size_t i=0; i<(size_t)bytes.size; i++){
+			this->str[this->position + i] = bytes.str[i];
+		}
+	}else{ 
+		if(space < (strlen(bytes.str)+1)) {
+			this->str = realloc(this->str, this->size + space + 1);
+			this->size = this->position + (strlen(bytes.str));
+			this->str[this->position + (strlen(bytes.str))] = '\0';
+		}
+        	for(size_t j = 0; j < (strlen(bytes.str)+1); j++){
+                	this->str[this->position + j] = bytes.str[j];
+       		}
+	}
+}
+
+void sstream_insert(sstream *this, bytestring bytes) {
+	size_t space = sstream_remain(this)+this->size-this->position;
+	if(bytes.size >= 0){
+		if(space < (size_t)bytes.size)
+	    		this->str = realloc(this->str, this->size + space + 1);
+		for(size_t i=0; i<(size_t)bytes.size; i++){
+			this->str[this->position+(size_t)bytes.size+i] = this->str[this->position + i];
+			this->str[this->position + i] = bytes.str[i];
+		}
+		this->size += bytes.size;
+		this->str[space] = '\0';
+ 	}else{ 
+	if(space < (strlen(bytes.str)+1)) this->str = realloc(this->str, this->size + space + 1);
+		for(size_t j = 0; j < (strlen(bytes.str)+1); j++){
+			this->str[this->position+strlen(bytes.str)+j] = this->str[this->position + j];
+        	        this->str[this->position + j] = bytes.str[j];
+		}
+		this->size += strlen(bytes.str);
+	}
+}
+
+int sstream_parse_long(sstream *this, long *out) {
+	char* temp;
+	int num = 0;
+	char* curr = this->str + this->position;
+	long result = strtol(curr,&temp,10);
+	if(result == 0) return -1;
+	else if(result > LONG_MAX && result > LONG_MIN){
+		num = 0;
+		long a = LONG_MAX;
+		while(a!=0){
+			a/=10;
+			num++;	
+		}	
+		if(result>=0){
+			this->position += num;
+			char* temp1 = malloc(num+1);
+			strncpy(temp1,temp,num);
+			temp1[num]='\0';
+			result = strtol(temp1,&temp,10);
+			*out = result;
+			free(temp1);
+			return num;
+		}
+		else{
+			this->position += (num + 1);
+			char* temp2 = malloc(num+2);
+			strncpy(temp2,temp,num+1); 
+			temp2[num+1] = '\0';
+			result = strtol(temp2,&temp,10);
+			*out = result;
+			free(temp2);
+			return num+1;
+		}
+	}
+	else{
+		num = 0;
+		*out = result;
+		while(result!=0){
+			result/=10;
+			num++;
+		}
+		if(result>=0)	return num;
+		else	return num+1;
+	}
+	return -1;	
+
+}

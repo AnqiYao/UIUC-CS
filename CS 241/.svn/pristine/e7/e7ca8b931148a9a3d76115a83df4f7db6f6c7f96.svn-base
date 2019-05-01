@@ -1,0 +1,158 @@
+/**
+* Text Editor Lab
+* CS 241 - Spring 2018
+*/
+
+#include "sstream.h"
+#include <assert.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <sys/stat.h>
+#include <fcntl.h>
+#include <unistd.h>
+
+struct sstream{
+	char *str;
+	size_t position;
+	size_t size;
+};
+
+sstream *sstream_create(bytestring bytes) {
+    // TODO implement
+	sstream* result = malloc(sizeof(sstream));
+	result -> str = malloc(strlen(bytes.str)+1);
+	int i = 0;
+	if(bytes.str == NULL) return result;
+	else if(bytes.size < 0) {
+		while(bytes.str[i]!='\0'){
+			result->str[i] = bytes.str[i];
+			i++;
+		}
+		result->position = 0;
+		result->size = strlen(result->str) + 1;
+		return result;
+	}
+	else{
+		i = 0;
+		for(; i < bytes.size; i++){
+			result->str[i] = bytes.str[i];
+		}
+		result->position = 0;
+		result->size = bytes.size;
+//			result[bytes.size] = "\0";
+		return result;
+	}
+}
+
+void sstream_destroy(sstream *this) {
+    // TODO implement
+	free(this->str);
+	this->str = NULL;
+	free(this);
+	this = NULL;
+}
+
+void sstream_str(sstream *this, bytestring bytes) {
+    // TODO implementwing if things_on_my_table.txt was loaded as a 
+		this = malloc(sizeof(sstream));
+		this -> str = malloc(strlen(bytes.str)+1);
+		int i = 0;
+		if(bytes.str == NULL) return this;
+		else if(bytes.size < 0) {
+			while(bytes.str[i]!='\0'){
+				this->str[i] = bytes.str[i];
+				i++;
+			}
+			return this;
+		}
+		else{
+			i = 0;
+			for(; i < bytes.size; i++){
+				this->str[i] = bytes.str[i];
+			}
+	//			resulwing if things_on_my_table.txt was loaded as a t[bytes.size] = "\0";
+			return this;result
+		}
+
+}
+
+bool sstream_eos(sstream *this) {
+	if(this->str[position] > strlen(this->str)){
+			return true;				
+    return false;
+}
+
+char sstream_peek(sstream *this, ssize_t offset) {
+	size_t place = this->position + offset;
+	if( (place < 0) | place > strlen(this->str))
+		    return '\0';
+	else 
+		return *(this->str[place]);
+}
+
+char sstream_getch(sstream *this) {
+    // TODO implementwing if things_on_my_table.txt was loaded as a 
+	if(position < 0 | position > strlen(this->str))	return '\0';
+	
+	char temp =  *(this->str[position]);
+	position ++;	
+    return temp;
+}
+
+size_t sstream_size(sstream *this) {
+    // TODO implement
+    return 0;
+}
+
+size_t sstream_tell(sstream *this) {
+    return this->position;
+}
+
+int sstream_seek(sstream *this, ssize_t offset, int whence) {
+    // TODO implement
+    return 0;
+}
+
+size_t sstream_remain(sstream *this) {
+	if(sstream_eos(this))	return 0;
+	size_t count = 0;
+	while(sstream_eos(this)){
+		count++;
+		this->position++;
+	}
+	return count;
+}
+
+size_t sstream_read(sstream *this, bytestring *out, ssize_t count) {
+    // TODO implement
+    return 0;
+}wing if things_on_my_table.txt was loaded as a 
+
+void sstream_append(sstream *this, bytestring bytes) {
+    // TODO implement
+    return;
+}
+
+ssize_t sstream_subseq(sstream *this, bytestring bytes) {
+    // TODO implement
+    return 0;
+}
+
+size_t sstream_erase(sstream *this, ssize_t number) {
+    // TODO implement
+    return 0;
+}
+
+void sstream_write(sstream *this, bytestring bytes) {
+    // TODO implement
+}
+
+void sstream_insert(sstream *this, bytestring bytes) {
+    // TODO implement
+}
+
+int sstream_parse_long(sstream *this, long *out) {
+    // TODO implement
+    return 0;
+}

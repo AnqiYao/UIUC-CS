@@ -1,0 +1,376 @@
+/**
+* Text Editor Lab
+* CS 241 - Spring 2018
+*/
+
+#include "document.h"
+#include "editor.h"
+#include "format.h"
+#include "sstream.h"
+
+#include <assert.h>
+#include <limits.h>
+#include <math.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+#define CSTRING(x) ((bytestring){(char *)x, -1})
+#define DECLARE_BUFFER(name) bytestring name = {NULL, 0};
+#define EMPTY_BYTES ((bytestring){NULL, 0})
+
+char *get_filename(int argc, char *argv[]) {
+    // TODO implement get_filename
+    // take a look at editor_main.c to see what this is used for
+    //OK
+    if(argc < 2){
+      print_usage_error();
+      return NULL;
+    }
+    return argv[1];
+}
+
+sstream *handle_create_stream() {
+    // TODO create empty stream
+    return sstream_create(EMPTY_BYTES);
+}
+
+document *handle_create_document(const char *path_to_file) {
+    // TODO create the document
+    //OK
+    document * doc = document_create_from_file(path_to_file);
+    return doc;
+}
+
+void handle_cleanup(editor *editor) {
+    // TODO destroy the document
+    //OK
+    document_destroy(editor->document);
+}
+
+void handle_display_command(editor *editor, size_t start_line,
+                            ssize_t max_lines, size_t start_col_index,
+                            ssize_t max_cols) {
+    // TODO implement handle_display_command
+    //OK
+    assert(start_line >= 1);
+    //empty document
+    if(document_size(editor->document) ==0 || editor->document == NULL){
+	print_document_empty_error();
+        return;
+    }
+    //max_lines == -1
+	  if(max_lines == -1){
+      		for(size_t i = start_line; i <= document_size(editor->document); i++){
+			print_line(editor->document, i, start_col_index, max_cols);
+		}
+	  }
+	  else{
+		if((size_t)max_lines + start_line > document_size(editor->document))
+			max_lines = document_size(editor->document);
+		else max_lines += (start_line-1);
+		for(ssize_t j = start_line; j <= max_lines; j++){
+			print_line(editor->document, j, start_col_index, max_cols);
+		}
+	  }
+}
+
+void handle_insert_command(editor *editor, location loc, const char *line) {
+    // TODO implement handle_insert_command
+    // OK
+    if(line == NULL) return;
+	  if(loc.line_no >= 1 && loc.line_no <= document_size(editor->document)){
+        	char *old = (char*)document_get_line(editor->document, loc.line_no);
+    		char *new = (char*)malloc(strlen(line) + strlen(document_get_line(editor->document, loc.line_no)) + 1);
+    		int i = 0;
+		int j = 0;
+        	//strncpy may add a null byte at the end
+    		if((size_t)i < (strlen(line) + strlen(document_get_line(editor->document, loc.line_no)))){
+      			while((size_t)i < loc.idx){
+        			new[i++] = *old++;
+            		}
+      			while((size_t)i < (loc.idx + strlen(line))){
+                		new[i++] = line[j++];
+            		}
+    			while(*old){
+				new[i++] = *old++;
+			}
+    		}
+    		new[i] = '\0';
+    		document_set_line(editor->document, loc.line_no, new);
+    		free(new);
+    		new = NULL;
+  	}
+  	else if(loc.line_no >= 1 && loc.line_no > document_size(editor->document)){
+        //set the lines in between as empty strings
+    		for(size_t i = document_size(editor->document) + 1; i <= loc.line_no - 1; i++){
+    			  document_insert_line(editor->document, i, "");
+ 	        }
+    		document_insert_line(editor->document, loc.line_no, line);
+  	}
+}
+
+void handle_append_command(editor *editor, size_t line_no, const char *line) {
+    // TODO implement handle_append_command
+	if(line_no > document_size(editor->document)){
+		char * newline = strdup(line);	//make an editable line
+		if(newline[strlen(newline)-1] == '\\') newline[strlen(newline)-1] = '\0';
+		int i = 0;
+		int j = 0;  //count for newline
+		int k = 0;  //for escaping
+		while(newline[i]){
+			if(newline[i] == '\\'){
+				if(newline[i+1] && newline[i+1]== 'n'){
+					char * insert = strndup(newline+j, i-j);
+					insert[i-j] = '\0';
+					document_insert_line(editor->document, line_no, insert);
+					j = i+2;
+					i = j;
+					line_no++;
+					//free(insert);
+					//insert = NULL;
+				}else if(newline[i+1] == '\\'){
+					i += 1;
+                                	k = i;
+                                	while(newline[k+1]){
+                                        	newline[k] = newline[k+1];
+                                        	k++;
+                                	}
+                                	newline[k] = '\0';
+				}else{
+					k = i;
+					while(newline[k+1]){
+						newline[k] = newline[k+1];
+						k++;
+					}
+					newline[k] = '\0';
+				}
+			}else{
+				i++;
+			}
+		}
+		newline[strlen(newline)] = '\0';
+		newline += j;
+		document_insert_line(editor->document, line_no, newline);
+		//free(newline);
+		//newline = NULL;
+	}else{
+    		char* old =  (char*)document_get_line(editor->document, line_no);
+		//old = realloc(old, strlen(old)+strlen(line)+1);
+		int i = 0;
+		int j = 0;
+		int k = 0;
+		size_t line_count = line_no;
+		char * newline2 = strdup((char*)line);
+		if(newline2[strlen(newline2)-1] == '\\') newline2[strlen(newline2)-1] = '\0';
+      		while(newline2[i]){
+                        if(newline2[i] == '\\'){
+                                if(newline2[i+1] && newline2[i+1]== 'n'){
+                                        char * insert = strndup(&newline2[j], i-j);
+                                        insert[i-j] = '\0';
+					if(line_count == line_no){
+                                        	char * orig = malloc(strlen(old)+strlen(newline2)+1);
+						strcpy(orig, old);
+						strcat(orig, insert);
+						//document_set_line(editor->document, line_no, orig);
+						document_delete_line(editor->document, line_count);
+						document_insert_line(editor->document, line_count, orig);
+					}else{
+						document_insert_line(editor->document, line_count, insert);
+					}
+                                        j = i+2;
+                                        i = j;
+					line_count ++;
+                                        //line_no++;
+					//document_insert_line(editor->document, line_no, "\0");
+					//old = (char*)document_get_line(editor->document, line_no);
+					//old = realloc(old, strlen(old)+strlen(line)+1);
+					//free(insert);
+					//insert = NULL;
+				}else if(newline2[i+1] == '\\'){
+					i = i+1;
+                                	k = i;
+                                	while(newline2[k+1]){
+                                       		newline2[k] = newline2[k+1];
+                                       		k++;
+                                	}
+                                	newline2[k] = '\0';
+                                }else{
+                                        k = i;
+                                        while(newline2[k+1]){
+                                                newline2[k] = newline2[k+1];
+                                                k++;
+                                        }
+                                        newline2[k] = '\0';
+                                }
+                        }else{
+                                i++;
+                        }
+                }
+                newline2[strlen(newline2)] = '\0';
+		newline2 += j;
+                if(line_count == line_no){
+                        char * orig = malloc(strlen(old)+strlen(newline2)+1);
+                        strcpy(orig, old);
+                        strcat(orig, newline2);
+                        //document_set_line(editor->document, line_no, orig);
+			document_delete_line(editor->document, line_no);
+			document_insert_line(editor->document, line_no, orig);
+
+                }else{                                
+			document_insert_line(editor->document, line_count, newline2);
+                }
+                //free(newline);
+                //newline = NULL;
+      	}
+}
+
+void handle_write_command(editor *editor, size_t line_no, const char *line) {
+    // TODO implement handle_write_command
+	if(line_no <= document_size(editor->document))
+ 		document_delete_line(editor->document, line_no);
+	char * newline = strdup(line);  //make an editable line
+        if(newline[strlen(newline)-1] == '\\') newline[strlen(newline)-1] = '\0';
+        int i = 0;
+        int j = 0;  //count for newline
+        int k = 0;  //for escaping
+        while(newline[i]){
+		if(newline[i] == '\\'){
+                	if(newline[i+1] && newline[i+1]== 'n'){
+                        	char * insert = strndup(newline+j, i-j);
+                                insert[i-j] = '\0';
+                                document_insert_line(editor->document, line_no, insert);
+                                j = i+2;
+                                i = j;
+                                line_no++;
+                                //free(insert);
+                                //insert = NULL;
+  			}else if(newline[i+1] == '\\'){
+				  i += 1;
+  				  k = i;
+                                  while(newline[k+1]){
+                                          newline[k] = newline[k+1];
+                                          k++;
+                                  }
+                                  newline[k] = '\0';
+                        }else{
+                                k = i;
+                                while(newline[k+1]){
+                                        newline[k] = newline[k+1];
+                                        k++;
+                                }
+                                newline[k] = '\0';
+                        }
+		}else{
+			i++;
+                }
+	}
+        newline[strlen(newline)] = '\0';
+        newline += j;
+        document_insert_line(editor->document, line_no, newline);
+}
+
+void handle_delete_command(editor *editor, location loc, size_t num_chars) {
+    // TODO implement handle_delete_command'
+    // OK
+    char* line = (char*)document_get_line(editor->document, loc.line_no);
+  	if(strlen(line) - loc.idx <= num_chars){
+  		  line[loc.idx] = '\0';
+  	}else{
+    		line += loc.idx;
+    		while(line[num_chars]){
+      			*line = line[num_chars];
+      			line++;
+    		}
+    		*line = '\0';
+  	}
+}
+
+void handle_delete_line(editor *editor, size_t line_no) {
+    // TODO implement handle_delete_line
+    //Ok
+    if(line_no <= document_size(editor->document))  document_delete_line(editor->document, line_no);
+}
+
+location handle_search_command(editor *editor, location loc,
+                               const char *search_str) {
+    // TODO implement handle_search_command
+    //search_str doesn't exist
+    // OK
+    size_t line_number = loc.line_no;
+    size_t index = loc.idx;
+    //empty search string
+    if(*search_str == '\0') return (location){0, 0};
+    //line number larger than the document size
+    if(line_number > document_size(editor->document)) return (location){0, 0};
+
+    //usual case:
+    char * line = (char*)document_get_line(editor->document, line_number);
+    //string longer than the rest of the line
+    //if(strlen(search_str) > (strlen(line)-index)) return (location){0, 0};
+
+    //first find the first letter match then loop thru the search_str and check;
+    //look for the next possible first match char.
+    int check = 1;
+  	line += index;
+  	int i = 0;
+  	while(line[i]){
+  		  if(line[i] == search_str[0]){
+  			     for(size_t j = 1; j < strlen(search_str); j++){
+  			          if(check != 1)   break;
+  			          else if(line[i + j] != search_str[j]) check = 0;
+  			          else{}
+  			     }
+      			     if (check == 1) {
+                  		location loc =  (location){line_number,index+i};
+                  		return loc;
+             		     }
+  		 }
+  		check = 1;
+  		i += 1;
+  	}
+    	//not found here
+  	return handle_search_command(editor, (location){line_number+1, index}, search_str);
+}
+
+void handle_merge_line(editor *editor, size_t line_no) {
+    // TODO implement handle_merge_line
+    //OK
+    char *old = (char*)document_get_line(editor->document, line_no);
+  	char *new = (char*)document_get_line(editor->document, line_no + 1);
+  	char *in = (char*)malloc(sizeof(char) * (strlen(old) + strlen(new) + 1));
+  	strcpy(in, old);
+  	strcat(in, new);
+  	document_set_line(editor->document, line_no, in);
+  	document_delete_line(editor->document, line_no + 1);
+  	free(in);
+}
+
+void handle_split_line(editor *editor, location loc) {
+    // TODO implement handle_split_line
+    //OK
+    char *orig = (char*)document_get_line(editor->document, loc.line_no);
+  	int length = strlen(orig) - loc.idx + 1;
+  	char *new = (char*)malloc(sizeof(char) * length);
+  	int i = 0;
+  	char *temp = orig;
+  	temp += loc.idx;
+  	while(i < length - 1){
+    		new[i++] = *temp;
+    		*temp = '\0';
+    		temp++;
+  	}
+  	new[i] = '\0';
+  	document_insert_line(editor->document, loc.line_no + 1, new);
+  	free(new);
+  	new = NULL;
+}
+
+void handle_save_command(editor *editor) {
+    // TODO implement handle_save_command
+    //OK
+    if(!editor) return;
+    if(editor->filename != NULL && editor->document == NULL)
+	editor->document = document_create_from_file(editor->filename);
+    document_write_to_file(editor->document, editor->filename);
+}

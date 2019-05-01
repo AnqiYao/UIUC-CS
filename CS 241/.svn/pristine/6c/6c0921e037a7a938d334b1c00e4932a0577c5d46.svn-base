@@ -1,0 +1,213 @@
+/**
+* Savvy_scheduler Lab
+* CS 241 - Spring 2018
+*/
+
+#include "libpriqueue/libpriqueue.h"
+#include "libscheduler.h"
+
+#include <assert.h>
+#include <stdbool.h>
+#include <stdint.h>
+#include <stdio.h>
+#include <stdlib.h>
+
+typedef struct _job_info {
+    	int id;
+    	int priority;
+	bool ever_started;
+	unsigned arrival_time;
+	unsigned remaining_time;
+	unsigned running_time;
+	unsigned end_time;
+	unsigned last_start_time;
+	unsigned last_end_time;
+	unsigned start_time;
+    /* Add whatever other bookkeeping you need into this struct. */
+} job_info;
+
+typedef struct _core_t {
+    size_t job_count;
+    float total_turnaround_time;
+    float total_response_time;
+    float total_waiting_time;
+    bool job_running;
+} core_t;
+
+priqueue_t pqueue;
+scheme_t pqueue_scheme;
+comparer_t comparision_func;
+static core_t core;
+
+void scheduler_start_up(scheme_t s) {
+    switch (s) {
+    case FCFS:
+        comparision_func = comparer_fcfs;
+        break;
+    case PRI:
+        comparision_func = comparer_pri;
+        break;
+    case PPRI:
+        comparision_func = comparer_ppri;
+        break;
+    case PSRTF:
+        comparision_func = comparer_psrtf;
+        break;
+    case RR:
+        comparision_func = comparer_rr;
+        break;
+    case SJF:
+        comparision_func = comparer_sjf;
+        break;
+    default:
+        printf("Did not recognize scheme\n");
+        exit(1);
+    }
+    priqueue_init(&pqueue, comparision_func);
+    pqueue_scheme = s;
+    // Put any set up code you may need here
+}
+
+static int break_tie(const void *a, const void *b) {
+    return comparer_fcfs(a, b);
+}
+
+int comparer_fcfs(const void *a, const void *b) {
+    	if (((job_info *)a)->arrival_time < ((job_info *)b)->arrival_time)	return -1;
+	else return 1;
+	
+}
+
+int comparer_ppri(const void *a, const void *b) {
+    // Complete as is
+    return comparer_pri(a, b);
+}
+
+int comparer_pri(const void *a, const void *b) {
+    	if (((job_info *)a)->priority < ((job_info *)b)->priority)	return -1;
+	else if (((job_info *)a)->priority == ((job_info *)b)->priority)	return break_tie(a,b);
+	else return 1;
+}
+
+int comparer_psrtf(const void *a, const void *b) {
+    	if ((job_info*)a->remaining_time < (job_info*)b->remaining_time ) return -1;
+    	else if ((job_info*)a->remaining_time - > (job_info*)b->remaining_time ) return 1;
+	return break_tie(a,b);
+}
+
+int comparer_rr(const void *a, const void *b) {
+    	 return ((job_t *)a)->last_end_time < ((job_t *)b)->last_end_time ? -1 : 1;
+}
+
+int comparer_sjf(const void *a, const void *b) {
+    	job_info* a_job  = (job_info*)a;
+    	job_info* b_job  = (job_info*)b;
+    	if ((job_info*)a->running_time > (job_info*)b->running_time) return 1;
+    	if ((job_info*)b->running_time < (job_info*)b->running_time) return -1;
+	return break_tie(a,b);
+}
+
+// Do not allocate stack space or initialize ctx. These will be overwritten by
+// gtgo
+void scheduler_new_job(job *newjob, int job_number, double time,
+                       scheduler_info *sched_data) {
+    // TODO complete me!
+	core.job_count++;
+	job_info* new_job = (job_info*)newjob->metadata;
+	new_job -> id = job_number;
+    	new_job -> priority = (int)(sched_data-> priority);
+	new_job -> running_time = (ddddsched_data-> running_time);
+	new_job -> arrival_time = (unsigned) time;
+	new_job -> remaining_time = (int)(sched_data-> running_time);
+	new_job -> start_time =  time;
+	new_job -> last_start_time =  time;
+	new_job -> last_end_time = time;
+	
+	job_info* prev_job = (job_info*)priqueue_peek(&pqueue);
+	if(prev_next_job){
+		prev_next_job->remaining_time -= (time - prev_next_job->last_start_time);
+       		prev_next_job->last_start_time = time;
+	}
+	priqueue_offer(&pqueue, new_job);
+
+    	if (!(job_number == ((job_t *)priqueue_peek(&pqueue))->id)) 			return;
+    	if (pqueue_scheme == PPRI || pqueue_scheme == PSRTF || !core.job_running) {
+        	if (prev_next_job) {
+            	if (prev_next_job->start_time == time) 
+			prev_next_job->ever_started = false;
+            		prev_next_job->last_end_time = time;
+        }
+        new_job->ever_started = true;
+        new_job->start_time = curr_time;
+        core.job_running = true;
+        current_running_id = job_number;
+}
+
+job *scheduler_quantum_expired(job *job_evicted, double time) {
+    // TODO complete me!
+	
+    return NULL;
+}
+
+void scheduler_job_finished(job *job_done, double time) {
+    // TODO complete me!
+	priqueue_t *temp = (priqueue_t *)malloc(sizeof(priqueue_t));
+    	priqueue_init(temp, comparison_func);
+		
+	int index = ((job->info*)(job_done)->metadata)->id;
+	job->info* finished_job;
+	while((finished_job = (job_t *)priqueue_poll(&pqueue)) != NULL){
+		if(finished_job->id == index) break;
+		priqueue_offer(temp, finished_job);
+	}	
+	void *temp_job;
+    	while ((temp_job = priqueue_poll(temp)) != NULL) {
+        	priqueue_offer(&pqueue, temp_job);
+    	}	
+	
+	priqueue_destroy(temp);
+    	free(temp);
+		
+	finished_job->remaining_time = 0;
+    	finished_job->last_end_time = curr_time;
+    	finished_job->end_time = curr_time;
+
+	core.total_turnaround_time += (finished_job->end_time - finished_job->arrival_time);
+    	core.total_response_time += (finished_job->start_time - finished_job->arrival_time);
+    	core.total_waiting_time += (finished_job->end_time - finished_job->arrival_time - finished_job->running_time);
+
+    	free(finished_job);
+	
+	
+	
+}
+
+static void print_stats() {
+    fprintf(stderr, "turnaround     %f\n", scheduler_average_turnaround_time());
+    fprintf(stderr, "total_waiting  %f\n", scheduler_average_waiting_time());
+    fprintf(stderr, "total_response %f\n", scheduler_average_response_time());
+}
+
+double scheduler_average_waiting_time() {
+    // TODO complete me!
+    return core.total_waiting_time / core.job_count;
+}
+
+double scheduler_average_turnaround_time() {
+    // TODO complete me!
+    return core.total_turnaround_time / core.job_count;
+}
+
+double scheduler_average_response_time() {
+    // TODO complete me!
+    return core.total_response_time / core.job_count;
+}
+
+void scheduler_show_queue() {
+    // Implement this if you need it!
+}
+
+void scheduler_clean_up() {
+    priqueue_destroy(&pqueue);
+    print_stats();
+}

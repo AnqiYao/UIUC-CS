@@ -1,0 +1,296 @@
+[
+  {
+    "checksum": "f46997160c0b07c57257aa433333db4ac8ca40b4  mini_valgrind.c\n",
+    "timestamp": "2018-02-09 22:00:02.951820",
+    "revision": "28756",
+    "testcases": [
+      {
+        "log": "Trying to compile your code...\nSuccessfully compiled your code.\nIncorrect number of invalid addresses!",
+        "description": "Test with a program that frees or reallocs invalid addresses",
+        "ptsEarned": 0.0,
+        "ptsPossible": 1.0,
+        "name": "bad_free"
+      },
+      {
+        "log": "Incorrect invalid address count ",
+        "description": "Test calloc with a program that has no memory leaks",
+        "ptsEarned": 0.0,
+        "ptsPossible": 1.0,
+        "name": "calloc"
+      },
+      {
+        "log": "Incorrect number of leaks",
+        "description": "Test with a program that has a variety of issues",
+        "ptsEarned": 0.0,
+        "ptsPossible": 1.0,
+        "name": "full"
+      },
+      {
+        "log": "Incorrect number of leaks",
+        "description": "Test with a program that has memory leaks",
+        "ptsEarned": 0.0,
+        "ptsPossible": 1.0,
+        "name": "leak"
+      },
+      {
+        "log": "Incorrect invalid address count",
+        "description": "Test with a program that has no memory leaks",
+        "ptsEarned": 0.0,
+        "ptsPossible": 1.0,
+        "name": "no_leak"
+      },
+      {
+        "log": "Incorrect invalid address count",
+        "description": "Test realloc with a program that has no memory leaks",
+        "ptsEarned": 0.0,
+        "ptsPossible": 1.0,
+        "name": "realloc"
+      }
+    ]
+  },
+  {
+    "checksum": "f46997160c0b07c57257aa433333db4ac8ca40b4  mini_valgrind.c\n",
+    "timestamp": "2018-02-11 22:00:04.078058",
+    "revision": "32157",
+    "testcases": [
+      {
+        "log": "Trying to compile your code...\nSuccessfully compiled your code.\nIncorrect number of invalid addresses!",
+        "description": "Test with a program that frees or reallocs invalid addresses",
+        "ptsEarned": 0.0,
+        "ptsPossible": 1.0,
+        "name": "bad_free"
+      },
+      {
+        "log": "Incorrect invalid address count ",
+        "description": "Test calloc with a program that has no memory leaks",
+        "ptsEarned": 0.0,
+        "ptsPossible": 1.0,
+        "name": "calloc"
+      },
+      {
+        "log": "Incorrect number of leaks",
+        "description": "Test with a program that has a variety of issues",
+        "ptsEarned": 0.0,
+        "ptsPossible": 1.0,
+        "name": "full"
+      },
+      {
+        "log": "Incorrect number of leaks",
+        "description": "Test with a program that has memory leaks",
+        "ptsEarned": 0.0,
+        "ptsPossible": 1.0,
+        "name": "leak"
+      },
+      {
+        "log": "Incorrect invalid address count",
+        "description": "Test with a program that has no memory leaks",
+        "ptsEarned": 0.0,
+        "ptsPossible": 1.0,
+        "name": "no_leak"
+      },
+      {
+        "log": "Incorrect invalid address count",
+        "description": "Test realloc with a program that has no memory leaks",
+        "ptsEarned": 0.0,
+        "ptsPossible": 1.0,
+        "name": "realloc"
+      }
+    ]
+  },
+  {
+    "checksum": "f46997160c0b07c57257aa433333db4ac8ca40b4  mini_valgrind.c\n",
+    "timestamp": "2018-02-12 22:00:03.376285",
+    "revision": "35599",
+    "testcases": [
+      {
+        "log": "Trying to compile your code...\nSuccessfully compiled your code.\nIncorrect number of invalid addresses!",
+        "description": "Test with a program that frees or reallocs invalid addresses",
+        "ptsEarned": 0.0,
+        "ptsPossible": 1.0,
+        "name": "bad_free"
+      },
+      {
+        "log": "Incorrect invalid address count ",
+        "description": "Test calloc with a program that has no memory leaks",
+        "ptsEarned": 0.0,
+        "ptsPossible": 1.0,
+        "name": "calloc"
+      },
+      {
+        "log": "Incorrect number of leaks",
+        "description": "Test with a program that has a variety of issues",
+        "ptsEarned": 0.0,
+        "ptsPossible": 1.0,
+        "name": "full"
+      },
+      {
+        "log": "Incorrect number of leaks",
+        "description": "Test with a program that has memory leaks",
+        "ptsEarned": 0.0,
+        "ptsPossible": 1.0,
+        "name": "leak"
+      },
+      {
+        "log": "Incorrect invalid address count",
+        "description": "Test with a program that has no memory leaks",
+        "ptsEarned": 0.0,
+        "ptsPossible": 1.0,
+        "name": "no_leak"
+      },
+      {
+        "log": "Incorrect invalid address count",
+        "description": "Test realloc with a program that has no memory leaks",
+        "ptsEarned": 0.0,
+        "ptsPossible": 1.0,
+        "name": "realloc"
+      }
+    ]
+  },
+  {
+    "checksum": "170aaea6a00e6467702c0a7316b6b080e892afd3  mini_valgrind.c\n",
+    "timestamp": "2018-02-13 22:00:03.312940",
+    "revision": "37211",
+    "testcases": [
+      {
+        "log": "Trying to compile your code...\nFAILED TO COMPILE!\nmini_valgrind.c:25:2: error: statement requires expression of scalar type ('meta_data' (aka 'struct _meta_data') invalid)\n        if(head[sizeof(meta_data)])     return head[sizeof(meta_data)];\n        ^  ~~~~~~~~~~~~~~~~~~~~~~~\nmini_valgrind.c:25:37: error: returning 'meta_data' (aka 'struct _meta_data') from a function with incompatible result type 'void *'\n        if(head[sizeof(meta_data)])     return head[sizeof(meta_data)];\n                                               ^~~~~~~~~~~~~~~~~~~~~~~\nmini_valgrind.c:32:2: warning: implicit declaration of function 'assert' is invalid in C99 [-Wimplicit-function-declaration]\n        assert(num_elements != 0 && element_size != 0);\n        ^\nmini_valgrind.c:35:18: error: use of undeclared identifier 'size'\n        memset(head, 0, size);\n                        ^\nmini_valgrind.c:38:8: error: no member named 'instructino' in 'struct _meta_data'; did you mean 'instruction'?\n        head->instructino = instruction;\n              ^~~~~~~~~~~\n              instruction\n./mini_valgrind.h:15:11: note: 'instruction' declared here\n    void *instruction;\n          ^\nmini_valgrind.c:40:2: error: statement requires expression of scalar type ('meta_data' (aka 'struct _meta_data') invalid)\n        if(head[sizeof(meta_data)])     return head[sizeof(meta_data)];\n        ^  ~~~~~~~~~~~~~~~~~~~~~~~\nmini_valgrind.c:40:37: error: returning 'meta_data' (aka 'struct _meta_data') from a function with incompatible result type 'void *'\n        if(head[sizeof(meta_data)])     return head[sizeof(meta_data)];\n                                               ^~~~~~~~~~~~~~~~~~~~~~~\nmini_valgrind.c:53:12: error: member reference base type 'void' is not a structure or union\n        if(payload->request_size >= request_size)       total_memory_freed += (payload->request_size - request_size);\n           ~~~~~~~^ ~~~~~~~~~~~~\nmini_valgrind.c:53:74: error: member reference base type 'void' is not a structure or union\n        if(payload->request_size >= request_size)       total_memory_freed += (payload->request_size - request_size);\n                                                                               ~~~~~~~^ ~~~~~~~~~~~~\nmini_valgrind.c:54:56: error: member reference base type 'void' is not a structure or union\n        else    total_memory_requested += (request_size - payload->request_size);\n                                                          ~~~~~~~^ ~~~~~~~~~~~~\nmini_valgrind.c:56:2: error: statement requires expression of scalar type ('void' invalid)\n        if(payload[sizeof(meta_data)])  return payload[sizeof(meta_data)];\n        ^  ~~~~~~~~~~~~~~~~~~~~~~~~~~\nmini_valgrind.c:56:40: error: returning 'void' from a function with incompatible result type 'void *'\n        if(payload[sizeof(meta_data)])  return payload[sizeof(meta_data)];\n                                               ^~~~~~~~~~~~~~~~~~~~~~~~~~\nmini_valgrind.c:55:2: warning: ignoring return value of function declared with warn_unused_result attribute [-Wunused-result]\n        realloc(payload, sizeof(meta_data)+request_size);\n        ^~~~~~~ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n2 warnings and 11 errors generated.\nmake: *** [.objs/mini_valgrind-release.pic.o] Error 1\n",
+        "description": "Test with a program that frees or reallocs invalid addresses",
+        "ptsEarned": 0.0,
+        "ptsPossible": 1.0,
+        "name": "bad_free"
+      },
+      {
+        "log": "Trying to compile your code...\nFAILED TO COMPILE!\nmini_valgrind.c:25:2: error: statement requires expression of scalar type ('meta_data' (aka 'struct _meta_data') invalid)\n        if(head[sizeof(meta_data)])     return head[sizeof(meta_data)];\n        ^  ~~~~~~~~~~~~~~~~~~~~~~~\nmini_valgrind.c:25:37: error: returning 'meta_data' (aka 'struct _meta_data') from a function with incompatible result type 'void *'\n        if(head[sizeof(meta_data)])     return head[sizeof(meta_data)];\n                                               ^~~~~~~~~~~~~~~~~~~~~~~\nmini_valgrind.c:32:2: warning: implicit declaration of function 'assert' is invalid in C99 [-Wimplicit-function-declaration]\n        assert(num_elements != 0 && element_size != 0);\n        ^\nmini_valgrind.c:35:18: error: use of undeclared identifier 'size'\n        memset(head, 0, size);\n                        ^\nmini_valgrind.c:38:8: error: no member named 'instructino' in 'struct _meta_data'; did you mean 'instruction'?\n        head->instructino = instruction;\n              ^~~~~~~~~~~\n              instruction\n./mini_valgrind.h:15:11: note: 'instruction' declared here\n    void *instruction;\n          ^\nmini_valgrind.c:40:2: error: statement requires expression of scalar type ('meta_data' (aka 'struct _meta_data') invalid)\n        if(head[sizeof(meta_data)])     return head[sizeof(meta_data)];\n        ^  ~~~~~~~~~~~~~~~~~~~~~~~\nmini_valgrind.c:40:37: error: returning 'meta_data' (aka 'struct _meta_data') from a function with incompatible result type 'void *'\n        if(head[sizeof(meta_data)])     return head[sizeof(meta_data)];\n                                               ^~~~~~~~~~~~~~~~~~~~~~~\nmini_valgrind.c:53:12: error: member reference base type 'void' is not a structure or union\n        if(payload->request_size >= request_size)       total_memory_freed += (payload->request_size - request_size);\n           ~~~~~~~^ ~~~~~~~~~~~~\nmini_valgrind.c:53:74: error: member reference base type 'void' is not a structure or union\n        if(payload->request_size >= request_size)       total_memory_freed += (payload->request_size - request_size);\n                                                                               ~~~~~~~^ ~~~~~~~~~~~~\nmini_valgrind.c:54:56: error: member reference base type 'void' is not a structure or union\n        else    total_memory_requested += (request_size - payload->request_size);\n                                                          ~~~~~~~^ ~~~~~~~~~~~~\nmini_valgrind.c:56:2: error: statement requires expression of scalar type ('void' invalid)\n        if(payload[sizeof(meta_data)])  return payload[sizeof(meta_data)];\n        ^  ~~~~~~~~~~~~~~~~~~~~~~~~~~\nmini_valgrind.c:56:40: error: returning 'void' from a function with incompatible result type 'void *'\n        if(payload[sizeof(meta_data)])  return payload[sizeof(meta_data)];\n                                               ^~~~~~~~~~~~~~~~~~~~~~~~~~\nmini_valgrind.c:55:2: warning: ignoring return value of function declared with warn_unused_result attribute [-Wunused-result]\n        realloc(payload, sizeof(meta_data)+request_size);\n        ^~~~~~~ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n2 warnings and 11 errors generated.\nmake: *** [.objs/mini_valgrind-release.pic.o] Error 1\n",
+        "description": "Test calloc with a program that has no memory leaks",
+        "ptsEarned": 0.0,
+        "ptsPossible": 1.0,
+        "name": "calloc"
+      },
+      {
+        "log": "Trying to compile your code...\nFAILED TO COMPILE!\nmini_valgrind.c:25:2: error: statement requires expression of scalar type ('meta_data' (aka 'struct _meta_data') invalid)\n        if(head[sizeof(meta_data)])     return head[sizeof(meta_data)];\n        ^  ~~~~~~~~~~~~~~~~~~~~~~~\nmini_valgrind.c:25:37: error: returning 'meta_data' (aka 'struct _meta_data') from a function with incompatible result type 'void *'\n        if(head[sizeof(meta_data)])     return head[sizeof(meta_data)];\n                                               ^~~~~~~~~~~~~~~~~~~~~~~\nmini_valgrind.c:32:2: warning: implicit declaration of function 'assert' is invalid in C99 [-Wimplicit-function-declaration]\n        assert(num_elements != 0 && element_size != 0);\n        ^\nmini_valgrind.c:35:18: error: use of undeclared identifier 'size'\n        memset(head, 0, size);\n                        ^\nmini_valgrind.c:38:8: error: no member named 'instructino' in 'struct _meta_data'; did you mean 'instruction'?\n        head->instructino = instruction;\n              ^~~~~~~~~~~\n              instruction\n./mini_valgrind.h:15:11: note: 'instruction' declared here\n    void *instruction;\n          ^\nmini_valgrind.c:40:2: error: statement requires expression of scalar type ('meta_data' (aka 'struct _meta_data') invalid)\n        if(head[sizeof(meta_data)])     return head[sizeof(meta_data)];\n        ^  ~~~~~~~~~~~~~~~~~~~~~~~\nmini_valgrind.c:40:37: error: returning 'meta_data' (aka 'struct _meta_data') from a function with incompatible result type 'void *'\n        if(head[sizeof(meta_data)])     return head[sizeof(meta_data)];\n                                               ^~~~~~~~~~~~~~~~~~~~~~~\nmini_valgrind.c:53:12: error: member reference base type 'void' is not a structure or union\n        if(payload->request_size >= request_size)       total_memory_freed += (payload->request_size - request_size);\n           ~~~~~~~^ ~~~~~~~~~~~~\nmini_valgrind.c:53:74: error: member reference base type 'void' is not a structure or union\n        if(payload->request_size >= request_size)       total_memory_freed += (payload->request_size - request_size);\n                                                                               ~~~~~~~^ ~~~~~~~~~~~~\nmini_valgrind.c:54:56: error: member reference base type 'void' is not a structure or union\n        else    total_memory_requested += (request_size - payload->request_size);\n                                                          ~~~~~~~^ ~~~~~~~~~~~~\nmini_valgrind.c:56:2: error: statement requires expression of scalar type ('void' invalid)\n        if(payload[sizeof(meta_data)])  return payload[sizeof(meta_data)];\n        ^  ~~~~~~~~~~~~~~~~~~~~~~~~~~\nmini_valgrind.c:56:40: error: returning 'void' from a function with incompatible result type 'void *'\n        if(payload[sizeof(meta_data)])  return payload[sizeof(meta_data)];\n                                               ^~~~~~~~~~~~~~~~~~~~~~~~~~\nmini_valgrind.c:55:2: warning: ignoring return value of function declared with warn_unused_result attribute [-Wunused-result]\n        realloc(payload, sizeof(meta_data)+request_size);\n        ^~~~~~~ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n2 warnings and 11 errors generated.\nmake: *** [.objs/mini_valgrind-release.pic.o] Error 1\n",
+        "description": "Test with a program that has a variety of issues",
+        "ptsEarned": 0.0,
+        "ptsPossible": 1.0,
+        "name": "full"
+      },
+      {
+        "log": "Trying to compile your code...\nFAILED TO COMPILE!\nmini_valgrind.c:25:2: error: statement requires expression of scalar type ('meta_data' (aka 'struct _meta_data') invalid)\n        if(head[sizeof(meta_data)])     return head[sizeof(meta_data)];\n        ^  ~~~~~~~~~~~~~~~~~~~~~~~\nmini_valgrind.c:25:37: error: returning 'meta_data' (aka 'struct _meta_data') from a function with incompatible result type 'void *'\n        if(head[sizeof(meta_data)])     return head[sizeof(meta_data)];\n                                               ^~~~~~~~~~~~~~~~~~~~~~~\nmini_valgrind.c:32:2: warning: implicit declaration of function 'assert' is invalid in C99 [-Wimplicit-function-declaration]\n        assert(num_elements != 0 && element_size != 0);\n        ^\nmini_valgrind.c:35:18: error: use of undeclared identifier 'size'\n        memset(head, 0, size);\n                        ^\nmini_valgrind.c:38:8: error: no member named 'instructino' in 'struct _meta_data'; did you mean 'instruction'?\n        head->instructino = instruction;\n              ^~~~~~~~~~~\n              instruction\n./mini_valgrind.h:15:11: note: 'instruction' declared here\n    void *instruction;\n          ^\nmini_valgrind.c:40:2: error: statement requires expression of scalar type ('meta_data' (aka 'struct _meta_data') invalid)\n        if(head[sizeof(meta_data)])     return head[sizeof(meta_data)];\n        ^  ~~~~~~~~~~~~~~~~~~~~~~~\nmini_valgrind.c:40:37: error: returning 'meta_data' (aka 'struct _meta_data') from a function with incompatible result type 'void *'\n        if(head[sizeof(meta_data)])     return head[sizeof(meta_data)];\n                                               ^~~~~~~~~~~~~~~~~~~~~~~\nmini_valgrind.c:53:12: error: member reference base type 'void' is not a structure or union\n        if(payload->request_size >= request_size)       total_memory_freed += (payload->request_size - request_size);\n           ~~~~~~~^ ~~~~~~~~~~~~\nmini_valgrind.c:53:74: error: member reference base type 'void' is not a structure or union\n        if(payload->request_size >= request_size)       total_memory_freed += (payload->request_size - request_size);\n                                                                               ~~~~~~~^ ~~~~~~~~~~~~\nmini_valgrind.c:54:56: error: member reference base type 'void' is not a structure or union\n        else    total_memory_requested += (request_size - payload->request_size);\n                                                          ~~~~~~~^ ~~~~~~~~~~~~\nmini_valgrind.c:56:2: error: statement requires expression of scalar type ('void' invalid)\n        if(payload[sizeof(meta_data)])  return payload[sizeof(meta_data)];\n        ^  ~~~~~~~~~~~~~~~~~~~~~~~~~~\nmini_valgrind.c:56:40: error: returning 'void' from a function with incompatible result type 'void *'\n        if(payload[sizeof(meta_data)])  return payload[sizeof(meta_data)];\n                                               ^~~~~~~~~~~~~~~~~~~~~~~~~~\nmini_valgrind.c:55:2: warning: ignoring return value of function declared with warn_unused_result attribute [-Wunused-result]\n        realloc(payload, sizeof(meta_data)+request_size);\n        ^~~~~~~ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n2 warnings and 11 errors generated.\nmake: *** [.objs/mini_valgrind-release.pic.o] Error 1\n",
+        "description": "Test with a program that has memory leaks",
+        "ptsEarned": 0.0,
+        "ptsPossible": 1.0,
+        "name": "leak"
+      },
+      {
+        "log": "Trying to compile your code...\nFAILED TO COMPILE!\nmini_valgrind.c:25:2: error: statement requires expression of scalar type ('meta_data' (aka 'struct _meta_data') invalid)\n        if(head[sizeof(meta_data)])     return head[sizeof(meta_data)];\n        ^  ~~~~~~~~~~~~~~~~~~~~~~~\nmini_valgrind.c:25:37: error: returning 'meta_data' (aka 'struct _meta_data') from a function with incompatible result type 'void *'\n        if(head[sizeof(meta_data)])     return head[sizeof(meta_data)];\n                                               ^~~~~~~~~~~~~~~~~~~~~~~\nmini_valgrind.c:32:2: warning: implicit declaration of function 'assert' is invalid in C99 [-Wimplicit-function-declaration]\n        assert(num_elements != 0 && element_size != 0);\n        ^\nmini_valgrind.c:35:18: error: use of undeclared identifier 'size'\n        memset(head, 0, size);\n                        ^\nmini_valgrind.c:38:8: error: no member named 'instructino' in 'struct _meta_data'; did you mean 'instruction'?\n        head->instructino = instruction;\n              ^~~~~~~~~~~\n              instruction\n./mini_valgrind.h:15:11: note: 'instruction' declared here\n    void *instruction;\n          ^\nmini_valgrind.c:40:2: error: statement requires expression of scalar type ('meta_data' (aka 'struct _meta_data') invalid)\n        if(head[sizeof(meta_data)])     return head[sizeof(meta_data)];\n        ^  ~~~~~~~~~~~~~~~~~~~~~~~\nmini_valgrind.c:40:37: error: returning 'meta_data' (aka 'struct _meta_data') from a function with incompatible result type 'void *'\n        if(head[sizeof(meta_data)])     return head[sizeof(meta_data)];\n                                               ^~~~~~~~~~~~~~~~~~~~~~~\nmini_valgrind.c:53:12: error: member reference base type 'void' is not a structure or union\n        if(payload->request_size >= request_size)       total_memory_freed += (payload->request_size - request_size);\n           ~~~~~~~^ ~~~~~~~~~~~~\nmini_valgrind.c:53:74: error: member reference base type 'void' is not a structure or union\n        if(payload->request_size >= request_size)       total_memory_freed += (payload->request_size - request_size);\n                                                                               ~~~~~~~^ ~~~~~~~~~~~~\nmini_valgrind.c:54:56: error: member reference base type 'void' is not a structure or union\n        else    total_memory_requested += (request_size - payload->request_size);\n                                                          ~~~~~~~^ ~~~~~~~~~~~~\nmini_valgrind.c:56:2: error: statement requires expression of scalar type ('void' invalid)\n        if(payload[sizeof(meta_data)])  return payload[sizeof(meta_data)];\n        ^  ~~~~~~~~~~~~~~~~~~~~~~~~~~\nmini_valgrind.c:56:40: error: returning 'void' from a function with incompatible result type 'void *'\n        if(payload[sizeof(meta_data)])  return payload[sizeof(meta_data)];\n                                               ^~~~~~~~~~~~~~~~~~~~~~~~~~\nmini_valgrind.c:55:2: warning: ignoring return value of function declared with warn_unused_result attribute [-Wunused-result]\n        realloc(payload, sizeof(meta_data)+request_size);\n        ^~~~~~~ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n2 warnings and 11 errors generated.\nmake: *** [.objs/mini_valgrind-release.pic.o] Error 1\n",
+        "description": "Test with a program that has no memory leaks",
+        "ptsEarned": 0.0,
+        "ptsPossible": 1.0,
+        "name": "no_leak"
+      },
+      {
+        "log": "Trying to compile your code...\nFAILED TO COMPILE!\nmini_valgrind.c:25:2: error: statement requires expression of scalar type ('meta_data' (aka 'struct _meta_data') invalid)\n        if(head[sizeof(meta_data)])     return head[sizeof(meta_data)];\n        ^  ~~~~~~~~~~~~~~~~~~~~~~~\nmini_valgrind.c:25:37: error: returning 'meta_data' (aka 'struct _meta_data') from a function with incompatible result type 'void *'\n        if(head[sizeof(meta_data)])     return head[sizeof(meta_data)];\n                                               ^~~~~~~~~~~~~~~~~~~~~~~\nmini_valgrind.c:32:2: warning: implicit declaration of function 'assert' is invalid in C99 [-Wimplicit-function-declaration]\n        assert(num_elements != 0 && element_size != 0);\n        ^\nmini_valgrind.c:35:18: error: use of undeclared identifier 'size'\n        memset(head, 0, size);\n                        ^\nmini_valgrind.c:38:8: error: no member named 'instructino' in 'struct _meta_data'; did you mean 'instruction'?\n        head->instructino = instruction;\n              ^~~~~~~~~~~\n              instruction\n./mini_valgrind.h:15:11: note: 'instruction' declared here\n    void *instruction;\n          ^\nmini_valgrind.c:40:2: error: statement requires expression of scalar type ('meta_data' (aka 'struct _meta_data') invalid)\n        if(head[sizeof(meta_data)])     return head[sizeof(meta_data)];\n        ^  ~~~~~~~~~~~~~~~~~~~~~~~\nmini_valgrind.c:40:37: error: returning 'meta_data' (aka 'struct _meta_data') from a function with incompatible result type 'void *'\n        if(head[sizeof(meta_data)])     return head[sizeof(meta_data)];\n                                               ^~~~~~~~~~~~~~~~~~~~~~~\nmini_valgrind.c:53:12: error: member reference base type 'void' is not a structure or union\n        if(payload->request_size >= request_size)       total_memory_freed += (payload->request_size - request_size);\n           ~~~~~~~^ ~~~~~~~~~~~~\nmini_valgrind.c:53:74: error: member reference base type 'void' is not a structure or union\n        if(payload->request_size >= request_size)       total_memory_freed += (payload->request_size - request_size);\n                                                                               ~~~~~~~^ ~~~~~~~~~~~~\nmini_valgrind.c:54:56: error: member reference base type 'void' is not a structure or union\n        else    total_memory_requested += (request_size - payload->request_size);\n                                                          ~~~~~~~^ ~~~~~~~~~~~~\nmini_valgrind.c:56:2: error: statement requires expression of scalar type ('void' invalid)\n        if(payload[sizeof(meta_data)])  return payload[sizeof(meta_data)];\n        ^  ~~~~~~~~~~~~~~~~~~~~~~~~~~\nmini_valgrind.c:56:40: error: returning 'void' from a function with incompatible result type 'void *'\n        if(payload[sizeof(meta_data)])  return payload[sizeof(meta_data)];\n                                               ^~~~~~~~~~~~~~~~~~~~~~~~~~\nmini_valgrind.c:55:2: warning: ignoring return value of function declared with warn_unused_result attribute [-Wunused-result]\n        realloc(payload, sizeof(meta_data)+request_size);\n        ^~~~~~~ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n2 warnings and 11 errors generated.\nmake: *** [.objs/mini_valgrind-release.pic.o] Error 1\n",
+        "description": "Test realloc with a program that has no memory leaks",
+        "ptsEarned": 0.0,
+        "ptsPossible": 1.0,
+        "name": "realloc"
+      }
+    ]
+  },
+  {
+    "checksum": "fa067986ddcdd40cb1b0e2f8eb8b96590a0cb1ba  mini_valgrind.c\n",
+    "timestamp": "2018-02-14 12:00:03.372680",
+    "revision": "37907",
+    "testcases": [
+      {
+        "log": "Trying to compile your code...\nSuccessfully compiled your code.",
+        "description": "Test with a program that frees or reallocs invalid addresses",
+        "ptsEarned": 1.0,
+        "ptsPossible": 1.0,
+        "name": "bad_free"
+      },
+      {
+        "log": "Calloc not zero'd out",
+        "description": "Test calloc with a program that has no memory leaks",
+        "ptsEarned": 0.0,
+        "ptsPossible": 1.0,
+        "name": "calloc"
+      },
+      {
+        "log": "Trying to compile your code...\nSuccessfully compiled your code.",
+        "description": "Test with a program that has a variety of issues",
+        "ptsEarned": 1.0,
+        "ptsPossible": 1.0,
+        "name": "full"
+      },
+      {
+        "log": "Incorrect number of leaks",
+        "description": "Test with a program that has memory leaks",
+        "ptsEarned": 0.0,
+        "ptsPossible": 1.0,
+        "name": "leak"
+      },
+      {
+        "log": "Incorrect invalid address count",
+        "description": "Test with a program that has no memory leaks",
+        "ptsEarned": 0.0,
+        "ptsPossible": 1.0,
+        "name": "no_leak"
+      },
+      {
+        "log": "Incorrect invalid address count",
+        "description": "Test realloc with a program that has no memory leaks",
+        "ptsEarned": 0.0,
+        "ptsPossible": 1.0,
+        "name": "realloc"
+      }
+    ]
+  },
+  {
+    "revision": "39852",
+    "checksum": "337c03698c7274063034862115e90faf812ae5f4  mini_valgrind.c\n",
+    "timestamp": "2018-02-15 00:00:03.544798",
+    "testcases": [
+      {
+        "log": "Trying to compile your code...\nSuccessfully compiled your code.",
+        "description": "Test with a program that frees or reallocs invalid addresses",
+        "ptsEarned": 1.0,
+        "ptsPossible": 1.0,
+        "name": "bad_free"
+      },
+      {
+        "log": "Trying to compile your code...\nSuccessfully compiled your code.",
+        "description": "Test calloc with a program that has no memory leaks",
+        "ptsEarned": 1.0,
+        "ptsPossible": 1.0,
+        "name": "calloc"
+      },
+      {
+        "log": "Trying to compile your code...\nSuccessfully compiled your code.",
+        "description": "Test with a program that has a variety of issues",
+        "ptsEarned": 1.0,
+        "ptsPossible": 1.0,
+        "name": "full"
+      },
+      {
+        "log": "Trying to compile your code...\nSuccessfully compiled your code.",
+        "description": "Test with a program that has memory leaks",
+        "ptsEarned": 1.0,
+        "ptsPossible": 1.0,
+        "name": "leak"
+      },
+      {
+        "log": "Trying to compile your code...\nSuccessfully compiled your code.",
+        "description": "Test with a program that has no memory leaks",
+        "ptsEarned": 1.0,
+        "ptsPossible": 1.0,
+        "name": "no_leak"
+      },
+      {
+        "log": "Trying to compile your code...\nSuccessfully compiled your code.",
+        "description": "Test realloc with a program that has no memory leaks",
+        "ptsEarned": 1.0,
+        "ptsPossible": 1.0,
+        "name": "realloc"
+      }
+    ]
+  }
+]

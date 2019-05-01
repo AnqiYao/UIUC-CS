@@ -1,0 +1,222 @@
+/**
+* Malloc Lab
+* CS 241 - Spring 2018
+*/
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <unistd.h>
+
+#define BLOCK_SIZE sizeof(struct block)
+#define TAG_SIZE sizeof(struct tag)
+
+typedef struct block{
+	size_t size;
+	void* curr;
+        struct block *next;
+        struct block *prev;
+}block;
+
+typedef struct tag{
+	size_t size_tag;
+}tag;
+	
+static struct block freelist[100000];
+ 
+static int freecount = 0;
+
+static struct block* head = (void*)NULL;
+
+static struct block* last = (void*)NULL;
+
+static size_t maximum = 0;
+
+void* request_space(size_t size){
+	struct tag* result;
+	result = sbrk(size + TAG_SIZE);
+	if(result == (void*)-1)	return NULL;
+	result->size_tag = size;
+	return (result+1);
+}
+
+int check_connect(void* ptr, size_t size){
+	if(head == NULL)	return 0;
+	else {
+		struct block* temp = head;
+		while(temp!=NULL){	
+//			struct tag* temp_tag = (tag*)((void*)temp->curr - TAG_SIZE);
+			if((temp->curr + temp->size + TAG_SIZE) == ptr)	{
+				temp->size += (size+TAG_SIZE);
+				int a = check_connect(temp->curr,temp->size);
+				if(a == 1){
+					if(temp == head){
+                                		head = temp->next;
+                        		        temp->next->prev = NULL;
+                        		}else if(last == temp){
+                                		temp->prev->next = NULL;
+                                		last = temp->prev;
+	                       	 	}else{	
+        	        	                temp->prev->next = temp->next;
+                	        	        temp->next->prev = temp->prev;
+					}
+					return 1;	
+				}
+				else{	
+					if(temp->size > maximum)	maximum = temp->size;
+					return 1;
+				}
+			}
+			else if((ptr+size+TAG_SIZE) == temp->curr){
+				temp->curr = ptr;
+				temp->size += size + TAG_SIZE;
+				int a = check_connect(temp->curr,temp->size);
+				if(a == 1){
+					if(temp == head){
+                                		head = temp->next;
+					        temp->next->prev = NULL;
+                        		}else if(last == temp){
+                                		temp->prev->next = NULL;
+                                		last = temp->prev;
+	                       	 	}else{	
+        	        	                temp->prev->next = temp->next;
+                	        	        temp->next->prev = temp->prev;
+					}
+					return 1;	
+				}
+				else{	
+					if(temp->size > maximum)	maximum = temp->size;
+					return 1;
+				}
+			}
+			temp = temp->next;
+		}
+		return 0;
+	}
+}
+
+
+void become_free(void* ptr, size_t size){
+	int flag = check_connect(ptr,size);
+	if(flag == 1)	return;	//merge into big free block
+	if(flag == 2)	return;	//may be needed in the future
+//	freelist[freecount] = temp;
+//	freecount ++; // put it in the free list
+	struct block* temp = &freelist[freecount];
+	temp->size = size;
+	temp->curr = ptr;
+	if(last!=NULL){
+		last->next = temp;
+		temp->prev = last;
+		temp->next = NULL;
+		last = temp;
+	}
+	else{
+		temp->next = NULL;
+		temp->prev = NULL;
+		head = temp;
+		last = temp;
+	}	
+	freecount++;
+	if(size >= maximum)	maximum = size;
+}
+
+void* find_freelist(size_t size){
+	struct block* temp = head;
+	while(temp!=NULL){
+		if(temp->size > (size + TAG_SIZE)){
+			struct tag* temp_tag = (tag*)((void*)temp->curr - TAG_SIZE);		
+			struct tag* new_tag = (struct tag*)(temp->curr+size);			
+			temp->size = temp->size - size - TAG_SIZE;
+			new_tag -> size_tag = temp->size;
+			temp_tag->size_tag = size;
+			temp->curr = (void*)(new_tag+1);
+			return (temp_tag + 1);
+		}
+		else if(temp->size > size){
+			if(temp == head){
+				head = temp->next;
+				if(last == temp)	last = temp->next;
+				if(head!=NULL)
+					temp->next->prev = NULL;
+				return temp->curr;
+			}else if(last == temp){
+				temp->prev->next = NULL;
+				last = temp->prev;
+				return temp->curr;
+			}else{
+				temp->prev->next = temp->next;
+				temp->next->prev = temp->prev;
+				return temp->curr;
+			}		
+		}	
+		temp = temp->next;
+	}
+	return NULL;
+}
+
+void *malloc(size_t size) {
+    // implement malloc!
+    // say we have never malloc anything on the heap before     
+        void* temp;
+        if(head == NULL){
+                temp = request_space(size);
+                if(temp == NULL) return NULL;
+                return temp;
+        }
+        else {
+		if(size > maximum){
+			temp = request_space(size);
+			if(temp == NULL)	return NULL;
+		}
+		else{
+			void* temp = find_freelist(size);
+			if(temp == NULL){
+				temp = request_space(size);
+                        	if(temp == NULL)        return NULL;
+			}
+			return temp;
+		}
+        }
+	return temp;
+}
+
+
+void *calloc(size_t num, size_t size) {
+    // implement calloc!
+    void* result = malloc(num*size);
+    memset(result, 0, num*size);
+    return result; 
+}
+
+
+void free(void *ptr) {
+	// implement free!
+	struct tag* temp = (struct tag*)(ptr - TAG_SIZE);
+	become_free(ptr, temp->size_tag);		
+}
+
+
+void *realloc(void *ptr, size_t size) {
+    // implement realloc!
+	if(ptr == NULL)		return malloc(size);
+	struct tag* thismeta = (struct tag*)(ptr-TAG_SIZE);
+	if(thismeta->size_tag > size){
+		if(thismeta->size_tag - size > TAG_SIZE){
+			struct tag* nextmeta = (struct tag*)(ptr+thismeta->size_tag);
+			nextmeta->size_tag = size - thismeta->size_tag - TAG_SIZE;
+			free(nextmeta+1);
+		}
+		thismeta->size_tag = size;
+		return (thismeta+1);
+	}
+	else if(thismeta->size_tag < size){
+		void* result = malloc(size);
+		if(result == NULL)	return NULL;
+		memcpy(result,ptr,thismeta->size_tag);
+		free(ptr);
+		return result;			
+	}
+	else 
+		return ptr;
+}

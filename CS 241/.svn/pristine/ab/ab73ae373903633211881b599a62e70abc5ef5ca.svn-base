@@ -1,0 +1,86 @@
+/**
+* Networking Lab
+* CS 241 - Spring 2018
+*/
+/*
+#include "common.h"
+
+size_t read_from_socket(int sock_fd, char* line, size_t num){
+    size_t byte_read = 0;
+    while (byte_read < num) {
+        ssize_t new_read = read(sock_fd, line + byte_read, num - byte_read);
+        if (new_read == 0)
+            return byte_read;
+        if (new_read == -1 && errno == EINTR)
+            continue;
+        if (new_read == -1 && errno != EINTR)
+            return -1;
+        byte_read += new_read;
+    }
+    return byte_read;
+}
+
+size_t write_to_socket(int sock_fd, const char* line, size_t num){
+    size_t byte_write = 0;
+    while (byte_write < num) {
+        ssize_t new_write = write(sock_fd, line + byte_write, num - byte_write);
+        if (new_write == 0)
+            return byte_write;
+        if (new_write == -1 && errno == EINTR)
+            continue;
+        if (new_write == -1 && errno != EINTR)
+            return -1;
+        byte_write += new_write;
+    }
+    return byte_write;
+}
+*/
+#include "common.h"
+
+ssize_t get_message_size(int socket) {
+    uint64_t size;
+    ssize_t read_bytes =
+        read_all_from_socket(socket, (char *)&size, 8);
+    if (read_bytes == 0 || read_bytes == -1)
+        return read_bytes;
+
+    return (ssize_t)size;
+}
+
+ssize_t write_message_size(size_t size, int socket) {
+    uint64_t ssize = size;
+    ssize_t write_bytes =
+        write_all_to_socket(socket, (char *)&ssize, 8);
+
+    return write_bytes;
+}
+
+size_t read_all_from_socket(int sock_fd, char *buffer, size_t count) {
+    size_t size_read = 0;
+    while (size_read < count) {
+        ssize_t curr_read = read(sock_fd, buffer + size_read, count - size_read);
+        if (curr_read == 0)    // connection lost
+            return size_read;
+        if (curr_read == -1 && errno == EINTR)
+            continue;
+        if (curr_read == -1 && errno != EINTR)
+            return -1;
+        size_read += curr_read;
+    }
+    return size_read;
+}
+
+size_t write_all_to_socket(int sock_fd, const char *buffer, size_t count) {
+    size_t size_write = 0;
+    while (size_write < count) {
+        ssize_t curr_write = write(sock_fd, buffer + size_write, count - size_write);
+        if (curr_write == 0)    // connection lost
+            return size_write;
+        if (curr_write == -1 && errno == EINTR)
+            continue;
+        if (curr_write == -1 && errno != EINTR)
+            return -1;
+        size_write += curr_write;
+    }
+    return size_write;
+}

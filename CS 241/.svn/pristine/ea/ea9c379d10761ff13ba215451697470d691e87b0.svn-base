@@ -1,0 +1,303 @@
+/**
+* Malloc Lab
+* CS 241 - Spring 2018
+*/
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <unistd.h>
+
+#define BLOCK_SIZE sizeof(struct block)
+
+struct block{
+        size_t size;
+        int free;
+	size_t remained;
+        struct block *next;
+        struct block *prev;
+};
+
+static char* list[60000000];
+
+static struct block* head = (void*)NULL;
+
+static struct block* last = (void*)NULL;
+
+static size_t maximum = 0;
+
+void split(struct block* curr, size_t size){
+	void* temp = (curr + 1);
+	struct block* this_meta = (struct block*)(temp + size);
+	this_meta->size = (curr->size - size - BLOCK_SIZE);
+	this_meta->free = 1;
+	this_meta->prev = curr;
+	if(curr->next == NULL){
+		last = this_meta;
+		this_meta->next = NULL;
+		curr->size = size;
+		curr->next = this_meta;
+		curr->free = 0;
+		return;
+	}
+	this_meta->next = curr->next;
+	(curr->next)->prev = this_meta;
+	curr->next = this_meta;
+	curr->free = 0;
+	curr->size = size;
+}
+
+void merge(struct block* curr, int num){
+	if(num == 3){
+		curr->size += curr->next->size + curr->next->next->size + 2*BLOCK_SIZE;
+		if(curr->next->next->next == NULL){
+			curr->next = NULL;
+			last = curr;
+		}
+		else{
+			curr->next->next->next->prev = curr;
+			curr->next = curr->next->next->next;
+		}
+		curr->free = 1;
+	}
+	else if(num == 2){
+		curr->size += BLOCK_SIZE + curr->next->size;
+		if(curr->next->next == NULL){
+			curr->next = NULL;
+			last = curr;
+		}
+		else{
+			curr->next->next->prev = curr;
+			curr->next = curr->next->next;
+		}
+		curr->free = 1;
+	}
+	if(curr->size > maximum)	maximum = curr->size;
+}
+
+struct block* find_free_space(size_t size){
+	struct block* curr = head;
+	while(curr != NULL){
+		if(curr->size >= size && (curr->free == 1)){
+			if((curr->size - size - BLOCK_SIZE) > 0){
+				split(curr,size);
+			//to make the extra space store in the next block
+			}
+			return curr;	
+		}	
+		curr = curr->next;
+	}	
+	return NULL;
+}
+
+struct block* request_space(struct block* curr, size_t size){
+	struct block* result;
+	result = sbrk(0);
+	void *request_next = sbrk(size + BLOCK_SIZE);	
+//request failed 
+	if(request_next == (void*)-1)	return NULL;
+	else if(curr != NULL){
+		curr->next = result;
+		last = result;
+	}
+	result->prev = curr;
+	result->size = size;
+	result->next = NULL;
+	result->free = 0;
+	return result;	
+}
+
+
+/**
+ * Allocate memory block
+ *
+ * Allocates a block of size bytes of memory, returning a pointer to the
+ * beginning of the block.  The content of the newly allocated block of
+ * memory is not initialized, remaining with indeterminate values.
+ *
+ * @param size
+ *    Size of the memory block, in bytes.
+ *
+ * @return
+ *    On success, a pointer to the memory block allocated by the function.
+ *
+ *    The type of this pointer is always void*, which can be cast to the
+ *    desired type of data pointer in order to be dereferenceable.
+ *
+ *    If the function failed to allocate the requested block of memory,
+ *    a null pointer is returned.
+ *
+ * @see h ttp://www.cplusplus.com/reference/clibrary/cstdlib/malloc/
+ */
+void *malloc(size_t size) {
+    // implement malloc!
+    // say we have never malloc anything on the heap before     
+        struct block* temp;
+        if(head == NULL){
+                temp = request_space(NULL, size);
+                if(temp == NULL) return NULL;
+                head = temp;
+                last = temp;
+        }
+        else {
+		if(size<=maximum){
+                	temp = find_free_space(size);
+                	if(temp == NULL){
+                        	temp = request_space(last, size);
+                        	if(temp == NULL)        return NULL;
+                	}
+		}
+		else{
+			temp = request_space(last,size);
+			if(temp == NULL)	return NULL;
+		}
+                temp->free = 0;
+        }
+
+    return (temp+1);
+}
+
+
+/**
+ * Allocate space for array in memory
+ *
+ * Allocates a block of memory for an array of num elements, each of them size
+ * bytes long, and initializes all its bits to zero. The effective result is
+ * the allocation of an zero-initialized memory block of (num * size) bytes.
+ *
+ * @param num
+ *    Number of elements to be allocated.
+ * @param size
+ *    Size of elements.
+ *
+ * @return
+ *    A pointer to the memory block allocated by the function.
+ *
+ *    The type of this pointer is always void*, which can be cast to the
+ *    desired type of data pointer in order to be dereferenceable.
+ *
+ *    If the function failed to allocate the requested block of memory, a
+ *    NULL pointer is returned.
+ *
+ * @see http://www.cplusplus.com/reference/clibrary/cstdlib/calloc/
+ */
+
+
+void *calloc(size_t num, size_t size) {
+    // implement calloc!
+    void* result = malloc(num*size);
+    memset(result, 0, num*size);
+    return result; 
+}
+
+/**
+ * Deallocate space in memory
+ *
+ * A block of memory previously allocated using a call to malloc(),
+ * calloc() or realloc() is deallocated, making it available again for
+ * further allocations.
+ *
+ * Notice that this function leaves the value of ptr unchanged, hence
+ * it still points to the same (now invalid) location, and not to the
+ * null pointer.
+ *
+ * @param ptr
+ *    Pointer to a memory block previously allocated with malloc(),
+ *    calloc() or realloc() to be deallocated.  If a null pointer is
+ *    passed as argument, no action occurs.
+ */
+void free(void *ptr) {
+	// implement free!
+	if(ptr == NULL)	return;
+	struct block* temp = (struct block*) (ptr - BLOCK_SIZE);
+	if(temp->free == 1)	return;
+	else{
+		if(temp->prev != NULL && temp->prev->free == 1 && temp->next != NULL && temp->next->free == 1){
+			temp->free = 1;
+			merge(temp->prev,3);
+		}
+		else if(temp->prev != NULL && temp->prev->free == 1){
+			temp->free = 1;
+			merge(temp->prev,2);
+		}
+		else if(temp->next != NULL && temp->next->free == 1){
+			merge(temp,2);
+			temp->free = 1;
+		}else{
+			temp->free = 1;
+			if(temp->size > maximum)
+				maximum = temp->size;
+		}
+	}
+}
+
+/**
+ * Reallocate memory block
+ *
+ * The size of the memory block pointed to by the ptr parameter is changed
+ * to the size bytes, expanding or reducing the amount of memory available
+ * in the block.
+ *
+ * The function may move the memory block to a new location, in which case
+ * the new location is returned. The content of the memory block is preserved
+ * up to the lesser of the new and old sizes, even if the block is moved. If
+ * the new size is larger, the value of the newly allocated portion is
+ * indeterminate.
+ *
+ * In case that ptr is NULL, the function behaves exactly as malloc, assigning
+ * a new block of size bytes and returning a pointer to the beginning of it.
+ *
+ * In case that the size is 0, the memory previously allocated in ptr is
+ * deallocated as if a call to free was made, and a NULL pointer is returned.
+ *
+ * @param ptr
+ *    Pointer to a memory block previously allocated with malloc(), calloc()
+ *    or realloc() to be reallocated.
+ *
+ *    If this is NULL, a new block is allocated and a pointer to it is
+ *    returned by the function.
+ *
+ * @param size
+ *    New size for the memory block, in bytes.
+ *
+ *    If it is 0 and ptr points to an existing block of memory, the memory
+ *    block pointed by ptr is deallocated and a NULL pointer is returned.
+ *
+ * @return
+ *    A pointer to the reallocated memory block, which may be either the
+ *    same as the ptr argument or a new location.
+ *
+ *    The type of this pointer is void*, which can be cast to the desired
+ *    type of data pointer in order to be dereferenceable.
+ *
+ *    If the function failed to allocate the requested block of memory,
+ *    a NULL pointer is returned, and the memory block pointed to by
+ *    argument ptr is left unchanged.
+ *
+ * @see http://www.cplusplus.com/reference/clibrary/cstdlib/realloc/
+ */
+void *realloc(void *ptr, size_t size) {
+    // implement realloc!
+    	if(size == 0 && ptr == NULL)	return NULL;
+    	if(size == 0){
+		free(ptr);
+		return NULL;
+	}
+	if(ptr == NULL)		return malloc(size);
+	struct block* thismeta = (struct block*)(ptr-BLOCK_SIZE);
+	if(thismeta->size > size){
+		split(thismeta,size);
+		free(thismeta->next + 1);
+		return (thismeta+1);
+	}
+	else if(thismeta->size < size){
+		memcpy(list,ptr,thismeta->size);
+		free(ptr);	
+		void* result = malloc(size);
+		memcpy(result, list, thismeta->size); 
+		return result;	
+	}
+	else 
+		return ptr;
+}
+

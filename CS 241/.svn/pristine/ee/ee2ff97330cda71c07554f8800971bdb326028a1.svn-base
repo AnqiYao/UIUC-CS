@@ -1,0 +1,29 @@
+/**
+* Utilities Unleashed Lab
+* CS 241 - Spring 2018
+*/
+
+#include <format.h>
+
+
+int main(int argc, char *argv[]) {
+	if(argc<2) {
+		print_time_usage();
+	}
+	pid_t child_id = fork();
+	if (child_id == -1) { 
+		print_fork_failed();
+	}
+	else if (child_id > 0) { 
+    		int status;
+		waitpid( child_id, &status, 0 );
+		double teme = clock_gettime() - start;
+		printf("%d\n",teme);
+		return 1;		
+	}
+	else{	
+		double start = clock_gettime();
+		execvp(argv[1],argv[1],arg[2],NULL);
+		print_exec_failed();
+	}
+}

@@ -1,0 +1,159 @@
+/**
+* Text Editor Lab
+* CS 241 - Spring 2018
+*/
+
+
+#include <assert.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <sys/stat.h>
+#include <fcntl.h>
+#include <unistd.h>
+
+#include "document.h"
+#include "vector.h"
+
+struct document {
+    vector *vector;
+};
+
+document *document_create() {
+    document *this = (document *)malloc(sizeof(document));
+    assert(this);
+    this->vector = vector_create(string_copy_constructor, string_destructor,
+                                 string_default_constructor);
+    return this;
+}
+
+
+/**
+ * Writes the content of 'document' to a file located at 'path_to_file'.
+ *
+ * For each line in 'document' write it to the file located at 'path_to_file'
+ * with the format
+ * ("%s\n", line), where line is a null terminated string.
+ *
+ * The file may or may not exist already. If it does exist, it should be
+ * overwritten.
+ * You should set the permissions so that anyone can read or write to the
+ * document.
+ */
+void document_write_to_file(document *this, const char *path_to_file) {
+    assert(this);
+    assert(path_to_file);
+    // see the comment in the header file for a description of how to do this!
+    // TODO: your code here!
+    int fildes = open(path_to_file, O_CREAT|O_TRUNC|O_RDWR, S_IRUSR|S_IWUSR);
+    size_t n = document_size(this);
+    for(size_t i = 1; i <= n; i++){
+      const char * line = document_get_line(this, i);
+      write(fildes, line, strlen(line)+1);
+      write(fildes, "\n", 1);
+    }
+    close(fildes);
+}
+
+
+/**
+ * Creates a document and loads it with the information from
+ * the file located at 'path_to_file'.
+ *
+ * Do NOT store new lines in your underlying vector!
+ *
+ * Note if for any reason you can not open the file,
+ * then you should treat it as an empty file and move on.
+ */
+document *document_create_from_file(const char *path_to_file) {
+    assert(path_to_file);
+    // this function will read a file which is created by document_write_to_file
+    // TODO: your code here!
+    // OK
+    document * doc = document_create();
+    FILE * fp = fopen(path_to_file, "r+");
+    if(fp == NULL) return doc;
+    char * line = NULL;
+    size_t capacity = 0;
+    //ssize_t bytesread;
+    size_t line_number = 1;
+
+    while(1){
+      //bytesread = getline(&line, &capacity, fp);
+      if(getline(&line, &capacity, fp) == -1) break;
+      line[strlen(line)+1] = '\0';
+      document_set_line(doc, line_number, line);
+      line_number++;
+    }
+    free (line);
+    fclose(fp);
+    return doc;
+}
+
+void document_destroy(document *this) {
+    assert(this);
+    vector_destroy(this->vector);
+    free(this);
+}
+
+size_t document_size(document *this) {
+    assert(this);
+    return vector_size(this->vector);
+}
+
+void document_set_line(document *this, size_t line_number, const char *str) {
+    assert(this);
+    assert(str);
+    size_t index = line_number - 1;
+    vector_set(this->vector, index, (void *)str);
+}
+
+const char *document_get_line(document *this, size_t line_number) {
+    assert(this);
+    assert(line_number > 0);
+    size_t index = line_number - 1;
+    return (const char *)vector_get(this->vector, index);
+}
+
+
+/**
+ * Inserts a copy of 'str' into the 'line_number'-th line of 'document'.
+ *
+ * Note: Inserting into the middle of the document shifts all subsequent lines
+ * down and inserting past the end fills the gap with empty strings.
+ *
+ * Note: lines in document are 1-indexed.
+ *
+ * Note: Inserting NULL is invalid. The document can only contain non-NULL
+ * entries.
+ */
+void document_insert_line(document *this, size_t line_number, const char *str) {
+    assert(this);
+    assert(str);
+    // TODO: your code here!
+    // How are you going to handle the case when the user wants to
+    // insert a line past the enresultd of the document?
+    if(str == NULL) return;
+    size_t number = document_size(this);
+    if(line_number > number){
+      size_t count;
+		  for(count = 1; count < (line_number - document_size(this)); count++){
+			     const char * input = "";
+		       document_set_line(this, document_size(this)+count, input);
+		  }
+      document_set_line(this, number, str);
+      return;
+    }
+    const char * line = document_get_line(this, line_number);
+    document_set_line(this, line_number, str);
+    line_number++;
+    document_insert_line(this, line_number, line);
+}
+
+void document_delete_line(document *this, size_t line_number) {
+    // OK
+    assert(this);
+    assert(line_number > 0);
+    size_t index = line_number - 1;
+    vector_erase(this->vector, index);
+}

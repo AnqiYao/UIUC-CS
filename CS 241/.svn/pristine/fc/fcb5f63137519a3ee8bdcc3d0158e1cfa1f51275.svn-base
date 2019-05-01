@@ -1,0 +1,63 @@
+/**
+* Mini Valgrind Lab
+* CS 241 - Spring 2018
+*/
+
+#include "mini_valgrind.h"
+#include <stdio.h>
+#include <string.h>
+
+meta_data *head;
+size_t total_memory_requested;
+size_t total_memory_freed;
+size_t invalid_addresses;
+
+void *mini_malloc(size_t request_size, const char *filename,
+                  void *instruction) {
+    // your code here
+	if(request_size == 0)	return NULL;
+	total_memory_requested += request_size;
+	head = malloc(request_size + sizeof(meta_data));
+	if(!head)	return NULL;
+	head->filename = filename;
+	head->request_size = request_size;
+	head->instruction = instruction;
+	head->next = NULL;
+	return head+sizeof(meta_data);
+}
+
+void *mini_calloc(size_t num_elements, size_t element_size,
+                  const char *filename, void *instruction) {
+    // your code here
+	assert(num_elements != 0 && element_size != 0);
+	total_memory_requested += (num_elements * element_size);
+	head = malloc(sizeof(meta_data)+num_elements*element_size);
+	if(!head)	return NULL;
+	memset(head, 0, size);
+	head->filename = filename;
+	head->request_size = (num_elements * element_size);
+	head->instruction = instruction;
+	head->next = NULL;
+	return head+sizeof(meta_data);
+}
+
+void *mini_realloc(void *payload, size_t request_size, const char *filename,
+                   void *instruction) {
+    // your code here
+	assert(payload != NULL && request_size != 0);
+	if(payload == NULL)	mini_malloc(request_size, filename, instruction);
+	if(request_size == 0){
+		mini_free(payload);
+		return NULL;
+	}
+	if(payload->request_size >= request_size)	total_memory_freed += (payload->request_size - request_size);
+	else	total_memory_requested += (request_size - payload->request_size);
+	realloc(payload, sizeof(meta_data)+request_size);
+	if(payload[sizeof(meta_data)])	return (void*)payload[sizeof(meta_data)];
+	else    return NULL;
+}
+
+void mini_free(void *payload) {
+    // your code here
+	
+}
