@@ -1,0 +1,2 @@
+#D#what should be measured when evaluating TR system? (A) Effctiveness and accuracy  (B) Efficiency  (C) Usability (D) All of above
+

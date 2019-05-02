@@ -1,0 +1,2 @@
+#D#Why in real life we often only retain the terms with heighest weights when using Rocchio? (A) often truncate the vector  (B) avoid over-fitting  (C) usually robust and effective (D) All of above
+

@@ -1,0 +1,725 @@
+---
+title: "hw1 p2"
+output: pdf_document
+---
+
+```{r}
+data = read.csv("train.csv")
+head(data)
+```
+
+
+
+###Part 2A
+
+```{R}
+#install.packages("e1071")
+library(e1071)
+train = read.csv("train.csv")
+test = read.csv("test.csv", header=F)
+val = read.csv("val.csv")
+for(i in 1:784){
+  colnames(test)[i] = paste0("X", i)
+}
+head(train)
+head(test)
+```
+
+
+
+#Gaussian + Untouched:
+```{r}
+#install.packages("caret")
+#install.packages("quanteda")
+#install.packages("naivebayes")
+library(caret)
+library(naivebayes)
+model = naive_bayes(train[,3:786], train[,2])
+pred = predict(model, newdata = val[,2:785])
+sum(pred == val$label)/2000
+pred_t = predict(model, newdata = test[,1:784])
+#pred_t
+test$X785 = as.integer(pred_t) - 1 
+#test[,780:785]
+#write.csv(pred_t, file = 'Gaussian + Untouched.csv')
+```
+
+#Bernoulli + Untouched:
+```{r}
+library(e1071)
+library(quanteda)
+bernoulli_model = textmodel_nb(as.dfm(train[,3:786]), as.factor(train[,2]), distribution = "Bernoulli")
+bernoulli_pred = predict(bernoulli_model, newdata = as.dfm(val[,2:785]))
+correct = as.vector(as.integer(val$label == bernoulli_pred))
+sum(correct)/2000
+bernoulli_pred_t = predict(bernoulli_model, newdata = as.dfm(test[,1:784]))
+test$X786 = as.integer(bernoulli_pred_t) - 1
+#test[,780:786]
+#write.csv(bernoulli_pred_t, file = 'Bernoulli + Untouched.csv')
+
+```
+
+#20 images for untouched 
+```{r}
+
+#install.packages("rgdal")
+library(rgdal)
+test_0_GU = test[test$X785 == 0,]
+test_0_GU_mean = sapply(test_0_GU/255, mean)
+
+for(i in 1:length(test_0_GU_mean)){
+  if(test_0_GU_mean[i] > 75/255) test_0_GU_mean[i] = 0
+  else test_0_GU_mean[i] = 1
+}
+
+mat = matrix(unlist(test_0_GU_mean[1:784]), nrow = 28, ncol = 28)
+
+l = list(x = 1:nrow(mat), y = 1:ncol(mat), z = mat)
+x <- flipVertical(image2Grid(l))
+#writeGDAL(x, "00.jpg")
+#-----------------------------------------------------------------------#
+
+test_1_GU = test[test$X785 == 1,]
+test_1_GU_mean = sapply(test_1_GU/255, mean)
+
+for(i in 1:length(test_1_GU_mean)){
+  if(test_1_GU_mean[i] > 75/255) test_1_GU_mean[i] = 0
+  else test_1_GU_mean[i] = 1
+}
+
+mat = matrix(unlist(test_1_GU_mean[1:784]), nrow = 28, ncol = 28)
+
+l = list(x = 1:nrow(mat), y = 1:ncol(mat), z = mat)
+x <- flipVertical(image2Grid(l))
+#writeGDAL(x, "01.jpg")
+#--------------------------------------------------------------------------------#
+test_2_GU = test[test$X785 == 2,]
+test_2_GU_mean = sapply(test_2_GU/255, mean)
+
+for(i in 1:length(test_2_GU_mean)){
+  if(test_2_GU_mean[i] > 75/255) test_2_GU_mean[i] = 0
+  else test_2_GU_mean[i] = 1
+}
+
+mat = matrix(unlist(test_2_GU_mean[1:784]), nrow = 28, ncol = 28)
+
+l = list(x = 1:nrow(mat), y = 1:ncol(mat), z = mat)
+x <- flipVertical(image2Grid(l))
+#writeGDAL(x, "02.jpg")
+#------------------------------------------------------#
+
+test_3_GU = test[test$X785 == 3,]
+test_3_GU_mean = sapply(test_3_GU/255, mean)
+
+for(i in 1:length(test_3_GU_mean)){
+  if(test_3_GU_mean[i] > 75/255) test_3_GU_mean[i] = 0
+  else test_3_GU_mean[i] = 1
+}
+
+mat = matrix(unlist(test_3_GU_mean[1:784]), nrow = 28, ncol = 28)
+
+l = list(x = 1:nrow(mat), y = 1:ncol(mat), z = mat)
+x <- flipVertical(image2Grid(l))
+#writeGDAL(x, "03.jpg")
+#-----------------------------------------------------#
+
+test_4_GU = test[test$X785 == 4,]
+test_4_GU_mean = sapply(test_4_GU/255, mean)
+
+for(i in 1:length(test_4_GU_mean)){
+  if(test_4_GU_mean[i] > 75/255) test_4_GU_mean[i] = 0
+  else test_4_GU_mean[i] = 1
+}
+
+mat = matrix(unlist(test_4_GU_mean[1:784]), nrow = 28, ncol = 28)
+
+l = list(x = 1:nrow(mat), y = 1:ncol(mat), z = mat)
+x <- flipVertical(image2Grid(l))
+#writeGDAL(x, "04.jpg")
+#-----------------------------------------------------#
+test_5_GU = test[test$X785 == 5,]
+test_5_GU_mean = sapply(test_5_GU/255, mean)
+
+for(i in 1:length(test_5_GU_mean)){
+  if(test_5_GU_mean[i] > 75/255) test_5_GU_mean[i] = 0
+  else test_5_GU_mean[i] = 1
+}
+
+mat = matrix(unlist(test_5_GU_mean[1:784]), nrow = 28, ncol = 28)
+
+l = list(x = 1:nrow(mat), y = 1:ncol(mat), z = mat)
+x <- flipVertical(image2Grid(l))
+#writeGDAL(x, "05.jpg")
+#-----------------------------------------------------#
+test_6_GU = test[test$X785 == 6,]
+test_6_GU_mean = sapply(test_6_GU/255, mean)
+
+for(i in 1:length(test_6_GU_mean)){
+  if(test_6_GU_mean[i] > 75/255) test_6_GU_mean[i] = 0
+  else test_6_GU_mean[i] = 1
+}
+
+mat = matrix(unlist(test_6_GU_mean[1:784]), nrow = 28, ncol = 28)
+
+
+l = list(x = 1:nrow(mat), y = 1:ncol(mat), z = mat)
+x <- flipVertical(image2Grid(l))
+#writeGDAL(x, "06.jpg")
+#-----------------------------------------------------#
+test_7_GU = test[test$X785 == 7,]
+test_7_GU_mean = sapply(test_7_GU/255, mean)
+
+for(i in 1:length(test_7_GU_mean)){
+  if(test_7_GU_mean[i] > 75/255) test_7_GU_mean[i] = 0
+  else test_7_GU_mean[i] = 1
+}
+
+mat = matrix(unlist(test_7_GU_mean[1:784]), nrow = 28, ncol = 28)
+
+
+l = list(x = 1:nrow(mat), y = 1:ncol(mat), z = mat)
+x <- flipVertical(image2Grid(l))
+#writeGDAL(x, "07.jpg")
+#-----------------------------------------------------#
+test_8_GU = test[test$X785 == 8,]
+test_8_GU_mean = sapply(test_8_GU/255, mean)
+
+for(i in 1:length(test_8_GU_mean)){
+  if(test_8_GU_mean[i] > 75/255) test_8_GU_mean[i] = 0
+  else test_8_GU_mean[i] = 1
+}
+
+mat = matrix(unlist(test_8_GU_mean[1:784]), nrow = 28, ncol = 28)
+
+
+
+l = list(x = 1:nrow(mat), y = 1:ncol(mat), z = mat)
+x <- flipVertical(image2Grid(l))
+#writeGDAL(x, "08.jpg")
+#-----------------------------------------------------#
+test_9_GU = test[test$X785 == 9,]
+test_9_GU_mean = sapply(test_9_GU/255, mean)
+
+for(i in 1:length(test_9_GU_mean)){
+  if(test_9_GU_mean[i] > 75/255) test_9_GU_mean[i] = 0
+  else test_9_GU_mean[i] = 1
+}
+
+mat = matrix(unlist(test_9_GU_mean[1:784]), nrow = 28, ncol = 28)
+
+
+l = list(x = 1:nrow(mat), y = 1:ncol(mat), z = mat)
+x <- flipVertical(image2Grid(l))
+#writeGDAL(x, "09.jpg")
+#--------------------------------------------------------#
+
+test_0_BU = test[test$X786 == 0,]
+test_0_BU_mean = sapply(test_0_BU/255, mean)
+for(i in 1:length(test_0_BU_mean)){
+  if(test_0_BU_mean[i] > 75/255) test_0_BU_mean[i] = 0
+  else test_0_BU_mean[i] = 1
+}
+
+mat = matrix(unlist(test_0_BU_mean[1:784]), nrow = 28, ncol = 28)
+
+l = list(x = 1:nrow(mat), y = 1:ncol(mat), z = mat)
+x <- flipVertical(image2Grid(l))
+#writeGDAL(x, "10.jpg")
+#-----------------------------------------------------#
+test_1_BU = test[test$X786 == 1,]
+test_1_BU_mean = sapply(test_1_BU/255, mean)
+for(i in 1:length(test_1_BU_mean)){
+  if(test_1_BU_mean[i] > 75/255) test_1_BU_mean[i] = 0
+  else test_1_BU_mean[i] = 1
+}
+
+mat = matrix(unlist(test_1_BU_mean[1:784]), nrow = 28, ncol = 28)
+
+l = list(x = 1:nrow(mat), y = 1:ncol(mat), z = mat)
+x <- flipVertical(image2Grid(l))
+#writeGDAL(x, "11.jpg")
+
+#-----------------------------------------------------#
+test_2_BU = test[test$X786 == 2,]
+test_2_BU_mean = sapply(test_2_BU/255, mean)
+for(i in 1:length(test_2_BU_mean)){
+  if(test_2_BU_mean[i] > 75/255) test_2_BU_mean[i] = 0
+  else test_2_BU_mean[i] = 1
+}
+
+mat = matrix(unlist(test_2_BU_mean[1:784]), nrow = 28, ncol = 28)
+
+l = list(x = 1:nrow(mat), y = 1:ncol(mat), z = mat)
+x <- flipVertical(image2Grid(l))
+#writeGDAL(x, "12.jpg")
+
+#-----------------------------------------------------#
+test_3_BU = test[test$X786 == 3,]
+test_3_BU_mean = sapply(test_3_BU/255, mean)
+for(i in 1:length(test_3_BU_mean)){
+  if(test_3_BU_mean[i] > 75/255) test_3_BU_mean[i] = 0
+  else test_3_BU_mean[i] = 1
+}
+
+mat = matrix(unlist(test_3_BU_mean[1:784]), nrow = 28, ncol = 28)
+
+l = list(x = 1:nrow(mat), y = 1:ncol(mat), z = mat)
+x <- flipVertical(image2Grid(l))
+#writeGDAL(x, "13.jpg")
+
+#-----------------------------------------------------#
+test_4_BU = test[test$X786 == 4,]
+test_4_BU_mean = sapply(test_4_BU/255, mean)
+for(i in 1:length(test_4_BU_mean)){
+  if(test_4_BU_mean[i] > 75/255) test_4_BU_mean[i] = 0
+  else test_4_BU_mean[i] = 1
+}
+
+mat = matrix(unlist(test_4_BU_mean[1:784]), nrow = 28, ncol = 28)
+mat
+l = list(x = 1:nrow(mat), y = 1:ncol(mat), z = mat)
+x <- flipVertical(image2Grid(l))
+#writeGDAL(x, "14.jpg")
+#-----------------------------------------------------#
+test_5_BU = test[test$X786 == 5,]
+test_5_BU_mean = sapply(test_5_BU/255, mean)
+for(i in 1:length(test_5_BU_mean)){
+  if(test_5_BU_mean[i] > 75/255) test_5_BU_mean[i] = 0
+  else test_5_BU_mean[i] = 1
+}
+
+mat = matrix(unlist(test_5_BU_mean[1:784]), nrow = 28, ncol = 28)
+
+l = list(x = 1:nrow(mat), y = 1:ncol(mat), z = mat)
+x <- flipVertical(image2Grid(l))
+#writeGDAL(x, "15.jpg")
+#-----------------------------------------------------#
+test_6_BU = test[test$X786 == 6,]
+test_6_BU_mean = sapply(test_6_BU/255, mean)
+for(i in 1:length(test_6_BU_mean)){
+  if(test_6_BU_mean[i] > 75/255) test_6_BU_mean[i] = 0
+  else test_6_BU_mean[i] = 1
+}
+
+mat = matrix(unlist(test_6_BU_mean[1:784]), nrow = 28, ncol = 28)
+
+l = list(x = 1:nrow(mat), y = 1:ncol(mat), z = mat)
+x <- flipVertical(image2Grid(l))
+#writeGDAL(x, "16.jpg")
+
+#-----------------------------------------------------#
+test_7_BU = test[test$X786 == 7,]
+test_7_BU_mean = sapply(test_7_BU/255, mean)
+for(i in 1:length(test_7_BU_mean)){
+  if(test_7_BU_mean[i] > 75/255) test_7_BU_mean[i] = 0
+  else test_7_BU_mean[i] = 1
+}
+
+mat = matrix(unlist(test_7_BU_mean[1:784]), nrow = 28, ncol = 28)
+
+l = list(x = 1:nrow(mat), y = 1:ncol(mat), z = mat)
+x <- flipVertical(image2Grid(l))
+#writeGDAL(x, "17.jpg")
+#-----------------------------------------------------#
+test_8_BU = test[test$X786 == 8,]
+test_8_BU_mean = sapply(test_8_BU/255, mean)
+for(i in 1:length(test_8_BU_mean)){
+  if(test_8_BU_mean[i] > 75/255) test_8_BU_mean[i] = 0
+  else test_8_BU_mean[i] = 1
+}
+
+mat = matrix(unlist(test_8_BU_mean[1:784]), nrow = 28, ncol = 28)
+
+l = list(x = 1:nrow(mat), y = 1:ncol(mat), z = mat)
+x <- flipVertical(image2Grid(l))
+#writeGDAL(x, "18.jpg")
+
+#-----------------------------------------------------#
+
+test_9_BU = test[test$X786 == 9,]
+test_9_BU_mean = sapply(test_9_BU/255, mean)
+for(i in 1:length(test_9_BU_mean)){
+  if(test_9_BU_mean[i] > 75/255) test_9_BU_mean[i] = 0
+  else test_9_BU_mean[i] = 1
+}
+
+mat = matrix(unlist(test_9_BU_mean[1:784]), nrow = 28, ncol = 28)
+
+l = list(x = 1:nrow(mat), y = 1:ncol(mat), z = mat)
+x <- flipVertical(image2Grid(l))
+#writeGDAL(x, "19.jpg")
+
+```
+
+
+
+#Resize
+```{r}
+#install.packages("OpenImageR")
+library(OpenImageR)
+resize = function(image){
+  rows = nrow(image)
+  ret = matrix(NA, rows, 400)
+  for(i in 1:rows){
+    temp = matrix(image[i,],28,28)
+    
+    xmin = 1
+    xmax = 29
+    ymin = 1
+    ymax = 29
+    
+    for(j in 1:nrow(temp)){
+      for(k in 1:ncol(temp)){
+        if(temp[j,k]>0){
+          if(j > ymin){ymin = j}
+          if(j < ymax){ymax = j}
+          if(k > xmin){xmin = k}
+          if(k < xmax){xmax = k}
+        }
+      }
+    }
+    
+    if(xmin < 29){temp = temp[,-(xmin+1):-28]}
+    if(xmax > 1){temp = temp[,-1:-(xmax-1)]}
+    if(ymin < 29){temp = temp[-(ymin+1):-28,]}
+    if(ymax > 1){temp = temp[-1:-(ymax-1),]}
+    
+    temp2 = resizeImage(as.matrix.data.frame(temp),20, 20, method = "bilinear")
+    ret[i,] = apply(temp2, 1, function(x) x*255)
+  }
+  return(ret)
+}
+```
+
+
+```{r}
+#new_train = resize(train[,3:786])
+#new_val = resize(val[,2:785])
+#new_test = resize(test[,1:784])
+#write.csv(as.data.frame(new_train), file = 'new_train.csv')
+#write.csv(as.data.frame(new_val), file = 'new_val.csv')
+#write.csv(as.data.frame(new_test), file = 'new_test.csv')
+new_train = read.csv("new_train.csv")
+new_val = read.csv("new_val.csv")
+new_test = read.csv("new_test.csv")
+head(new_val)
+```
+
+
+#Gaussian + Stretched:
+```{r}
+model = naive_bayes(new_train[,2:401], train[,2])
+pred_s = predict(model, newdata = new_val[2:401])
+sum(pred_s == val$label)/2000
+
+pred_t1 = predict(model, newdata = new_test)
+as.data.frame(new_test)
+new_test$V401 = as.integer(pred_t1) - 1
+
+#write.csv(pred_t1, file = 'Gaussian + Stretched.csv')
+```
+
+#Bernoulli + Stretched:
+```{r}
+bernoulli_model = textmodel_nb(as.dfm(new_train[,2:401]), as.factor(train[,2]), distribution = "Bernoulli")
+bernoulli_pred = predict(bernoulli_model, newdata = as.dfm(new_val[,2:401]))
+correct = as.vector(as.integer(val$label == bernoulli_pred))
+sum(correct)/2000
+bernoulli_pred_t1 = predict(bernoulli_model, newdata = new_test[,2:401])
+as.data.frame(new_test)
+new_test$V402 = as.integer(bernoulli_pred_t1) - 1
+
+#write.csv(bernoulli_pred_t1, file = 'Bernoulli + Stretched.csv')
+```
+
+#image for stretched
+```{r}
+library(rgdal)
+test_s_0_GU = new_test[new_test$V401 == 0,]
+test_s_0_GU_mean = sapply(test_s_0_GU/255, mean)
+
+test_s_0_GU_mean
+for(i in 1:length(test_s_0_GU_mean)){
+  if(test_s_0_GU_mean[i] > 75/255) test_s_0_GU_mean[i] = 0
+  else test_s_0_GU_mean[i] = 1
+}
+
+mat = t(matrix(unlist(test_s_0_GU_mean[1:400]), nrow = 20, ncol = 20))
+
+l = list(x = 1:nrow(mat), y = 1:ncol(mat), z = mat)
+x <- flipVertical(image2Grid(l))
+writeGDAL(x, "20.jpg")
+#-----------------------------------------------------------------------#
+
+test_s_1_GU = new_test[new_test$V401 == 1,]
+test_s_1_GU_mean = sapply(test_s_1_GU/255, mean)
+
+for(i in 1:length(test_s_1_GU_mean)){
+  if(test_s_1_GU_mean[i] > 75/255) test_s_1_GU_mean[i] = 0
+  else test_s_1_GU_mean[i] = 1
+}
+
+mat = t(matrix(unlist(test_s_1_GU_mean[1:400]), nrow = 20, ncol = 20))
+
+l = list(x = 1:nrow(mat), y = 1:ncol(mat), z = mat)
+x <- flipVertical(image2Grid(l))
+writeGDAL(x, "21.jpg")
+#--------------------------------------------------------------------------------#
+test_s_2_GU = new_test[new_test$V401 == 2,]
+test_s_2_GU_mean = sapply(test_s_2_GU/255, mean)
+
+for(i in 1:length(test_s_2_GU_mean)){
+  if(test_s_2_GU_mean[i] > 75/255) test_s_2_GU_mean[i] = 0
+  else test_s_2_GU_mean[i] = 1
+}
+
+mat = t(matrix(unlist(test_s_2_GU_mean[1:400]), nrow = 20, ncol = 20))
+
+l = list(x = 1:nrow(mat), y = 1:ncol(mat), z = mat)
+x <- flipVertical(image2Grid(l))
+writeGDAL(x, "22.jpg")
+#------------------------------------------------------#
+
+test_s_3_GU = new_test[new_test$V401 == 3,]
+test_s_3_GU_mean = sapply(test_s_3_GU/255, mean)
+
+for(i in 1:length(test_s_3_GU_mean)){
+  if(test_s_3_GU_mean[i] > 75/255) test_s_3_GU_mean[i] = 0
+  else test_s_3_GU_mean[i] = 1
+}
+
+mat = t(matrix(unlist(test_s_3_GU_mean[1:400]), nrow = 20, ncol = 20))
+
+l = list(x = 1:nrow(mat), y = 1:ncol(mat), z = mat)
+x <- flipVertical(image2Grid(l))
+writeGDAL(x, "23.jpg")
+#-----------------------------------------------------#
+
+test_s_4_GU = new_test[new_test$V401 == 4,]
+test_s_4_GU_mean = sapply(test_s_4_GU/255, mean)
+
+for(i in 1:length(test_s_4_GU_mean)){
+  if(test_s_4_GU_mean[i] > 75/255) test_s_4_GU_mean[i] = 0
+  else test_s_4_GU_mean[i] = 1
+}
+
+mat = t(matrix(unlist(test_s_4_GU_mean[1:400]), nrow = 20, ncol = 20))
+
+l = list(x = 1:nrow(mat), y = 1:ncol(mat), z = mat)
+x <- flipVertical(image2Grid(l))
+writeGDAL(x, "24.jpg")
+#-----------------------------------------------------#
+test_s_5_GU = new_test[new_test$V401 == 5,]
+test_s_5_GU_mean = sapply(test_s_5_GU/255, mean)
+
+for(i in 1:length(test_s_5_GU_mean)){
+  if(test_s_5_GU_mean[i] > 75/255) test_s_5_GU_mean[i] = 0
+  else test_s_5_GU_mean[i] = 1
+}
+
+mat = t(matrix(unlist(test_s_5_GU_mean[1:400]), nrow = 20, ncol = 20))
+
+l = list(x = 1:nrow(mat), y = 1:ncol(mat), z = mat)
+x <- flipVertical(image2Grid(l))
+writeGDAL(x, "25.jpg")
+#-----------------------------------------------------#
+test_s_6_GU = new_test[new_test$V401 == 6,]
+test_s_6_GU_mean = sapply(test_s_6_GU/255, mean)
+
+for(i in 1:length(test_s_6_GU_mean)){
+  if(test_s_6_GU_mean[i] > 75/255) test_s_6_GU_mean[i] = 0
+  else test_s_6_GU_mean[i] = 1
+}
+test_s_6_GU_mean
+mat = t(matrix(unlist(test_s_6_GU_mean[1:400]), nrow = 20, ncol = 20))
+
+
+l = list(x = 1:nrow(mat), y = 1:ncol(mat), z = mat)
+x <- flipVertical(image2Grid(l))
+writeGDAL(x, "26.jpg")
+#-----------------------------------------------------#
+test_s_7_GU = new_test[new_test$V401 == 7,]
+test_s_7_GU_mean = sapply(test_s_7_GU/255, mean)
+
+for(i in 1:length(test_s_7_GU_mean)){
+  if(test_s_7_GU_mean[i] > 75/255) test_s_7_GU_mean[i] = 0
+  else test_s_7_GU_mean[i] = 1
+}
+
+mat = t(matrix(unlist(test_s_7_GU_mean[1:400]), nrow = 20, ncol = 20))
+
+
+l = list(x = 1:nrow(mat), y = 1:ncol(mat), z = mat)
+x <- flipVertical(image2Grid(l))
+writeGDAL(x, "27.jpg")
+#-----------------------------------------------------#
+test_s_8_GU = new_test[new_test$V401 == 8,]
+test_s_8_GU_mean = sapply(test_s_8_GU/255, mean)
+
+for(i in 1:length(test_s_8_GU_mean)){
+  if(test_s_8_GU_mean[i] > 75/255) test_s_8_GU_mean[i] = 0
+  else test_s_8_GU_mean[i] = 1
+}
+
+mat = t(matrix(unlist(test_s_8_GU_mean[1:400]), nrow = 20, ncol = 20))
+
+
+
+l = list(x = 1:nrow(mat), y = 1:ncol(mat), z = mat)
+x <- flipVertical(image2Grid(l))
+writeGDAL(x, "28.jpg")
+#-----------------------------------------------------#
+test_s_9_GU = new_test[new_test$V401 == 9,]
+test_s_9_GU_mean = sapply(test_s_9_GU/255, mean)
+
+for(i in 1:length(test_s_9_GU_mean)){
+  if(test_s_9_GU_mean[i] > 75/255) test_s_9_GU_mean[i] = 0
+  else test_s_9_GU_mean[i] = 1
+}
+
+mat = t(matrix(unlist(test_s_9_GU_mean[1:400]), nrow = 20, ncol = 20))
+
+
+l = list(x = 1:nrow(mat), y = 1:ncol(mat), z = mat)
+x <- flipVertical(image2Grid(l))
+writeGDAL(x, "29.jpg")
+#--------------------------------------------------------#
+
+test_s_0_BU = new_test[new_test$V402 == 0,]
+test_s_0_BU_mean = sapply(test_s_0_BU/255, mean)
+for(i in 1:length(test_s_0_BU_mean)){
+  if(test_s_0_BU_mean[i] > 75/255) test_s_0_BU_mean[i] = 0
+  else test_s_0_BU_mean[i] = 1
+}
+
+mat = t(matrix(unlist(test_s_0_BU_mean[1:400]), nrow = 20, ncol = 20))
+
+l = list(x = 1:nrow(mat), y = 1:ncol(mat), z = mat)
+x <- flipVertical(image2Grid(l))
+writeGDAL(x, "30.jpg")
+#-----------------------------------------------------#
+test_s_1_BU = new_test[new_test$V402 == 1,]
+test_s_1_BU_mean = sapply(test_s_1_BU/255, mean)
+for(i in 1:length(test_s_1_BU_mean)){
+  if(test_s_1_BU_mean[i] > 75/255) test_s_1_BU_mean[i] = 0
+  else test_s_1_BU_mean[i] = 1
+}
+
+mat = t(matrix(unlist(test_s_1_BU_mean[1:400]), nrow = 20, ncol = 20))
+
+l = list(x = 1:nrow(mat), y = 1:ncol(mat), z = mat)
+x <- flipVertical(image2Grid(l))
+writeGDAL(x, "31.jpg")
+
+#-----------------------------------------------------#
+test_s_2_BU = new_test[new_test$V402 == 2,]
+test_s_2_BU_mean = sapply(test_s_2_BU/255, mean)
+for(i in 1:length(test_s_2_BU_mean)){
+  if(test_s_2_BU_mean[i] > 75/255) test_s_2_BU_mean[i] = 0
+  else test_s_2_BU_mean[i] = 1
+}
+
+mat = t(matrix(unlist(test_s_2_BU_mean[1:400]), nrow = 20, ncol = 20))
+
+l = list(x = 1:nrow(mat), y = 1:ncol(mat), z = mat)
+x <- flipVertical(image2Grid(l))
+writeGDAL(x, "32.jpg")
+
+#-----------------------------------------------------#
+test_s_3_BU = new_test[new_test$V402 == 3,]
+test_s_3_BU_mean = sapply(test_s_3_BU/255, mean)
+for(i in 1:length(test_s_3_BU_mean)){
+  if(test_s_3_BU_mean[i] > 75/255) test_s_3_BU_mean[i] = 0
+  else test_s_3_BU_mean[i] = 1
+}
+
+mat = t(matrix(unlist(test_s_3_BU_mean[1:400]), nrow = 20, ncol = 20))
+
+l = list(x = 1:nrow(mat), y = 1:ncol(mat), z = mat)
+x <- flipVertical(image2Grid(l))
+writeGDAL(x, "33.jpg")
+
+#-----------------------------------------------------#
+test_s_4_BU = new_test[new_test$V402 == 4,]
+test_s_4_BU_mean = sapply(test_s_4_BU/255, mean)
+for(i in 1:length(test_s_4_BU_mean)){
+  if(test_s_4_BU_mean[i] > 75/255) test_s_4_BU_mean[i] = 0
+  else test_s_4_BU_mean[i] = 1
+}
+
+mat = t(matrix(unlist(test_s_4_BU_mean[1:400]), nrow = 20, ncol = 20))
+mat
+l = list(x = 1:nrow(mat), y = 1:ncol(mat), z = mat)
+x <- flipVertical(image2Grid(l))
+writeGDAL(x, "34.jpg")
+#-----------------------------------------------------#
+test_s_5_BU = new_test[new_test$V402 == 5,]
+test_s_5_BU_mean = sapply(test_s_5_BU/255, mean)
+for(i in 1:length(test_s_5_BU_mean)){
+  if(test_s_5_BU_mean[i] > 75/255) test_s_5_BU_mean[i] = 0
+  else test_s_5_BU_mean[i] = 1
+}
+
+mat = t(matrix(unlist(test_s_5_BU_mean[1:400]), nrow = 20, ncol = 20))
+
+l = list(x = 1:nrow(mat), y = 1:ncol(mat), z = mat)
+x <- flipVertical(image2Grid(l))
+writeGDAL(x, "35.jpg")
+#-----------------------------------------------------#
+test_s_6_BU = new_test[new_test$V402 == 6,]
+test_s_6_BU_mean = sapply(test_s_6_BU/255, mean)
+for(i in 1:length(test_s_6_BU_mean)){
+  if(test_s_6_BU_mean[i] > 75/255) test_s_6_BU_mean[i] = 0
+  else test_s_6_BU_mean[i] = 1
+}
+
+mat = t(matrix(unlist(test_s_6_BU_mean[1:400]), nrow = 20, ncol = 20))
+
+l = list(x = 1:nrow(mat), y = 1:ncol(mat), z = mat)
+x <- flipVertical(image2Grid(l))
+writeGDAL(x, "36.jpg")
+
+#-----------------------------------------------------#
+test_s_7_BU = new_test[new_test$V402 == 7,]
+test_s_7_BU_mean = sapply(test_s_7_BU/255, mean)
+for(i in 1:length(test_s_7_BU_mean)){
+  if(test_s_7_BU_mean[i] > 75/255) test_s_7_BU_mean[i] = 0
+  else test_s_7_BU_mean[i] = 1
+}
+
+mat = t(matrix(unlist(test_s_7_BU_mean[1:400]), nrow = 20, ncol = 20))
+
+l = list(x = 1:nrow(mat), y = 1:ncol(mat), z = mat)
+x <- flipVertical(image2Grid(l))
+writeGDAL(x, "37.jpg")
+#-----------------------------------------------------#
+test_s_8_BU = new_test[new_test$V402 == 8,]
+test_s_8_BU_mean = sapply(test_s_8_BU/255, mean)
+for(i in 1:length(test_s_8_BU_mean)){
+  if(test_s_8_BU_mean[i] > 75/255) test_s_8_BU_mean[i] = 0
+  else test_s_8_BU_mean[i] = 1
+}
+
+mat = t(matrix(unlist(test_s_8_BU_mean[1:400]), nrow = 20, ncol = 20))
+
+l = list(x = 1:nrow(mat), y = 1:ncol(mat), z = mat)
+x <- flipVertical(image2Grid(l))
+writeGDAL(x, "38.jpg")
+
+#-----------------------------------------------------#
+
+test_s_9_BU = new_test[new_test$V402 == 9,]
+test_s_9_BU_mean = sapply(test_s_9_BU/255, mean)
+for(i in 1:length(test_s_9_BU_mean)){
+  if(test_s_9_BU_mean[i] > 75/255) test_s_9_BU_mean[i] = 0
+  else test_s_9_BU_mean[i] = 1
+}
+
+mat = t(matrix(unlist(test_s_9_BU_mean[1:400]), nrow = 20, ncol = 20))
+
+l = list(x = 1:nrow(mat), y = 1:ncol(mat), z = mat)
+x <- flipVertical(image2Grid(l))
+writeGDAL(x, "39.jpg")
+
+  
+```

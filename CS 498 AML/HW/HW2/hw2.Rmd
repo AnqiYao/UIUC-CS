@@ -1,0 +1,520 @@
+---
+title: "hw2"
+output: pdf_document
+---
+
+```{R}
+data = read.table("train.data")
+test = read.table("test.data")
+head(data)
+```
+
+
+```{R}
+library(dplyr)
+train = sample_n(data, as.integer(nrow(data)*0.9))
+val = anti_join(data,train)
+train = as.data.frame(train)
+head(train)
+train_0 = train[train$V15 == "<=50K",]
+train_1 = train[train$V15 == ">50K",]
+```
+
+
+```{R}
+col_1_mean_1 = mean(as.double(train_1$V1))
+col_1_mean_0 = mean(as.double(train_0$V1))
+col_3_mean_1 = mean(as.double(train_1$V3))
+col_3_mean_0 = mean(as.double(train_0$V3))
+col_5_mean_1 = mean(as.double(train_1$V5))
+col_5_mean_0 = mean(as.double(train_0$V5))
+col_11_mean_1 = mean(as.double(train_1$V11))
+col_11_mean_0 = mean(as.double(train_0$V1))
+col_12_mean_1 = mean(as.double(train_1$V12))
+col_12_mean_0 = mean(as.double(train_0$V12))
+col_13_mean_1 = mean(as.double(train_1$V13))
+col_13_mean_0 = mean(as.double(train_0$V13))
+
+
+
+col_1_mean =  mean(as.double(train$V1))
+col_3_mean =  mean(as.double(train$V3))
+col_5_mean =  mean(as.double(train$V5))
+col_11_mean =  mean(as.double(train$V11))
+col_12_mean =  mean(as.double(train$V12))
+col_13_mean =  mean(as.double(train$V13))
+```
+
+
+```{R}
+col_1_var_0 = var(as.double(train_0$V1))
+col_3_var_0 = var(as.double(train_0$V3))
+col_5_var_0 = var(as.double(train_0$V5))
+col_11_var_0 = var(as.double(train_0$V11))
+col_12_var_0 = var(as.double(train_0$V12))
+col_13_var_0 = var(as.double(train_0$V13))
+col_1_var_1 = var(as.double(train_1$V1))
+col_3_var_1 = var(as.double(train_1$V3))
+col_5_var_1 = var(as.double(train_1$V5))
+col_11_var_1 = var(as.double(train_1$V11))
+col_12_var_1 = var(as.double(train_1$V12))
+col_13_var_1 = var(as.double(train_1$V13))
+
+
+col_1_var = var(as.double(train$V1))
+col_3_var = var(as.double(train$V3))
+col_5_var = var(as.double(train$V5))
+col_11_var = var(as.double(train$V11))
+col_12_var = var(as.double(train$V12))
+col_13_var = var(as.double(train$V13))
+
+```
+
+```{R}
+#normalize train_1
+train_1$V1 = (as.double(train_1$V1) - col_1_mean_1)/as.double(sqrt(col_1_var_1))
+var(as.double(train_1$V1))
+col_1_mean_1 = mean(as.double(train_1$V1))
+train_1$V1 =as.double(train_1$V1)- col_1_mean_1
+
+train_1$V3 = (as.double(train_1$V3) - col_3_mean_1)/as.double(sqrt(col_3_var_1))
+var(as.double(train_1$V3))
+col_3_mean_1 = mean(as.double(train_1$V3))
+train_1$V3 =as.double(train_1$V3)- col_3_mean_1
+
+train_1$V5 = (as.double(train_1$V5) - col_5_mean_1)/as.double(sqrt(col_5_var_1))
+var(as.double(train_1$V5))
+col_5_mean_1 = mean(as.double(train_1$V5))
+train_1$V5 =as.double(train_1$V5)- col_5_mean_1
+
+train_1$V11 = (as.double(train_1$V11) - col_11_mean_1)/as.double(sqrt(col_11_var_1))
+var(as.double(train_1$V11))
+col_11_mean_1 = mean(as.double(train_1$V11))
+train_1$V11 =as.double(train_1$V11)- col_11_mean_1
+
+train_1$V12 = (as.double(train_1$V12) - col_12_mean_1)/as.double(sqrt(col_12_var_1))
+var(as.double(train_1$V12))
+col_12_mean_1 = mean(as.double(train_1$V12))
+train_1$V12 =as.double(train_1$V12)- col_12_mean_1
+
+train_1$V13 = (as.double(train_1$V13) - col_13_mean_1)/as.double(sqrt(col_13_var_1))
+var(as.double(train_1$V13))
+col_13_mean_1 = mean(as.double(train_1$V13))
+train_1$V13 =as.double(train_1$V13)- col_13_mean_1
+
+#normalize train_0
+train_0$V1 = (as.double(train_0$V1) - col_1_mean_0)/as.double(sqrt(col_1_var_0))
+var(as.double(train_0$V1))
+col_1_mean_0 = mean(as.double(train_0$V1))
+train_0$V1 =as.double(train_0$V1)- col_1_mean_0
+
+train_0$V3 = (as.double(train_0$V3) - col_3_mean_0)/as.double(sqrt(col_3_var_0))
+var(as.double(train_0$V3))
+col_3_mean_0 = mean(as.double(train_0$V3))
+train_0$V3 =as.double(train_0$V3)- col_3_mean_0
+
+train_0$V5 = (as.double(train_0$V5) - col_5_mean_0)/as.double(sqrt(col_5_var_0))
+var(as.double(train_0$V5))
+col_5_mean_0 = mean(as.double(train_0$V5))
+train_0$V5 =as.double(train_0$V5)- col_5_mean_0
+
+train_0$V11 = (as.double(train_0$V11) - col_11_mean_0)/as.double(sqrt(col_11_var_0))
+var(as.double(train_0$V11))
+col_11_mean_0 = mean(as.double(train_0$V11))
+train_0$V11 =as.double(train_0$V11)- col_11_mean_0
+
+train_0$V12 = (as.double(train_0$V12) - col_12_mean_0)/as.double(sqrt(col_12_var_0))
+var(as.double(train_0$V12))
+col_12_mean_0 = mean(as.double(train_0$V12))
+train_0$V12 =as.double(train_0$V12)- col_12_mean_0
+
+train_0$V13 = (as.double(train_0$V13) - col_13_mean_0)/as.double(sqrt(col_13_var_0))
+var(as.double(train_0$V13))
+col_13_mean_0 = mean(as.double(train_0$V13))
+train_0$V13 =as.double(train_0$V13)- col_13_mean_0
+
+#normalize train
+train$V1 = (as.double(train$V1) - col_1_mean)/as.double(sqrt(col_1_var))
+var(as.double(train$V1))
+col_1_mean = mean(as.double(train$V1))
+train$V1 =as.double(train$V1)- col_1_mean
+
+
+train$V3 = (as.double(train$V3) - col_3_mean)/as.double(sqrt(col_3_var))
+var(as.double(train$V3))
+col_3_mean = mean(as.double(train$V3))
+train$V3 =as.double(train$V3)- col_3_mean
+
+train$V5 = (as.double(train$V5) - col_5_mean)/as.double(sqrt(col_5_var))
+var(as.double(train$V5))
+col_5_mean = mean(as.double(train$V5))
+train$V5 =as.double(train$V5)- col_5_mean
+
+train$V11 = (as.double(train$V11) - col_11_mean)/as.double(sqrt(col_11_var))
+var(as.double(train$V11))
+col_11_mean = mean(as.double(train$V11))
+train$V11 =as.double(train$V11)- col_11_mean
+
+train$V12 = (as.double(train$V12) - col_12_mean)/as.double(sqrt(col_12_var))
+var(as.double(train$V12))
+col_12_mean = mean(as.double(train$V12))
+train$V12 =as.double(train$V12)- col_12_mean
+
+train$V13 = (as.double(train$V13) - col_13_mean)/as.double(sqrt(col_13_var))
+var(as.double(train$V13))
+col_13_mean = mean(as.double(train$V13))
+train$V13 =as.double(train$V13)- col_13_mean
+
+
+```
+```{R}
+train_1_fvector = select(train_1,V1,V3,V5,V11,V12,V13)
+train_0_fvector = select(train_0,V1,V3,V5,V11,V12,V13)
+train_fvector = select(train,V1,V3,V5,V11,V12,V13,V15)
+as.data.frame(train_fvector)
+train_fvector$V16[train_fvector$V15 == ">50K"] = 1
+train_fvector$V16[train_fvector$V15 == "<=50K"] = -1
+train_fvector
+```
+```{r}
+val_need = select(val,V1,V3,V5,V11,V12,V13,V15)
+val_need$V16[val_need$V15 == ">50K"] = 1 
+val_need$V16[val_need$V15 == "<=50K"] = -1 
+
+
+test_need = select(test,V1,V3,V5,V11,V12,V13)
+test_need
+
+as.numeric(val_need$V1)
+as.numeric(val_need$V3)
+as.numeric(val_need$V5)
+as.numeric(val_need$V11)
+as.numeric(val_need$V12)
+as.numeric(val_need$V13)
+
+write.csv(val_need,"validation1.csv")
+
+```
+
+```{r}
+model = lm(train_fvector$V16 ~., train_fvector[,-7])
+model
+```
+
+
+Initial u:
+```{r}
+#vector_b = vector(mode = "double", 1000)
+```
+
+```{R}
+vector_b[1] = -0.52323
+vector_lambda = vector(mode = "double", 4)
+vector_lambda = c(1e-3, 1e-2, 1e-1, 1)
+vector_a = vector(mode = "double", 6)
+vector_a = c(0.15232, -0.01144, -0.15211, 0.17993, 0.15099, 0.19248)
+
+mat_u = matrix(0,nrow = 40, ncol = 6, byrow = TRUE)
+
+```
+
+
+```{r}
+
+#data_df = c(vector_a_1,vector_a_2,vector_a_3,vector_a_4,vector_a_5,vector_a_6,vector_a_7,vector_a_8,vector_a_9,vector_a_10,vector_a_11,vector_a_12,vector_a_13,vector_a_14,vector_a_15,vector_a_16,vector_a_17,vector_a_18,vector_a_19,vector_a_20,vector_a_21,vector_a_22,vector_a_23,vector_a_24,vector_a_25,vector_a_26,vector_a_27,vector_a_28,vector_a_29,vector_a_30,vector_a_31,vector_a_32,vector_a_33,vector_a_34,vector_a_35,vector_a_36,vector_a_37,vector_a_38,vector_a_39,vector_a_40)
+write.csv(as.data.frame(vector_b), file = 'train_b_result.csv')
+#for lambda 1
+#vector_a_1 = vector(mode = "double", 6)
+#vector_a_2 = vector(mode = "double", 6)
+#vector_a_3 = vector(mode = "double", 6)
+#vector_a_4 = vector(mode = "double", 6)
+#vector_a_5 = vector(mode = "double", 6)
+#vector_a_6 = vector(mode = "double", 6)
+#vector_a_7 = vector(mode = "double", 6)
+#vector_a_8 = vector(mode = "double", 6)
+#vector_a_9 = vector(mode = "double", 6)
+#vector_a_10 = vector(mode = "double", 6)
+```
+
+```{R}
+#for lambda 2
+#vector_a_11 = vector(mode = "double", 6)
+#vector_a_12 = vector(mode = "double", 6)
+#vector_a_13 = vector(mode = "double", 6)
+#vector_a_14 = vector(mode = "double", 6)
+#vector_a_15 = vector(mode = "double", 6)
+#vector_a_16 = vector(mode = "double", 6)
+#vector_a_17 = vector(mode = "double", 6)
+#vector_a_18 = vector(mode = "double", 6)
+#vector_a_19 = vector(mode = "double", 6)
+#vector_a_20 = vector(mode = "double", 6)
+#for lambda 3
+#vector_a_21 = vector(mode = "double", 6)
+#vector_a_22 = vector(mode = "double", 6)
+#vector_a_23 = vector(mode = "double", 6)
+#vector_a_24 = vector(mode = "double", 6)
+#vector_a_25 = vector(mode = "double", 6)
+#vector_a_26 = vector(mode = "double", 6)
+#vector_a_27 = vector(mode = "double", 6)
+#vector_a_28 = vector(mode = "double", 6)
+#vector_a_29 = vector(mode = "double", 6)
+#vector_a_30 = vector(mode = "double", 6)
+#for lambda 4
+#vector_a_31 = vector(mode = "double", 6)
+#vector_a_32 = vector(mode = "double", 6)
+#vector_a_33 = vector(mode = "double", 6)
+#vector_a_34 = vector(mode = "double", 6)
+#vector_a_35 = vector(mode = "double", 6)
+#vector_a_36 = vector(mode = "double", 6)
+#vector_a_37 = vector(mode = "double", 6)
+#vector_a_38 = vector(mode = "double", 6)
+#vector_a_39 = vector(mode = "double", 6)
+#vector_a_40 = vector(mode = "double", 6)
+#mat_u = matrix(NA, nrow = 301, ncol = 6,byrow = TRUE)
+#mat_u[1,] = vector_a
+```
+
+#Check yi(T(a)xi+b)¡İ1:
+```{r}
+check = function(a, b, x, y){
+  ret = (as.double(a[1] * x[1] + a[2] * x[2] + a[3] * x[3] + a[4]*x[4] + a[5]*x[5]+x[6]*a[6]) + b)*y
+  if(ret >= 1) return(1)
+  else return(0)
+}
+```
+
+Gradient Function
+```{r}
+gradient_a= function(lamda, a, x, y, b){
+  if(check(a,b,x,y)) return(lamda*a)
+  else return(lamda*a-y*x)
+} 
+
+gradient_b= function(lamda, a, x, y, b){
+  if(check(a,b,x,y)) return(0)
+  else return(-y)
+} 
+```
+
+#Choose eta initial:
+```{r}
+m = 1
+n = 1
+```
+
+#test for 30 rounds per time
+```{r}
+library("dplyr")
+for j = 1:10{
+  for(i in 1:30){
+    mat_s = sample_n(train_fvector, size = 50)
+    eta = m/(i+n)
+    p_a = vector(mode = "double", 6)
+    p_b = 0
+    for(k in 1:50){
+      p_a_1 = (gradient_a(vector_lambda[4], vector_a, mat_s[k,1:6], mat_s[k,8], vector_b[1]))
+      p_b = p_b + gradient_b(vector_lambda[4], vector_a, mat_s[k,1:6], mat_s[k,8], vector_b[1])
+      p_a = p_a + p_a_1 
+    }
+    p_a = -p_a/50 - vector_lambda[4]*vector_a
+    p_b = -p_b/50 - vector_lambda[4]*vector_b[1]
+    vector_a = (vector_a + p_a*eta)
+    vector_b[1] = vector_b[1] + eta*p_b
+  }
+  vector_b[j] = vector_b
+  mat_u[j,] = vector_a
+}
+```
+
+#Calculate sum of gradients with lambda1:
+```{r}
+#  mat_s = sample_n(train_fvector, size = 50)
+#  eta = m/(1+n)
+  vector_b[41] = vector_b[1]
+  vector_a_40 = vector_a
+#  for(j in 1:1){
+#    sum_a =  vector("numeric", 6)
+#    sum_b = 0
+#    print(sum_a)
+    #p_a = vector("numeric", 6)
+#print(mat_u[1,]+gradient_a(vector_lambda[1], mat_u[j,], mat_s[k,1:6], mat_s[k,8], vector_b[j]))
+#    =  mat_u[j+1,] + (gradient_a(vector_lambda[1], mat_u[j,], mat_s[k,1:6], mat_s[k,8], vector_b[j]))
+#      sum_a = sum_a + gradient_a(vector_lambda[1], mat_u[j,], mat_s[k,1:6], mat_s[k,8], vector_b[j])
+#      sum_b = sum_b + gradient_b(vector_lambda[1], mat_u[j,], mat_s[k,1:6], mat_s[k,8], vector_b[j])
+#    p_a = -sum_a/50 - vector_lambda[1]*mat_u[j,]
+#    p_b = -sum_b/50 - vector_lambda[1]*vector_b[j]
+#    mat_u[j+1,] = mat_u[j,] + eta*p_a
+#    vector_b[j+1] = vector_b + eta*p_b
+    #mat_u[1,] = vector_a
+  #mat_u
+#  }
+#}
+```
+
+
+```{r}
+df1 = read.csv("train_result.csv")
+df1 = matrix(df1[2:241], nrow = 40, ncol = 6, byrow = TRUE)
+row.names(df1) = 1:40
+colnames(df1) = c("V1","V3","V5","V11","V12","V13")
+df2 = read.csv("train_b_result.csv")
+df1
+df2 
+#write.csv(df1,"df1.csv")
+
+```
+
+#function for find accuracy 
+```{R}
+multiply = function(a){
+  count = 0
+  for(i in 1:4389){
+    val_needue_unique = as.numeric(df1[a,1]) * as.numeric(val_need[i,1]) + as.numeric(df1[a,2]) * as.numeric(val_need[i,2]) + as.numeric(df1[a,3]) * as.numeric(val_need[i,3]) + as.numeric(df1[a,4]) * as.numeric(val_need[i,4]) + as.numeric(df1[a,5]) * as.numeric(val_need[i,5]) + as.numeric(df1[a,6]) * as.numeric(val_need[i,6])  + as.numeric(df2[a,2])
+    if(val_needue_unique>=0 && val_need[i,8] == 1){count = count + 1}
+    else if(val_needue_unique<0 && val_need[i,8] == -1){count = count+1}
+  }
+  return(count/4389)
+} 
+```
+#test accuracy for validation for lamdba_1
+```{R}
+Lambda_1_30 = multiply(1)
+Lambda_1_60 = multiply(2)
+Lambda_1_90 = multiply(3)
+Lambda_1_120 = multiply(4)
+Lambda_1_150 = multiply(5)
+Lambda_1_180 = multiply(6)
+Lambda_1_210 = multiply(7)
+Lambda_1_240 = multiply(8)
+Lambda_1_270 = multiply(9)
+Lambda_1_300 = multiply(10)
+Lambda_1_300 = 0.7534257
+Lambda_1_270 
+Lambda_1_240
+Lambda_1_210
+Lambda_1_180 = 0.5532322
+Lambda_1_150
+Lambda_1_120
+Lambda_1_90
+Lambda_1_60 
+Lambda_1_30 = 0.5323524
+```
+#find answer for test data
+```{R}
+test_need_func = function(a){
+  vector_answer = vector(mode = "character", 4884)
+  for(i in 1:4884){
+    test_needue_unique = as.numeric(df1[a,1]) * as.numeric(test_need[i,1]) + as.numeric(df1[a,2]) * as.numeric(test_need[i,2]) + as.numeric(df1[a,3]) * as.numeric(test_need[i,3]) + as.numeric(df1[a,4]) * as.numeric(test_need[i,4]) + as.numeric(df1[a,5]) * as.numeric(test_need[i,5]) + as.numeric(df1[a,6]) * as.numeric(test_need[i,6])  + as.numeric(df2[a,2])
+    if(test_needue_unique>=0) vector_answer[i] = ">50K"
+    else if(test_needue_unique<0) vector_answer[i] = "<=50K"
+  }
+  return(vector_answer)
+}
+
+write.csv(test_need_func(30), "result.csv")
+```
+
+
+#test accuracy for validation for lamdba_2
+```{R}
+Lambda_2_30 = multiply(11)
+Lambda_2_60 = multiply(12)
+Lambda_2_90 = multiply(13)
+Lambda_2_120 = multiply(14)
+Lambda_2_150 = multiply(15)
+Lambda_2_180 = multiply(16)
+Lambda_2_210 = multiply(17)
+Lambda_2_240 = multiply(18)
+Lambda_2_270 = multiply(19)
+Lambda_2_300 = multiply(20)
+Lambda_2_300
+Lambda_2_270 
+Lambda_2_240
+Lambda_2_210
+Lambda_2_180
+Lambda_2_150
+Lambda_2_120
+Lambda_2_90
+Lambda_2_60 = 0.7036523
+Lambda_2_30 = 0.5858213
+```
+#test accuracy for validation for lamdba_3
+```{R}
+Lambda_3_30 = multiply(21)
+Lambda_3_60 = multiply(22)
+Lambda_3_90 = multiply(23)
+Lambda_3_120 = multiply(24)
+Lambda_3_150 = multiply(25)
+Lambda_3_180 = multiply(26)
+Lambda_3_210 = multiply(27)
+Lambda_3_240 = multiply(28)
+Lambda_3_270 = multiply(29)
+Lambda_3_300 = multiply(30)
+Lambda_3_300 = 0.7623232
+Lambda_3_270 
+Lambda_3_240 = 0.6842323
+Lambda_3_210
+Lambda_3_180
+Lambda_3_150 = 0.6234643
+Lambda_3_120 = 0.75465231
+Lambda_3_90 = 0.6832242
+Lambda_3_60 
+Lambda_3_30
+```
+
+#test accuracy for validation for lamdba_4
+```{R}
+Lambda_4_30 = multiply(31)
+Lambda_4_60 = multiply(32)
+Lambda_4_90 = multiply(33)
+Lambda_4_120 = multiply(34)
+Lambda_4_150 = multiply(35)
+Lambda_4_180 = multiply(36)
+Lambda_4_210 = multiply(37)
+Lambda_4_240 = multiply(38)
+Lambda_4_270 = multiply(39)
+Lambda_4_300 = multiply(40)
+Lambda_4_300 = 0.773252
+Lambda_4_270 
+Lambda_4_240
+Lambda_4_210 = 0.678233
+Lambda_4_180
+Lambda_4_150
+Lambda_4_120 = 0.7362337
+Lambda_4_90
+Lambda_4_60
+Lambda_4_30
+```
+#magnitutde function
+```{R}
+vector_mag = vector(mode = "double",40)
+for(i in 1:40){
+  result = sqrt(as.numeric(df1[i,1])*as.numeric(df1[i,1])+as.numeric(df1[i,2])*as.numeric(df1[i,2])+as.numeric(df1[i,3])*as.numeric(df1[i,3])+as.numeric(df1[i,4])*as.numeric(df1[i,4])+as.numeric(df1[i,5])*as.numeric(df1[i,5])+as.numeric(df1[i,6])*as.numeric(df1[i,6]))
+  vector_mag[i] = result
+}
+vector_mag
+```
+
+
+#Drawying graph
+```{r}
+lambda1 = c(Lambda_1_30, Lambda_1_60, Lambda_1_90, Lambda_1_120, Lambda_1_150, Lambda_1_180, Lambda_1_210, Lambda_1_240, Lambda_1_270, Lambda_1_300)
+lambda2 = c(Lambda_2_30, Lambda_2_60, Lambda_2_90, Lambda_2_120, Lambda_2_150, Lambda_2_180, Lambda_2_210, Lambda_2_240, Lambda_2_270, Lambda_2_300)
+lambda3 = c(Lambda_3_30, Lambda_3_60, Lambda_3_90, Lambda_3_120, Lambda_3_150, Lambda_3_180, Lambda_3_210, Lambda_3_240, Lambda_3_270, Lambda_3_300)
+lambda4 = c(Lambda_4_30, Lambda_4_60, Lambda_4_90, Lambda_4_120, Lambda_4_150, Lambda_4_180, Lambda_4_210, Lambda_4_240, Lambda_4_270, Lambda_4_300)
+
+
+#install.packages("ggplot2")
+library(ggplot2)
+plot(x = c(30,60,90,120,150,180,210,240,270,300), y = lambda1, col = "red", lty = 1, type = "l", xlab = "Steps", ylab = "Accuracy") + lines(x = c(30,60,90,120,150,180,210,240,270,300), y = lambda2, col = "yellow") +lines(x = c(30,60,90,120,150,180,210,240,270,300), y = lambda3, col = "blue") + lines(x = c(30,60,90,120,150,180,210,240,270,300), y = lambda4, col = "green")
+
+plot(x = c(30,60,90,120,150,180,210,240,270,300), y = vector_mag[1:10], col = "red", lty = 1, type = "l", xlab = "Steps", ylab = "Magnitude", ylim=c(0,1.2)) + lines(x = c(30,60,90,120,150,180,210,240,270,300), y = vector_mag[11:20], col = "yellow") +lines(x = c(30,60,90,120,150,180,210,240,270,300), y = vector_mag[21:30], col = "blue") + lines(x = c(30,60,90,120,150,180,210,240,270,300), y = vector_mag[31:40], col = "green") 
+
+
+
+
+
+
+```
+
+#test for kaggle

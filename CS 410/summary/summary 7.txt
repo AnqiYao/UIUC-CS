@@ -1,0 +1,2 @@
+#D#what is(are) the challenges of NLP? (A) World-level ambiguity  (B) syntactic ambiguity  (C) presupposition (D) All of above
+

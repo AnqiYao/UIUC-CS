@@ -1,0 +1,165 @@
+<?php
+include 'config.php';
+$data=$_POST;
+
+$sex=$data['sex'];
+$birth=$data['birth'];
+$episode=$data['episode'];
+$type=$data['type'];
+$genre=$data['genre'];
+
+// $sqldel1="drop view newTable1";
+// $sqldel2="drop view newTable2";
+// $sqldel3="drop view newTable3";
+// $sc1=$pdo->prepare($sqldel1);
+// $sc1->execute();
+// $sc2=$pdo->prepare($sqldel2);
+// $sc2->execute();
+// $sc3=$pdo->prepare($sqldel3);
+// $sc3->execute();
+
+
+$smsql1="CREATE VIEW smnewTable1 AS SELECT users_final_demo.`Field_0`,users_final_demo.`Field_2`,users_final_demo.`Field_3` FROM `users_final_demo` where users_final_demo.`Field_2`='{$sex}' and users_final_demo.`Field_3` like '%{$birth}'";
+$smt1=$pdo->prepare($smsql1);
+$smt1->execute();
+
+$row=$smt1->fetchAll();
+
+echo '<pre>';
+print_r($row);
+echo '</pre>';
+exit;
+
+$sql1="CREATE VIEW newTable1 AS SELECT smnewTable1.`Field_0`,smnewTable1.`Field_2`,smnewTable1.`Field_3` FROM `smnewTable1` inner join `animelists_final_demo` on `smnewTable1`.`Field_0`=`animelists_final_demo`.`Field_0` order by smnewTable1.`Field_0` limit 2000";
+
+$smt1=$pdo->prepare($sql1);
+$smt1->execute();
+
+$row=$smt1->fetchAll();
+
+echo '<pre>';
+print_r($row);
+echo '</pre>';
+exit;
+
+$sql2="CREATE VIEW newTable2 AS SELECT `table`.`COL 1` as id,`table`.`COL 2`,`table`.`COL 3`,`table`.`COL 5`,`table`.`COL 14`,`animelists_final_demo`.`Field_0` FROM `animelists_final_demo` inner join `table` on `animelists_final_demo`.`Field_1`=`table`.`COL 1` where `table`.`COL 3`='{$type}' and `table`.`COL 5` <= '{$episode}' and `table`.`COL 14` like '%{$genre}%' order by animelists_final_demo.`Field_0` limit 2000";
+
+$smt2=$pdo->prepare($sql2);
+$smt2->execute();
+
+$sql3="CREATE VIEW newTable3 AS SELECT newTable2.`id` as uid,count(newTable1.`Field_0`) as ucount from newTable1  inner join newTable2 on newTable1.`Field_0`=newTable2.`Field_0` group by newTable2.`id`";
+
+$smt3=$pdo->prepare($sql3);
+$smt3->execute();
+
+$sql4="select * from newTable3 order by ucount limit 5";
+$smt4=$pdo->prepare($sql4);
+$smt4->execute();
+$row=$smt4->fetchAll();
+
+echo '<pre>';
+print_r($row);
+echo '</pre>';
+
+ ?>
+  
+
+
+
+
+
+ // $sql3="CREATE VIEW smnewTable2 AS
+ //       SELECT `table`.`COL 1` as id
+ //       FROM `table`
+ //       where `table`.`COL 3`='{$type}' and `table`.`COL 5` <= '{$episode}' and `table`.`COL 14` like '%{$genre}%'
+ //       order by `table`.`COL 1`";
+ //
+ // $smt3=$pdo->prepare($sql3);
+ // $smt3->execute();
+
+
+ $sql4="CREATE VIEW newTable2 AS
+       SELECT `newTable1`.`Uname1` as Uname2, `newTable1`.`Uid1` as Uid2
+       FROM `newTable1`
+       where `newTable1`.Uid1 in (
+               SELECT `table`.`COL 1` as id
+               FROM `table`
+               where `table`.`COL 3`='{$type}' and `table`.`COL 5` <= '{$episode}' and `table`.`COL 14` like '%{$genre}%'
+               order by `table`.`COL 1`)";
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+               $sqltrigger = "create trigger aborting_trigger before insert on `table`
+               for each row
+               begin
+               set @found := false;
+               select true into @found from `table` where `COL 0`=new.$anime_id;
+
+               if @found then
+                 signal sqlstate '45000' set message_text = 'duplicate insert';
+                 end if;
+               end";
+               $smttrigger = $pdo->prepare($sqltrigger);
+               $smttrigger -> execute();
+
+
+
+
+
+
+               $sql6="SELECT `newTable3`.`Fid`
+                         FROM `newTable3`
+                         order by `newTable3`.`numP` DESC
+                         limit 5";
+
+                    $smt6=$pdo->prepare($sql6);
+                    $smt6->execute();
+                    $row=$smt6->fetchAll();
+
+                    echo '<pre>';
+                    print_r($row);
+                    echo '</pre>';

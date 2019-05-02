@@ -1,0 +1,2 @@
+#D#Which of following can optain enough taining sample? (A) Low-quality("pseudo") training examples may be leveraged (B) Exploit unlabeled data(using semi-supervised learning techniques) (C) Domain adaptation (D) All of above
+

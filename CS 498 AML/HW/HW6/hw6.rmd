@@ -1,0 +1,60 @@
+```{r}
+data_ori = read.table("https://archive.ics.uci.edu/ml/machine-learning-databases/housing/housing.data")
+#data_ori = as.data.frame(data_ori)
+data_ori
+```
+#plots for question 1 
+```{r}
+oriline.lm = lm( V14 ~ V1 + V2 + V3 + V4 + V5 + V6 + V7 + V8 + V9 + V10 + V11 + V12 + V13 ,data = data_ori)
+plot(oriline.lm)
+#abline(oriline.lm)
+a = rstandard(oriline.lm)
+plot(a)
+```
+
+```{r}
+#365,366,368,369,370,371,372,373,375,402,408,413
+lev = hatvalues(oriline.lm)
+#lev
+```
+#outliers to remove for question 2
+```{r} 
+data_new = (data_ori[ -c(373,369,405,413,373,368,372,370,366,371), ])
+oriline.lm = lm(formula = (V14) ~ V1 + V2 + V3 + V4 + V5 + V6 + V7 + V8 + V9 + V10 + V11 + V12 + V13 ,data = data_new)
+plot(oriline.lm)
+a = rstandard(oriline.lm)
+plot(a)
+#abline(oriline.lm)
+```
+#question 3 the boxcox
+```{r}
+#install.packages("MASS")
+library(MASS)
+bc = boxcox(oriline.lm)
+
+best.lam = bc$x[which(bc$y == max(bc$y))]
+best.lam
+fullmodel.inv = lm((V14)^(best.lam)~ V1 + V2 + V3 + V4 + V5 + V6 + V7 + V8 + V9 + V10 + V11 + V12 + V13 ,data = data_new)
+plot(fullmodel.inv)
+ a = rstandard(fullmodel.inv)
+plot(a)
+#fullmodel.inv$fitted.values^(1/best.lam)
+```
+
+#last part, plot
+```{r}
+pre_list = numeric(506)
+act_list = numeric(506)
+#fullmodel.inv$fitted.values
+for(i in 1:496){
+  pre = fullmodel.inv$fitted.values[i]^(1/best.lam)
+  actually = data_new[i,14] 
+  pre_list[i] = pre
+  act_list[i] = actually
+}
+as.data.frame(pre_list)
+as.data.frame(act_list)
+data_ori$V15 = pre_list
+data_ori$V16 = act_list
+plot(data_ori$V15,data_ori$V16,xlab= "Predict value", ylab = "Actually value")
+```

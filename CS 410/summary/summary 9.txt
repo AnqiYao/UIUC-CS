@@ -1,0 +1,2 @@
+#D#Which of following is the general behavior of a mixture model? (A) Every component model attempts to assign high probabilities to highly frequent words in the data (B) diffrent component models tend to "bet" high probability on different words (C) the probability of choosing each component "regulates" the collaboration between the component models (D) All of above
+

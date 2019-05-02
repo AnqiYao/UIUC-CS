@@ -1,0 +1,2 @@
+#D#what is(are) the recent use of machine learning? (A) Large-scale training data available  (B) need for combining many features  (C) need for robust ranking(again spams) (D) All of above
+

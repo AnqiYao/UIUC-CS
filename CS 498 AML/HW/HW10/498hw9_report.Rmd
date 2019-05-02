@@ -1,0 +1,40 @@
+---
+title: "498hw9"
+author: "Hao Qiu, Pengyu Chen"
+date: "5/2/2018"
+output: pdf_document
+---
+
+### 1. Go through the MNIST tutorial here. You may find the tensorboard tutorial here. helpful. Insert appropriate lines of code into the tensorflow example to log the accuracy on tensorboard every 100 batches, for at least 2000 batches. You should screen capture the accuracy graph from tensorboard, and submit this.
+
+We log the accuracy every 100 batches, and run the program for 2200 batches. Train accuracy = 96% and Test accuracy = 97.49%
+
+<center>
+![MNIST Original](/Users/hao/Desktop/cs498aml/hw9/Final/MNIST-original.png)
+</center>
+
+### 2. Modify the architecture that is offered in the MNIST tutorial to get the best accuracy you can. I made three convolutional layers of smaller depth (i.e. the 32 went to 8), dropped the max pooling, and used three layers. Submit a screen capture of tensorboard graphs of accuracy. We will make it possible for people to compare graphs anonymously. This is to allow people to show off how well their model is doing, and see how others are doing; it's not required, and won't be graded, but it's been a source of fun and excitement in the past.
+
+**Modification:**
+
+1. We changed the convolution window size from [5, 5] to [4, 4]
+2. We inserted a convolutional layer between the first convolutional layer and first pooling layer, insert
+another convolutional layer between the the originally second layer and second pooling
+layer, to get new CNN: conv1 -> conv2 -> pool1 -> conv3 -> conv4 -> pool2 -> fc1 -> fc2 
+3. Originally, the number of features is conv1(1 features to 32 features) -> conv2(32 features to 64 features). We changed features to conv1(1 features to 16 features) -> conv2(16 features to 32 features) -> conv3(32 features to 64 features) -> conv4(64 features to 128 features).
+
+**Result:**
+
+We log the accuracy every 100 batches, and run the program for 2200 batches. Train accuracy = 98% and test accuracy = 98.09%. Although it is not a significant increase in accuracy, we can still conclude that our modification improved the convolutional neural networks.
+
+<center>
+![MNIST Improved](/Users/hao/Desktop/cs498aml/hw9/Final/MNIST-improved.png)
+</center>
+
+### 3. Go through the CIFAR-10 tutorial here, and ensure you can run the code. Note the warning at the top: "This tutorial is intended for advanced users of TensorFlow and assumes expertise and experience in machine learning." Enjoy the sense that you are one of these. Finally, insert appropriate lines of code into the tensorflow example to log the accuracy on tensorboard every 100 batches, for at least 2000 batches. You should screen capture the accuracy graph from tensorboard, and submit this.
+
+We train and evaluate the model using cifar10_train_eval.py. We log the accuracy every 100 batches, and run the program for 5000 batches. Finally, test accuracy = 74.02%.
+
+<center>
+![MNIST Improved](/Users/hao/Desktop/cs498aml/hw9/Final/CIFAR10.png)
+</center>

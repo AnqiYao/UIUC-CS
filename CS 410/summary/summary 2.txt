@@ -1,0 +1,1 @@
+#C#what will be the smallest number for IDF when there are very large number of files in the collection? (A)log2  (B)0  (C) 1

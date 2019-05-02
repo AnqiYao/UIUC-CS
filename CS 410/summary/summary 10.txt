@@ -1,0 +1,2 @@
+#D#Which of following describes how close are the system-generated clusters to the ideal clusters? (A) "Closeness" can be assessed from multiple perspectives (B) "Closeness" can be quantified (C) "Clustering bias" is imposed by the human assessors (D) All of above
+

@@ -1,0 +1,19 @@
+I used R to perform the significance test on the average precision of BM25 and Dirichlet Prior. 
+
+Source Code: 
+	bm25 = read.table('bm25.avg_p.txt')$V1
+	dp = read.table('dp.avg_p.txt')$V1
+	t.test(bm25, dp, paired=T)
+
+Below is the result. p-value = 0.04382 < 0.05, so there is a significant difference between the two model.
+
+		Paired t-test
+
+	data:  bm25 and dp
+	t = 2.0272, df = 224, p-value = 0.04382
+	alternative hypothesis: true difference in means is not equal to 0
+	95 percent confidence interval:
+	 0.0002401141 0.0169523315
+	sample estimates:
+	mean of the differences 
+	            0.008596223

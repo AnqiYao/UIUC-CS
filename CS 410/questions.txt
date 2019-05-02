@@ -1,0 +1,26 @@
+1. Give an example of an easy query from the Cranfield dataset.
+	Line 213 - what is the effect on cylinder buckling of a circumferential stress system that varies in the axial direction .
+
+
+2. Give an example of a hard query from the Cranfield dataset.
+	Line 13: what is the basic mechanism of the transonic aileron buzz .
+
+
+3. Do you think this was a good dataset and set of queries for an evaluation like this (i.e., comparing two retrieval functions)? Why or why not?
+	No. The queries in this MP are kind of scientific, as a result, the cover range would be not general engouth to represent the queries in daily life. Meanwhile, documents are not general enough either. Therefore, both queries and documents are not broad enough for a search engine. 
+
+
+4. Do you think the experiments would have different results if we used a different dataset? What changes to the dataset can change the results?
+	Yes. If we change the topic of the document collection, for example, from scientific to daily life, we may see different results. 
+
+
+5. Overfitting is a major problem in IR and machine learning. Tuning the parameters on a corpus in this way is definitely a case of overfitting (i.e, specializing the parameters too much to a specific corpus). Do you think your parameter settings would generalize well to a different corpus? In an experiment like this (one that compares two different retrieval functions), how can we avoid the overfitting problem?
+
+	I don't think the parameter settings would generalize well to a different corpus. The parameter settings are only the optimum solution for this MP's corpus and it is not necessary an optimum for a corpus of different topics. 
+	Overfitting can be avoided by finding some parameter that is close to but not the true max of MP2's corpus. Setting a good parameter in one method, and test it on another method. 
+
+
+
+
+
+

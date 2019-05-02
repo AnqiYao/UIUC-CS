@@ -1,0 +1,2 @@
+#D#Which of following are the output we wish to see giving latent aspect rating analysis to a set of review articles about a topic with overall ratings? (A) Major aspects commented on in the reviews (B) Ratings of each aspect(C) Relative weights placed on different aspects by reviewers (D) All of above
+
