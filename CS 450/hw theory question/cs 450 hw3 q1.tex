@@ -1,0 +1,75 @@
+% ---------
+%  Compile with "pdflatex hw0".
+% --------
+%!TEX TS-program = pdflatex
+%!TEX encoding = UTF-8 Unicode
+
+\documentclass[11pt]{article}
+\usepackage{jeffe,handout,graphicx}
+\usepackage[utf8]{inputenc}		% Allow some non-ASCII Unicode in source
+
+%  Redefine suits
+\usepackage{pifont}
+\usepackage{algorithm}
+\usepackage{algorithmic}
+\usepackage{amsmath}
+
+\def\Spade{\text{\ding{171}}}
+\def\Heart{\text{\textcolor{Red}{\ding{170}}}}
+\def\Diamond{\text{\textcolor{Red}{\ding{169}}}}
+\def\Club{\text{\ding{168}}}
+
+\def\Cdot{\mathbin{\text{\normalfont \textbullet}}}
+\def\Sym#1{\textbf{\texttt{\color{BrickRed}#1}}}
+
+
+% =====================================================
+%   Define common stuff for solution headers
+% =====================================================
+\Class{CS $450$}
+\Semester{Spring $2019$}
+\Authors{1}
+%\Section{}
+
+% =====================================================
+\begin{document}
+
+% ---------------------------------------------------------
+
+
+% ---------------------------------------------------------
+% Change authors again
+\AuthorOne{Ray Ying}{xinruiy2@illinois.edu}
+
+
+\HomeworkHeader{$3$}{$1$}
+
+\begin{quote}
+
+\end{quote}
+\hrule
+
+
+\begin{solution}
+\item
+\begin{enumerate}
+    \item 
+    Based on the two equation given: $\hat{A} = A + \delta A $ and $\hat{x} = x - \delta x$. \\
+    $\hat{A}\hat{x} = (A  + \delta A)(x -  \delta x) = Ax - A\delta x + x\delta A - \delta A \delta x = Ax - A\delta x + x\delta A = b $. \\
+    We have that $Ax = b$, delete on both side of above equation:\\
+    $ A\delta x = \delta A x \implies \delta x = A^{-1}\delta A x \implies \abs{\delta x} = \abs{A^{-1}\delta A x} \implies \norm {\abs{\delta x}} = \norm {\abs{A^{-1}\delta A x}} \implies \norm {\abs{\delta x}} \leq \norm{\abs{A^{-1}}} \cdot  \norm{\abs{\delta A}} \cdot \norm{\abs{x}}. $\\
+    Based on the definition of $\epsilon \geq$ max$_{i,j} \abs{\delta a_{i,j}/ a_{i,j}}$, it guarantees that $\norm {\abs {\delta A}} \leq \epsilon \norm{\abs{A}} \implies \norm {\delta A} \leq \epsilon \norm{A}$.
+    Therefore, the inequality we derived before can be transform into the inequality we want to prove:\\
+    $\norm {\abs{\delta x}} \leq \norm{\abs{A^{-1}}} \cdot  \norm{\abs{\delta A}} \cdot \norm{\abs{x}} \implies \frac{\norm {\abs{\delta x}}}{\norm{x}}\leq \norm{\abs{A^{-1}}} \cdot  \norm{\abs{\delta A}} \implies \frac{\norm {\abs{\delta x}}}{\norm{x}}\leq \epsilon \norm{\abs{A^{-1}}} \cdot  \norm{\abs{A}} \implies \frac{\norm {\abs{\delta x}}}{\norm{x}}\leq \epsilon \norm{\abs{A^{-1}} \cdot \abs{A}} \implies \frac{\norm {x - \hat{x}}}{\norm{x}}\leq \epsilon \norm{\abs{A^{-1}} \cdot \abs{A}}$.\\
+    Hence, proved.
+    
+    
+    \item Proof:
+    \newline
+        $K_{CR}(DA) = \norm{ \abs{(DA)^{-1}} \cdot \abs{(DA)} } = \norm { \abs{A^{-1}D^{-1}} \cdot \abs{DA}} = \norm {\abs{A^{-1}D^{^-1}DA}} = \norm {\abs {A^{-1}A}} = \norm {\abs {A^{-1}} \abs A } = K_{CR}(A)$.\\
+        Hence, proved.
+        
+    \end{enumerate}
+    (The norm above is $1$-norm)
+\end{solution}
+\end{document}

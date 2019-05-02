@@ -1,0 +1,157 @@
+% ---------
+%  Compile with "pdflatex hw4".
+% --------
+%!TEX TS-program = pdflatex
+%!TEX encoding = UTF-8 Unicode
+
+\documentclass[11pt]{article}
+\usepackage{jeffe,handout,graphicx}
+\usepackage[utf8]{inputenc}		% Allow some non-ASCII Unicode in source
+
+%  Redefine suits
+\usepackage{pifont}
+\def\Spade{\text{\ding{171}}}
+\def\Heart{\text{\textcolor{Red}{\ding{170}}}}
+\def\Diamond{\text{\textcolor{Red}{\ding{169}}}}
+\def\Club{\text{\ding{168}}}
+
+\def\Cdot{\mathbin{\text{\normalfont \textbullet}}}
+\def\Sym#1{\textbf{\texttt{\color{BrickRed}#1}}}
+
+
+
+% =====================================================
+%   Define common stuff for solution headers
+% =====================================================
+\Class{CS/ECE $374$}
+\Semester{FALL $2018$}
+\Authors{3}
+\AuthorOne{Zhe Zhang}{zzhan157@illinois.edu}
+\AuthorTwo{Ray Ying}{xinruiy2@illinois.edu}
+\AuthorThree{Anqi Yao}{anqiyao2@illinois.edu}
+%\Section{}
+% =====================================================
+\documentclass[12pt]{article}
+\usepackage{tikz}
+\begin{document}
+
+% ---------------------------------------------------------
+
+\HomeworkHeader{$4$}{$3$}
+
+\begin{enumerate}[3.]
+\item It is common these days to hear statistics about wealth inequality in
+the United States. A typical statement is that the the top 1\% of
+earners together make more than ten times the total income of the bottom
+70\% of earners. You want to verify these statements on some data
+sets. Suppose you are given the income of people as an $n$ element
+\emph{unsorted} array $A$, where $A[i]$ gives the income of person
+$i$.
+\begin{enumerate}
+\item Describe an $O(n)$-time algorithm that given $A$ checks whether
+  the top 1\% of earners together make more than ten times the bottom
+  70\% together. Assume for simplicity that $n$ is a multiple of 100
+  and that all numbers in $A$ are distinct. Note that sorting $A$ will
+  easily solve the problem but will take $\Omega(n\log n)$ time.
+\item More generally we may want to compute the total earnings of the
+  top $\alpha$\% of earners for various values of $\alpha$. Suppose we
+  are given $A$ and $k$ numbers $\alpha_1 < \alpha_2 < \ldots < \alpha_k$
+  each of which is a number between $0$ and $100$ and we wish to
+  compute the total earnings of the top $\alpha_i$\% of earners for
+  each $1 \le i \le k$. Assume for simplicity that $\alpha_i n$ is an
+  integer for each $i$. Describe an algorithm for this problem that
+  runs in $O(n \log k)$ time. Note that sorting will allow you to
+  solve the problem in $O(n \log n)$ time but when $k \ll n$, $O(n
+  \log k)$ is faster. Note that an $O(nk)$ time algorithm is relative
+  easy. {\em Hint:} Use the previous part with $\alpha_{k/2}$ first and then
+  use divide and conquer.
+\end{enumerate}
+
+You should prove the correctness of the second part of the problem.
+It helps to write a recursive algorithm so that you can use induction
+to prove correctness.-
+\end{enumerate}
+
+\hrule
+
+
+\begin{solution}
+\item
+\begin{enumerate}[(a)]
+    \item 
+    The solution is to find the top $1\%$ and bottom $70\%$ of the elements in A by QUICKSELECT, which requires constant time and iterate over A to sum up the incomes.
+    The algorithm is as following:
+    \begin{itemize}
+        \item Find the index i of the $99\%*n+1$ ranked element by QUICKSELECT.
+        \item Find the index j of the $70\%*n$ ranked element by QUICKSELECT.
+        \item Iterate over the array A and store the elements greater than $A[i]$ in another array $A\_top$, and store the elements smaller than $A[j]$ in array $A\_bottom$.
+        \item Sum up the elements in $A\_top$ to get $Sum\_top$ and sum up the elements in $A\_bottom$ to get $Sum\_bottom$.
+        \item Return $A\_top > 10 * A\_bottom$.
+    \end{itemize}
+    The running time for QUICKSELECT is constant, i.e., $O(1)$ ,the time for iterate over A is $O(n)$, summing up the new array takes $O(n)$, and comparison simply costs $O(1)$. Thus overall the algorithm takes $O(n)$.
+    
+    \item
+    The idea is to rank $\alpha_is$ from $1$ to $k$, and use the divide and conquer method on this ranked array to find out the top $\alpha_i\%$ of A. The algorithm is as following:
+    \begin{itemize}
+        \item Rank $\alpha_is$ from $1$ to $k$, and let S denote the array of $\alpha_is$.
+        \item Use QUICKSELECT to find the median $m$ of S, and use QUICKSELECT again to find the $m_{th}$ ranked element in A. Then partition the A by pivot $A[m]$ to get $A_l$ and $A_r$ where $A_l$ stores element smaller than $A[m]$ and $A_r$ stores element greater than $A[m]$.
+        \item Recursively divide the array $A_l$ and $A_r$ into subarrays like in previous step.Also divide $S$ into $S_l$ and $S_r$ by $S[m]$ in the similar way. Let $sum_i$ denote the sum of the elements in each subarray. $sum_total$ is the sum of all subarrays and it is the value to return.
+    \end{itemize}
+    The function can be represented as follows:
+    \begin{quote}
+        \newline
+        \fbox{\begin{minipage}{30em}
+        S <- ranked array of $\alpha_is$
+        \newline
+        \newline
+        SUM\_UP(A, S):
+        \quote
+        if($len(R) == 0$) return
+        \newline
+        $m$ <- QUICKSELECT($r$, $\ceil{len(R)/2}$)
+        \newline
+        $a_m$ <- QUICKSELECT($A$, $m$)
+        \newline
+        ($A_l$, $A_r$) <- PARTITION($A$, $a_m$)
+        \newline
+        Return $(total\_sum - SUM($A_l$))$
+        \newline
+        $S_l$ <- $S[1, ..., m-1]$
+        \newline
+        $S_$r <- $S[m, ..., len(R)]$
+        \newline
+        for $i$ in $S_r$: $i <- i - m$
+        \newline
+        SUM\_UP(A_l, R_l)
+        \newline
+        SUM\_UP(A_r, R_r)
+        \end{minipage}}
+    \end{quote}
+    
+    
+    This algorithm takes $O(nlogk)$, because both QUICKSELECT and PARTITION takes $O(n)$ time and the recursion for divide and conquer is:
+    \begin{quote}
+    $T(n, k) = T(r, k/2) + T(n-r, k/2) + O(n)$
+    \end{quote}
+    where $n$ is $len(A)$ and $k$ is $len(R)$. Since it takes $logk$ times to divide R into single $\alpha_is$, which means the recursion tree has a height of $logk$, and each level takes $O(n)$ time. In total, the recursion takes $O(nlogk)$ time to complete.
+    \newline
+    \newline
+    Now prove the correctness of the algorithm.
+    \newline
+    \newline
+    Proof: By induction on k, where k is the number of $\alpha_is$, i.e., $i\in{1,2,...,k}$ for $\alpha_i$.
+    \begin{itemize}
+        \item Base case: When $k = 0$, $len(S) = 0$, and $sum = 0$ as the algorithm returns. Thus the base case is correct.
+        \item Induction: Suppose the algorithm is true for $i = 1, 2, ..., k-1$. Need to show it is correct for $i = k$. Let m =  $\ceil{len(S)/2}$. Then there are following cases for $i$ in $\alpha_i$:
+        \begin{itemize}
+            \item $1\leq i < m$: Then $\alpha_i$ is in the left part of $S$, i.e., $S_l$, so the $n_{th}$ element in $A_l$ is the $n_{th}$ element in $A$. Since $len(R_l) < k$, by the inductive hypothesis, the algorithm is correct.
+            \item $i = m$: Since $A_l$ contains all elements smaller than $a_m$ by how we do the partition, $(total\_sum - SUM(A_l))$ is the correct income for top $a_m\%$ people. Thus the algorithm is correct.
+            \item $m < i\leq k$: In this case, since we used the median $m$ as pivot in the QUICKSELECT for R in recursion, we can have the correct rank for $R[i] - R[m]$. Since the $n_{th}$ element in $A$ is the $n-m_{th}$ element in $A_r$ and $len(A_r) < k$, by the inductive hypothesis, the algorithm is correct.
+        \end{itemize}
+        Hence, the algorithm is correct.
+    \end{itemize}
+\end{enumerate}
+
+\end{solution}
+
+\end{document}

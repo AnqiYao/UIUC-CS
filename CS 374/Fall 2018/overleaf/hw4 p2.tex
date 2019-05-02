@@ -1,0 +1,142 @@
+% ---------
+%  Compile with "pdflatex hw4".
+% --------
+%!TEX TS-program = pdflatex
+%!TEX encoding = UTF-8 Unicode
+
+\documentclass[11pt]{article}
+\usepackage{jeffe,handout,graphicx}
+\usepackage[utf8]{inputenc}		% Allow some non-ASCII Unicode in source
+
+%  Redefine suits
+\usepackage{pifont}
+\def\Spade{\text{\ding{171}}}
+\def\Heart{\text{\textcolor{Red}{\ding{170}}}}
+\def\Diamond{\text{\textcolor{Red}{\ding{169}}}}
+\def\Club{\text{\ding{168}}}
+
+\def\Cdot{\mathbin{\text{\normalfont \textbullet}}}
+\def\Sym#1{\textbf{\texttt{\color{BrickRed}#1}}}
+
+
+
+% =====================================================
+%   Define common stuff for solution headers
+% =====================================================
+\Class{CS/ECE 374}
+\Semester{FALL $2018$}
+\Authors{3}
+\AuthorOne{Zhe Zhang}{zzhan157@illinois.edu}
+\AuthorTwo{Ray Ying}{xinruiy2@illinois.edu}
+\AuthorThree{Anqi Yao}{anqiyao2@illinois.edu}
+%\Section{}
+% =====================================================
+\documentclass[12pt]{article}
+\usepackage{tikz}
+\begin{document}
+
+% ---------------------------------------------------------
+
+\HomeworkHeader{$4$}{$2$}
+
+\begin{enumerate}[2.]
+\item Suppose you are given $k$ sorted arrays $A_1,A_2,\ldots,A_k$
+  each of which has $n$ numbers. Assume that all numbers in the arrays
+  are distinct. You would like to merge them into single sorted array
+  $A$ of $kn$ elements. Recall that you can merge two sorted arrays of
+  sizes $n_1$ and $n_2$ into a sorted array in $O(n_1+n_2)$ time.
+  \begin{itemize}
+  \item Use a divide and conquer strategy to merge the sorted arrays
+    in $O(nk \log k)$ time. To prove the correctness of the algorithm
+    you can assume a routine to merge two sorted arrays.
+  \item In MergeSort we split the array of size $N$ into two arrays
+    each of size $N/2$, recursively sort them and merge the two sorted
+    arrays. Suppose we instead split the array of size $N$ into $k$
+    arrays of size $N/k$ each and use the merging algorithm in the
+    preceding step to combine them into a sorted array.  Describe the
+    algorithm formally and analyze its running time via a recurrence.
+    You do not need to prove the correctness of the recursive algorithm.
+  \end{itemize}
+\end{enumerate}
+
+\hrule
+
+
+\begin{solution}
+1.We could merge the first array $A_1$ with the second array $A_2$, the third array $A_3$ with the fourth array $A_4$ and so on. Then k sorted arrays will become $k/2$ sorted arrays. We will do this procedure recursively until there is only $1$ sorted array containing kn elements.
+\newline
+\newline
+The algorithm can be represented by the following pseudocode:
+
+\begin{quote}
+        \newline
+        \fbox{\begin{minipage}{30em}
+        mergeArrays($A_1,A_2,...,A_k$):
+        \quote
+        if(numberof($A_1,A_2,...,A_k$) == 1) 
+        \newline
+        \hspace*{2ex} return $A_1$
+        \newline
+        firstpart = mergeArrays($A_1,A_2,...,A_{k/2}$)
+        \newline
+        secondpart = mergeArrays($A_{k/2+1},A_{k/2+2},...,A_k$)
+        \newline
+        result = merge(firstpart, secondpart)
+        \newline
+        return result
+        \end{minipage}}
+\end{quote}
+Each recursive step we do $O(kn)$ work to merge the k sorted arrays into $k/2$ sorted arrays. Since we will continue doing this procedure until there is only $1$ sorted array, we have to do $O(kn)$ work for $O(logk)$ times. Thus this algorithm takes $O(nklogk)$.
+\newline
+\newline
+We will prove the correctness of the algorithm by doing induction on the number of sorted arrays, k.
+\begin{itemize}
+\item Base case: when k = 1, the algorithm returns a sorted array which is correct.
+\item Inductive hypothesis: Suppose our algorithm holds for all the x such that $|x|<|k|$. The algorithm could merge x sorted arrays into a single sorted array containing xn elements.
+\item Since both firstpart and secondpart in our algorithm contain $k/2$ elements where $|k/2|<|k|$, by the inductive hypothesis, both firstpart and secondpart are sorted arrays containing $kn/2$ elements. Since it is a routine to merge two sorted arrays, merge() will merge firstpart and secondpart into a single sorted array containing kn elements.
+\end{itemize}
+Thus our algorithm is correct.
+\newline
+\newline
+2.
+The algorithm can be represented by the following pseudocode:
+\begin{quote}
+        \newline
+        \fbox{\begin{minipage}{30em}
+        arrays[1],arrays[2],...,arrays[k]
+        mergeSort($A[1,2,...,N]$):
+        \quote
+        if(length($A[1,2,...,N]$) == 1) 
+        \newline
+        \hspace*{2ex} return A
+        \newline
+        for(i in 1 : (k-1))
+        \newline
+        \hspace*{2ex} shift = (i-1) * (N/k)
+        \newline
+        \hspace*{2ex} arrays[i] = mergeSort(A[shift+1,shift+2,...,shift+N/k]
+        \newline
+        arrays[k] = mergeSort(A[(k-1)*(N/k)+1,...,N]
+        \newline
+        result = mergeArrays(arrays[1],arrays[2],...,arrays[k])
+        \newline
+        return result
+        \end{minipage}}
+\end{quote}
+\newline
+\newline
+We know from part(1) that merging k sorted arrays which are array[1],array[2],...,array[k], needs O(Nlogk).Then We analyze the running time via a recurrence.
+\newline
+\newline
+T(k)=\left\{
+\begin{array}{c l}	
+     O(1) & N = 1\\
+     kT(N/k) + O(Nlogk) & otherwise
+\end{array}\right
+\newline
+\newline
+\text{The overall running time is O(NlogN).}
+
+\end{solution}
+
+\end{document}

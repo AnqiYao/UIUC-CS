@@ -1,0 +1,98 @@
+% ---------
+%  Compile with "pdflatex hw0".
+% --------
+%!TEX TS-program = pdflatex
+%!TEX encoding = UTF-8 Unicode
+
+\documentclass[11pt]{article}
+\usepackage{jeffe,handout,graphicx}
+\usepackage[utf8]{inputenc}		% Allow some non-ASCII Unicode in source
+
+%  Redefine suits
+\usepackage{pifont}
+\usepackage{algorithm}
+\usepackage{algorithmic}
+\usepackage{amsmath}
+\documentclass{article}
+\usepackage{amsmath}
+
+\def\Spade{\text{\ding{171}}}
+\def\Heart{\text{\textcolor{Red}{\ding{170}}}}
+\def\Diamond{\text{\textcolor{Red}{\ding{169}}}}
+\def\Club{\text{\ding{168}}}
+
+\def\Cdot{\mathbin{\text{\normalfont \textbullet}}}
+\def\Sym#1{\textbf{\texttt{\color{BrickRed}#1}}}
+
+
+% =====================================================
+%   Define common stuff for solution headers
+% =====================================================
+\Class{CS $450$}
+\Semester{Spring $2019$}
+\Authors{1}
+%\Section{}
+
+% =====================================================
+\begin{document}
+
+% ---------------------------------------------------------
+
+
+% ---------------------------------------------------------
+% Change authors again
+\AuthorOne{Ray Ying}{xinruiy2@illinois.edu}
+
+
+\HomeworkHeader{$12$}{$1$}
+
+\begin{quote}
+
+\end{quote}
+
+\hrule
+
+\begin{solution}
+\item 
+
+\begin{enumerate}
+    \item 
+        \begin{enumerate}
+            \item Because $f(x) < 0$ for all $x \in [a,b]$ ($f$ is continues), let $x^*$ be the point where $f(x^*) \geq f(x)$ for all $x \in [a,b]$ where $x^* \in [a,b]$. Therefore, $\int_{a}^{b} f(x)dx \leq f(x^*)\cdot|b-a|$. $f(x^*) < 0$, thus $\int_{a}^{b} f(x)dx < 0$\\
+            
+            \item $\int_{a}^{b} p(x)x^kdx = 0$, we know that $k = 1, ... ,n-1$, the sign of $x^k$ can be negative or positive. Therefore, by what we know from given and part $1$, if $p(x) > 0$ for all $x \in [a,b]$, then $\int_{a}^{b} p(x)x^kdx > 0$ when $x^k > 0$ and $\int_{a}^{b} p(x)x^kdx < 0$ when $x^k < 0$. Same when $p(x) < 0$. Hence, the sign of $p(x)$ must changes in the interval $[a,b] \implies$ there must have a root in the $[a,b]$.\\
+            
+            \item $Q(x)$ is in the span$\{x_i\}_{i=0}^{i=n-1}$, in part $b$ we already proved that $p(x)$ is orthogonal to this span. Therefore, $\int_{a}^{b} p(x)Q(x)dx = 0$\\
+            
+            \item Assume that $p(x)$ has exactly $1$ root $x_i$ with loss of generality, if its multiplicity $m \geq 2$, $p(x) = Q(x)(x-x_i)^2$ where $Q(x) = Q'(x)(x-x_i)^{m-2}$.\\
+            
+            $\int_{a}^{b} p(x)Q(x)dx = \int_{a}^{b} Q(x)^2 (x-x_i)^2dx \geq 0$. Contradicts to the $\int_{a}^{b} p(x)Q(x)dx = 0$\\
+            
+            Hence, for a root $x_i \in [a,b]$, it must have multiplicity one.\\
+            
+            \item For any $k = 1, ..., n-1$, let $q_k(x) = (x - x_1)...(x - x_k)$\\
+            
+            We know that from part $d$ that $\int_{a}^{b} p(x)Q(x)dx = 0$, let $Q(x) = q_k(x)$ and $p(x) = q_k(x)R(x)$ where $R(x)$ is the remaining term. Then, $\int_{a}^{b} q(x)^2R(x)dx = 0$\\
+            
+            As $q(x) \geq 0$, then $R(x)$ must also has a root in $[a,b]$. Therefore, $p(x)$ will have at least one another root.\\
+        \end{enumerate}
+        
+    \item  
+        \begin{enumerate}
+            \item $f(x) = q(x)p(x) + r(x) \implies \int_{a}^{b} f(x)dx = \int_{a}^{b} q(x)p(x)dx + \int_{a}^{b}r(x) dx$ \\
+            
+            $\int_{a}^{b} q(x)p(x)dx = 0 \implies \int_{a}^{b} f(x)dx = \int_{a}^{b}r(x) dx$\\
+            
+            \item We know that for Lagrange basis function, $l_i(x_i) = 1$ if $i = j$ and $l_i(x_i) = 0$ otherwise.\\
+            
+            $r(x) = \sum_{i=1}^{i=n}r(x_i)l_i(x_i) \implies \int_{a}^{b}r(x) = \sum_{i=1}^{i=n}r(x_i)\int_{a}^{b}l_i(x_i)$ (If two polynomial agrees on $n$ points and with degrees both less than $n-1$, this holds)\\
+            
+            \item Simply because that $x_i$ are the roots for $p(x)$, therefore, $f(x_i) = r(x_i)$ from $f(x) = q(x)p(x) + r(x)$.\\
+            As $f(x)$ has the same root as the $p(x)$, same as $r(x)$, we can say that the n-point interpolatory quadrature rule on $[a,b]$ whose nodes are the zeros of $p(x)$ must has degree $2n - 1$
+        \end{enumerate}
+\end{enumerate}
+
+\end{solution}
+References: \\ 
+
+\end{document}

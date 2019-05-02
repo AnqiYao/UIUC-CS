@@ -1,0 +1,115 @@
+% ---------
+%  Compile with "pdflatex hw0".
+% --------
+%!TEX TS-program = pdflatex
+%!TEX encoding = UTF-8 Unicode
+
+\documentclass[11pt]{article}
+\usepackage{jeffe,handout,graphicx}
+\usepackage[utf8]{inputenc}		% Allow some non-ASCII Unicode in source
+
+%  Redefine suits
+\usepackage{pifont}
+\def\Spade{\text{\ding{171}}}
+\def\Heart{\text{\textcolor{Red}{\ding{170}}}}
+\def\Diamond{\text{\textcolor{Red}{\ding{169}}}}
+\def\Club{\text{\ding{168}}}
+
+\def\Cdot{\mathbin{\text{\normalfont \textbullet}}}
+\def\Sym#1{\textbf{\texttt{\color{BrickRed}#1}}}
+
+
+
+% =====================================================
+%   Define common stuff for solution headers
+% =====================================================
+\Class{CS/ECE 374}
+\Semester{Fall 2018}
+\Authors{1}
+%\Section{}
+
+% =====================================================
+\begin{document}
+
+% ---------------------------------------------------------
+
+
+% ---------------------------------------------------------
+% Change authors again
+\AuthorOne{Xinrui Ying}{xinruiy2@illinois.edu}
+
+
+\HomeworkHeader{$0$}{$2$}
+
+\begin{quote}
+\begin{enumerate}[(a)]
+%----------------------------------------------------------------------
+\item Consider the following recurrence.
+$$T(n) = T(\floor{n/2}) + 2T(\floor{n/4}) + n \quad n \ge 4, \mbox{~and~} T(n) = 1 \quad 1 \le n < 4. $$
+\begin{itemize}
+\item Prove by induction that $T(n) = O(n \log n)$.
+More precisely show that $T(n) \le a n \log n + b$ for $n \ge 1$ where
+$a,b \ge 0$ are some fixed but suitably chosen constants (you get to choose and fix them).
+%----------------------------------------------------------------------
+
+\end{itemize}
+\end{enumerate}
+\end{quote}
+\hrule
+
+
+\begin{solution}
+\item
+\begin{enumerate}[(a)]
+\item
+    Choose $a$ = $1$, $b$ = $1$.
+\begin{itemize}
+\item
+Base case: When $n$ = $1$, $T(1)$= $1$, $log 1$ = $0$, so that $a n \log n$ + $b$ = $b$ = $1$ $\ge$  $T(1)$. When $n$ = $2$, $T(2)$ = $1$, $log 2 = 1$, $a n \log n$ + $b$ = $b$ + $2$$a$ = $1$ + $2$$a$ = $3$ $\ge$ $T(2)$ . When $n$ = $3$, $T(3)$ = $1$, $a n \log n$ + $b$ = $b$ + $3$$alog3$ = $1$ + $3$$log3$ $\ge$ $T(3)$. So it holds for $n$ = $1, 2, 3$.
+    
+\item 
+Induction step: Suppose it is true for $n = 4, 5, 6 ... k$, we want to show that $n = k+1$ also holds. There are two cases:
+\begin{itemize}
+    \item $k$ is an even number: 
+    \begin{itemize}
+        Let $k = 2j$, $j \in $ $\Natural$. $n = k + 1 = 2j+1$. Then we have $T(k+1) = T(\floor{j+1/2}) + 2T(\floor{1/2j+1/4}) + k + 1$. 
+        \newline
+        \newline Since $j$ is a natural number, then $T(k+1) = T(\floor{j}) + 2T(\floor{1/2j}) + k + 1$. As $T(k) = T(\floor{j}) + 2T(\floor{1/2j}) + k $, we have $T(k+1) = T(k)+1$. 
+        \newline
+        \newline Since $n = k$ is already true that $T(k) \le a nlogn + b$, $T(k+1) = T(k)+1 \le a nlogn + b + 1 = an logn + b + (1/logn) * logn = (an+ (1/logn)) * logn +b$. 
+        \newline
+        \newline Since $logn > 1$, $1/logn < 1$, and $log(n+1) > log (n)$, then $(an+ (1/logn)) * logn +b < (an + a) * (log(n+1)) + b = a(n+1) * (log (n+1)) + b$. 
+        \newline
+        \newline Hence, we conclude that $T(k+1) \le (an+ (1/logn)) * logn +b < a(n+1) * (log (n+1)) + b$. The statement holds for $n = k + 1$ when k is an even number.
+        
+    \end{itemize}
+    \item $k$ is an odd number:
+    \begin{itemize}
+        Let $k = 2j + 1$, $j \in $ $\Natural$. $n = k + 1 = 2 (j+1)$. We have $T(k+1)$ = $T(\floor{(k+1)/2}) + 2T(\floor{(k+1)/4}) + k + 1$. Since it's assume holds true for 1, 2 ... k, and k >= 4, then (k+1)/2 and (k+1)/4 are less than k that $T(\floor{(k+1)/2}) \le a(k+1)/2 (log (k+1)/2) + b$, $T(\floor{(k+1)/4}) \le a(k+1)/4 (log (k+1)/4) + b$. 
+        \newline
+        \newline $b = 1$, Combine both inequality, $T(k+1)$ = $T(\floor{(k+1)/2}) + 2T(\floor{(k+1)/4}) + k + 1 \le a(k+1)/2 (log (k+1)/2) + b + 2 * (a(k+1)/4 (log (k+1)/4) + b) + k + 1$.
+        \newline
+        \newline Work on the right hand side, $a(k+1)/2 (log (k+1)/2) + b + 2 * (a(k+1)/4 (log (k+1)/4) + b) + k + 1 = a(k+1)/2 (log (k+1)/2) + (a(k+1)/2 (log (k+1)/4) + 3b + k + 1 = a(k+1)/2((log (k+1)/2)+(log (k+1)/4)) + 3 + k + 1$. 
+        \newline
+        \newline Since $log(a/b) = loga - logb$ and $log(ab) = loga + logb$, $a(k+1)/2((log (k+1)/2)+(log (k+1)/4)) = a(k+1)/2( 2*(log(k+1)) - log2 - log4)$. 
+        \newline
+        \newline According to piazza, log can be base on $2$, $a(k+1)/2( 2*(log(k+1)) - log2 - log4) = a(k+1)log(k+1) - a(k+1)/2 *(log2+ log4) = a(k+1)log(k+1) - a(k+1)/2 * 3$. 
+        \newline
+        \newline Now we can see that 
+        $a(k+1)/2((log (k+1)/2)+(log (k+1)/4)) + 3 + k + 1 = a(k+1)log(k+1) - a(k+1)/2 * 3  + 3 + (k+1)= (k+1) log(k+1) - (k+1)* (3/2) + (k+1) + 3 = 
+        (k+1) log(k+1) - (k+1)/2 + 3$. 
+        \newline
+        \newline $k \ge 4$, $(k+1)/2 > 2$, $3 - (k+1)/2 < 1$. Hence, $(k+1) log(k+1) - (k+1)/2 + 3 < (k+1) log(k+1) + 1 = a(k+1)log(k+1)+ 1$, then we can conclude that $T(k+1) < a(k+1)log(k+1) + b$.
+        
+\end{itemize} 
+    
+\end{itemize}
+    
+\end{itemize}
+    
+\medskip
+    Combine both cases, we proved that $T(n) \le anlogn + b$ for $n \ge 1$ when choosing a = 1, b = 1.
+\end{enumerate}
+
+\end{solution}
+\end{document}

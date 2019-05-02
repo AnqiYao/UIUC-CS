@@ -1,0 +1,73 @@
+% ---------
+%  Compile with "pdflatex hw0".
+% --------
+%!TEX TS-program = pdflatex
+%!TEX encoding = UTF-8 Unicode
+
+\documentclass[11pt]{article}
+\usepackage{jeffe,handout,graphicx}
+\usepackage[utf8]{inputenc}		% Allow some non-ASCII Unicode in source
+
+%  Redefine suits
+\usepackage{pifont}
+\usepackage{algorithm}
+\usepackage{algorithmic}
+\usepackage{amsmath}
+\documentclass{article}
+\usepackage{amsmath}
+
+\def\Spade{\text{\ding{171}}}
+\def\Heart{\text{\textcolor{Red}{\ding{170}}}}
+\def\Diamond{\text{\textcolor{Red}{\ding{169}}}}
+\def\Club{\text{\ding{168}}}
+
+\def\Cdot{\mathbin{\text{\normalfont \textbullet}}}
+\def\Sym#1{\textbf{\texttt{\color{BrickRed}#1}}}
+
+
+% =====================================================
+%   Define common stuff for solution headers
+% =====================================================
+\Class{CS $450$}
+\Semester{Spring $2019$}
+\Authors{1}
+%\Section{}
+
+% =====================================================
+\begin{document}
+
+% ---------------------------------------------------------
+
+
+% ---------------------------------------------------------
+% Change authors again
+\AuthorOne{Ray Ying}{xinruiy2@illinois.edu}
+
+
+\HomeworkHeader{$13$}{$1$}
+
+\begin{quote}
+
+\end{quote}
+
+\hrule
+
+\begin{solution}
+\item 
+
+\begin{enumerate}
+    \item  We know $l_k = y_k - u_{k-1}(t_k)$\\
+    
+    $y_{k+1} - y_{k+1}^* = y_{k+1} -  u_{k}(t_{k+1}) - (y_{k+1}^* - u_{k}(t_{k+1}))
+    = l_{k+1}-O(h^{p^*+1})$\\
+    Since $p^* > p$, $p* = p + 1$, therefore, $i = 2$
+    \\
+    \item We know that $|e_k| \approx |l_k| > tol$ and $|c(\alpha h_k)^{p+1}| = tol \implies \alpha^{p+1} = \frac{tol}{|e_k|}$\\
+    Hence, $\alpha = (\frac{tol}{|e_k|})^{\frac{1}{p+1}}$
+    
+\end{enumerate}
+
+\end{solution}
+References: \\ 
+
+\end{document}

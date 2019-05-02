@@ -1,0 +1,109 @@
+% ---------
+%  Compile with "pdflatex hw0".
+% --------
+%!TEX TS-program = pdflatex
+%!TEX encoding = UTF-8 Unicode
+
+\documentclass[11pt]{article}
+\usepackage{jeffe,handout,graphicx}
+\usepackage[utf8]{inputenc}		% Allow some non-ASCII Unicode in source
+
+%  Redefine suits
+\usepackage{pifont}
+\def\Spade{\text{\ding{171}}}
+\def\Heart{\text{\textcolor{Red}{\ding{170}}}}
+\def\Diamond{\text{\textcolor{Red}{\ding{169}}}}
+\def\Club{\text{\ding{168}}}
+
+\def\Cdot{\mathbin{\text{\normalfont \textbullet}}}
+\def\Sym#1{\textbf{\texttt{\color{BrickRed}#1}}}
+
+
+
+% =====================================================
+%   Define common stuff for solution headers
+% =====================================================
+\Class{CS/ECE 374}
+\Semester{Fall 2018}
+\Authors{1}
+%\Section{}
+
+% =====================================================
+\begin{document}
+
+% ---------------------------------------------------------
+
+
+% ---------------------------------------------------------
+% Change authors again
+\AuthorOne{Xinrui Ying}{xinruiy2@illinois.edu}
+
+
+\HomeworkHeader{$0$}{$3$}
+
+\begin{quote}
+%----------------------------------------------------------------------
+\item Consider the set of strings $L \subseteq \set{\Sym0,\Sym1}^*$
+  defined recursively as follows:
+\begin{itemize}
+\item The string $\Sym1$ is in $L$.
+\item For any string $x$ in $L$, the string $\Sym0 x$ is also in $L$.
+\item For any string $x$ in $L$, the string $x \Sym0$ is also in $L$.
+\item For any strings $x$ and $y$ in $L$, the string $x \Sym1 y$ is also in $L$.
+\item These are the only strings in $L$.
+\end{itemize}
+
+\begin{enumerate}[(a)]
+\item Prove by induction that every string $w \in L$ contains an odd
+  number of \Sym1s.
+\item
+Is every string $w$ that contains an odd number of \Sym1s in $L$?
+In either case prove your answer.
+\end{enumerate}
+Let $\#(a, w)$ denote the number of times symbol $a$ appears in string $w$; for example,
+\[
+	\#(\Sym0, \Sym{101110101101011}) = 5
+	\quad\text{and}\quad
+	\#(\Sym1, \Sym{101110101101011}) = 10.
+\]
+You may assume without proof that $\#(a, uv) = \#(a, u) + \#(a, v)$ for any symbol $a$ and any strings $u$ and $v$, or any other result proved in class, in lab, or in the lecture notes.  Otherwise, your proofs must be formal and self-contained.
+%----------------------------------------------------------------------
+
+\end{quote}
+\hrule
+
+
+\begin{solution}
+\item 
+\begin{enumerate}[(a)]
+\item
+\begin{itemize}
+\item
+    Base case: When $w$ length = $1$. The only string for $w$ is $1$, which has odd number of 1s. So the base case holds.
+\item
+    Induction step: Suppose $w$ having odd number of $1s$ is true for length $1,2,3...k$, we want to length = $k+1$ also holds. There are only the following three cases:
+    \begin{itemize}
+    \item  
+        We already have $w$ with length $k$ having odd number of $1s$, since $w \in L$, we also have $w0 \in L$. The number of $1s$ in $w0$ is same as number of 1s in $w$, the length of $w0$ = length of $w$ + 1 = $k$ + 1. So $w$ holds for length $k+1$ in this case.
+    \item  
+        We already have $w$ with length $k$ having odd number of $1s$, since $w \in L$, we also have $0w \in L$. The number of $1s$ in $0w$ is same as number of 1s in $w$, the length of $0w$ = length of $w$ + 1 = $k$ + 1. So $w$ holds for length $k+1$ in this case.
+    \item  
+        Let $m \in  L$ be any string with length $k1$ where $k1 < k$, and $n \in L$ be any string with length $k2$ where $k2 = k - k1$. Since $m$ and $n$ have length less then $k$, we can conclude that they both have odd number of $1s$. Since both $m$ and $n$ are in L, then $m1n$ is also in L. The number of $1s$ in $m1n$ = number of $1s$ in $m$ + number of $1s$ in $n$ + 1. Since odd + odd + 1 = odd, we have number of $1s$ in $m1n$ is odd. The length of $m1n$ = $k2 + k1 + 1$ = $k + 1$. So $w$ holds for length $k+1$ in this case.  
+     
+\end{itemize}
+    The prove of every string $w \in L$ contains an odd number of $1s$ is complete.
+\end{itemize}
+\item    
+    It's true that every string $w$ contains an odd number of $1s$ is in $L$.
+\begin{itemize}
+\item
+    Base case: $w$ contains only one $1s$. Let $w$ starts with just $1$, then $w$ is in $L$, you can concatenate $0$ at the front or the end to still be in $L$. After you concatenate for the first time, you still have $w$ in L and you can recursively doing this and you can have any number of $0s$ in the front or back of the $1$ and you still have $w \in L$. So the base case holds.
+\item
+    Induction step: Suppose it true for $w$ with $1,3,5...k-2,k$ number of $1s$, we want to prove that number of $1s$ = $k + 2$ also holds. Let $m$ be any string with $k$ number of $1s$, since the statement is assume true for $k$ number of $1s$, we have $m \in L$. Let $n$ be any string with $1$ number of $1s$, since the statement is proved true for $1$ number of $1s$, we have $n \in L$. Now since both $m$ and $n$ are in $L$, then $m1n$ and $n1m$ are both in $L$. The number of $1s$ for $m1n$ or $n1m$ = $1$ + $1$ + $k$ = $k+2$. Since $m$ and $n$ can be any string with just required number of $1s$, $m1n$ and $n1m$ contain all the possible outcomes with $k+2$ of $1s$. $m1n$ and $n1m$ are both in $L$, hence the statement is true for $k+2$ number of $1s$.
+\end{itemize}
+    The prove of every string $w$ contains an odd number of $1s$ is in L is complete.
+\medskip
+\end{enumerate}
+
+\end{solution}
+\end{document}

@@ -1,0 +1,89 @@
+% ---------
+%  Compile with "pdflatex hw0".
+% --------
+%!TEX TS-program = pdflatex
+%!TEX encoding = UTF-8 Unicode
+
+\documentclass[11pt]{article}
+\usepackage{jeffe,handout,graphicx}
+\usepackage[utf8]{inputenc}		% Allow some non-ASCII Unicode in source
+
+%  Redefine suits
+\usepackage{pifont}
+\usepackage{algorithm}
+\usepackage{algorithmic}
+\usepackage{amsmath}
+\documentclass{article}
+\usepackage{amsmath}
+
+\def\Spade{\text{\ding{171}}}
+\def\Heart{\text{\textcolor{Red}{\ding{170}}}}
+\def\Diamond{\text{\textcolor{Red}{\ding{169}}}}
+\def\Club{\text{\ding{168}}}
+
+\def\Cdot{\mathbin{\text{\normalfont \textbullet}}}
+\def\Sym#1{\textbf{\texttt{\color{BrickRed}#1}}}
+
+
+% =====================================================
+%   Define common stuff for solution headers
+% =====================================================
+\Class{CS $450$}
+\Semester{Spring $2019$}
+\Authors{1}
+%\Section{}
+
+% =====================================================
+\begin{document}
+
+% ---------------------------------------------------------
+
+
+% ---------------------------------------------------------
+% Change authors again
+\AuthorOne{Ray Ying}{xinruiy2@illinois.edu}
+
+
+\HomeworkHeader{$5$}{$1$}
+
+\begin{quote}
+
+\end{quote}
+\hrule
+
+
+\begin{solution}
+\item
+    \begin{enumerate}
+    \item  $A + uv^T = Q(R + wv^T) $, since $A = QR$\\
+    $QR + uv^T = QR + Qwv^T \implies uv^T = Qwv^T \implies Q^Tuv^T = Q^TQwv^T$\\
+    $Q$ is a orthogonal matrix, $Q^TQ = I$\\
+    $Q^Tuv^T = wv^T \implies Q^Tu = w$
+    \item $R + wv^T = Q_1(Q_1^TR + ce_1v^T)$, $Q_1$ is orthogonal because it is the product of orthogonal matrices(a series of Givens rotations).\\
+    $R + wv^T = R + Q_1ce_1v^T \implies wv^T = Q_1ce_1v^T$\\
+    Therefore, we want to show that $Q_1^Tw = ce_1$. This requires $Q_1^T$ to zeroing out every entry in $w$ except the first entry. Therefore, we will apply a series of rotations in this order $G_{0,1}G_{1,2}...G_{n-1,n}$ to achieve it. $Q_1$ will be $G_{n-1,n}^TG_{n-2,n-1}^T...G_{0,1}^T$. \\
+    It's easy to show $wv^T$ is upper triangular since $ce_1v^T$ is upper triangular.(Only the first row has value that's not $0$), therefore, $wv^T = Q_1ce_1v^T$ is also upper triangular. 
+    \item We want to show that $Q_1(Q_1^TR + ce_1v^T) = Q_1(H)$, then $Q_1^TR + ce_1v^T = H$.\\
+    We already show that $ce_1v^T$ is upper triangular since its value is only in the first row, we want to show that $Q_1^TR$ is upper Hessenberg matrices.\\
+    From wikipedia, an upper Hessenberg matrix multiply an upper triangular matrix is still upper Hessenberg matrix. $R$ is a upper triangular matrix, so we only need to prove that $Q_1^T$ is a upper Hessenberg matrix.\\
+    $Q_1^T = G_{0,1}G_{1,2}...G_{n-1,n}$, since each matrix $G_{k-1,k}$ only has one nonzero entry in the $[k,k-1]$ location below the diagonal in the matrix. Therefore, for different $G_{k-1,k}$ matrix, the nonzero entries below the diagonal are in different location and they are all in the first off-diagonal below the diagonal. Therefore, the product of $ G_{0,1}G_{1,2}...G_{n-1,n}$ will still only have nonzero value on and above the diagonal, or on the first off-diagonal below the diagonal. \\
+    Hence, $Q_1^T$ is Upper Hessenberg matrix, implies $Q_1^TR + ce_1v^T$ is Upper Hessenberg matrix. Therefore, $Q_1(Q_1^TR + ce_1v^T) = Q_1(H)$. 
+    \item $Q_1 = G_{n-1,n}^TG_{n-2,n-1}^T...G_{0,1}^T$, $H$ is an Upper Hessenberg matrix, we want $Q_1(H)$ to be an upper triangular. The transpose of a rotation will still be a rotation but in the opposite direction. Since the rotation matrix in the class is \\
+    \[
+      \begin{bmatrix}
+        c & s\\
+        -s & c
+      \end{bmatrix}
+    \]
+    The transpose will be 
+    \[
+      \begin{bmatrix}
+        c & -s\\
+        s & c
+      \end{bmatrix}
+    \]
+    Indeed, it is doing the zeroing out on the transpose of $H$, which will zeroing out all just the values on the first off-diagonal below the diagonal of the Upper Hessenberg matrix. Therefore, $Q_1(H)$ will be an upper triangular matrix.
+    \item The total time for the above process is computing the new $R$, since the rotation matrix $Q_1$ multiply a vector takes $O(n)$ and  the rotation matrix $Q_1$ multiply a matrix takes $O(n^2)$. Therefore, the total time will be the leading term $O(n^2)$.
+    \end{enumerate}
+\end{solution}
+\end{document}

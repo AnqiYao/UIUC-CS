@@ -1,0 +1,79 @@
+% ---------
+%  Compile with "pdflatex hw4".
+% --------
+%!TEX TS-program = pdflatex
+%!TEX encoding = UTF-8 Unicode
+
+\documentclass[11pt]{article}
+\usepackage{jeffe,handout,graphicx}
+\usepackage[utf8]{inputenc}		% Allow some non-ASCII Unicode in source
+
+%  Redefine suits
+\usepackage{pifont}
+\def\Spade{\text{\ding{171}}}
+\def\Heart{\text{\textcolor{Red}{\ding{170}}}}
+\def\Diamond{\text{\textcolor{Red}{\ding{169}}}}
+\def\Club{\text{\ding{168}}}
+
+\def\Cdot{\mathbin{\text{\normalfont \textbullet}}}
+\def\Sym#1{\textbf{\texttt{\color{BrickRed}#1}}}
+
+
+
+% =====================================================
+%   Define common stuff for solution headers
+% =====================================================
+\Class{CS/ECE $374$}
+\Semester{FALL $2018$}
+\Authors{3}
+\AuthorOne{Zhe Zhang}{zzhan157@illinois.edu}
+\AuthorTwo{Ray Ying}{xinruiy2@illinois.edu}
+\AuthorThree{Anqi Yao}{anqiyao2@illinois.edu}
+%\Section{}
+% =====================================================
+\documentclass[12pt]{article}
+\usepackage{tikz}
+\begin{document}
+
+% ---------------------------------------------------------
+
+\HomeworkHeader{$10$}{$2$}
+\item We call an undirected graph an \emph{eight-graph} if it has
+      an odd number of nodes, say $2n-1$, and consists of two cycles
+      $C_1$ and $C_2$ on $n$ nodes each and $C_1$ and $C_2$ share
+      exactly one node. See figure below for an eight-graph on $7$
+      nodes.\\
+      \\
+      Given an undirected graph $G$ and an integer $k$, the EIGHT problem asks whether or not there exists a subgraph which is an eight-graph on $2k-1$ nodes. Prove that EIGHT is NP-Complete.
+      \\
+\hrule
+\begin{solution}
+    \item
+    To prove EIGHT is NP-Complete, we need to prove first EIGHT is NP, and second an NP-hard (in this case, NP-Complete) problem (Hamiltonian cycle) is reducible to EIGHT.
+    \\
+    \\
+    First, show that EIGHT is an NP by finding an efficient certifier to the EIGHT problem.\\
+    \\
+    Problem: Given an undirected graph $G = (V, E)$ and an integer $k$, check whether there is an eight-graph subgraph with $2k-1$ nodes.\\
+    Certificate: Set $V_{8} \in V$, $|V_{8}| = 2k-1$.\\
+    Certifier: Check whether there is an eight-graph $H = (V_{8}, E_{8})$, where $E_{8}$ is a subset of $E$ containing edges with vertices from $V_{8}$.\\
+    We can see that the certifier is efficient because testing the certificate takes polynomial time, and thus the EIGHT problem is an NP.\\
+    \\
+    Second, we will show that the Hamiltonian cycle problem can be reduced to the EIGHT problem.\\
+    \\
+    Let $G = (V, E)$ be an undirected graph where $V = {v_1, v_2,...,v_k}$.\\
+    Create another undirected graph $G' = (V', E')$, $V' = {v_1', v_2',...,v_k'}$, $G'$ has an undirected Hamiltonian cycle, and $G'$ shares only one vertex with $G$.\\
+    Then let $G'' = (V''=V \cup V', E''= E \cup E')$, and notice that $G''$ has $2k-1$ vertices due to the vertex shared between $G$ and $G'$. \\
+    Also denote the shared vertex as $v_i$.\\
+    \\
+    Claim: \\
+    $G$ has an undirected Hamiltonian cycle $\iff$ $G''$ has a eight-graph subgraph with $2k-1$ vertices.\\
+    Proof:\\
+    "$\implies$" : Suppose $G$ has an undirected Hamiltonian cycle. Since $G'$ is created with a Hamiltonian cycle and $G$ and $G'$ shares only $1$ vertex. We have $2$ cycles in $G''$  and there is exactly one node shared between them. Thus they together form the eight-graph $G''$ with $2k-1$ nodes. \\
+    "$\impliedby$" : Suppose that a graph $G$ has a eight-graph with $2k-1$ nodes. We can have $C_1$ and $C_2$ be the two cycles in the eight-graph such that $|(C_1 \cap C_2)| = 1$, $|C_1| = |C_2| = k$. By the construction, we are certain that $G'$ has a Hamiltonian cycle and $|V(G')| = k$. As the statement of eight-graph, we can construct the graph $G''$ by deleting $G'/v$ from $G$ where $v$ is the intersection vertex of the two cycles in the eight-graph. Since the remaining graph is a cycle of length $k$ and there is only $k$ vertices left, we are guarantee to have a Hamiltonian cycle $G''$. So we proved that $G''$ is a Hamiltonian cycle by showing $G$ is a eight-graph.\\
+    Thus the claim is proved.\\
+    \\
+    \\
+    Now we have shown that the EIGHT problem is an NP and it could be reduced from an NP-complete problem. Hence, the EIGHT problem is NP-complete.
+\end{solution}
+\end{document}

@@ -1,0 +1,316 @@
+%!TEX TS-program = pdflatex
+%!TEX encoding = UTF-8 Unicode
+
+\documentclass[11pt]{article}
+\usepackage{jeffe,handout,graphicx,mathtools}
+\usepackage[utf8x]{inputenc}			% allow Unicode in .tex file
+\usepackage{enumerate}
+\usepackage{fourier-orns}
+
+\def\Sym#1{\texttt{\upshape\textcolor{BrickRed}{#1}}}
+\def\SymBlue#1{\texttt{\upshape\textcolor{RoyalBlue}{#1}}}
+\def\SymGreen#1{\texttt{\upshape\textcolor{PineGreen}{#1}}}
+\def\_#1{\SymBlue{\underline{\smash{\textbf{#1}}}}}
+\def\X#1{\SymGreen{$\overline{\textbf{#1}}$}}
+\def\u#1{\raise0.5ex\hbox{\textcolor{RoyalBlue}{#1}}}
+
+\def\Cdot{\mathbin{\text{\normalfont \textbullet}}}
+\def\Sym#1{\texttt{\upshape \color{BrickRed} {#1}}}
+\def\Var#1{\ensuremath{\seq{\textsf{#1}}}}
+
+\def\ForceSym#1{\setbox0\hbox{A}\hbox to \wd0{\hss #1\hss}}
+\def\Blank{\ForceSym{$\diamond$}}
+%\def\Enter{\ForceSym{$\dlsh$}}			% Too wide; needs mathabx package
+\def\Enter{\ForceSym{\rotatebox[origin=c]{180}{$\Rsh$}}}	% Better
+\def\To{\leadsto}
+\def\Tostar{\mathrel{\To\!\!\!^*}}
+
+\newcommand{\comp}[1]{#1_{\text{comp}}}
+
+\newtheorem{claim}{Claim}
+
+\newcommand{\IsSinL}{\text{IsStringInL}}
+\newcommand{\IsSinlang}[1]{\text{IsStringIn}L_{#1}}
+\newcommand{\cost}{\text{cost}}
+
+% =========================================================
+\begin{document}
+
+\headers{CS/ECE 374}{Homework 5 (due October 17)}{Fall 2018}
+
+\thispagestyle{empty}
+
+\begin{center}
+\Large\textbf{CS/ECE 374 \,\decosix\,  Fall 2018}%
+\\
+\LARGE\textbf{\decothreeleft~ Homework 5 ~\decothreeright}%
+\\[0.5ex]
+\large Due Wednesday, October 17, 2018 at 10am
+\end{center}
+
+\bigskip
+\hrule
+\bigskip
+
+\noindent
+\textbf{Groups of up to three people can submit joint solutions.}
+Each problem should be submitted by exactly one person, and the
+beginning of the homework should clearly state the Gradescope names
+and email addresses of each group member.  In addition, whoever
+submits the homework must tell Gradescope who their other group
+members are.
+\bigskip \hrule \bigskip
+
+\noindent
+The following unnumbered problems are not for submission or grading.
+No solutions for them will be provided but you can discuss them on Piazza.
+\begin{itemize}
+\item Problems in Jeff's notes on dynamic programming.
+In particular, Probs 1, 2, 3, 5, 6.
+\item Problems in Dasgupta etal book Chapter 6. In particular Probs 1, 2
+\item Problems in Kleinberg-Tardos book Chapter 6. Problems 1, 2, 7.
+\end{itemize}
+
+\vspace{1cm}
+
+\begin{enumerate}
+%\parindent 1.5em \itemsep 3ex plus 0.5fil
+
+%----------------------------------------------------------------------
+%\def\arraystretch{1.2}
+
+%----------------------------------------------------------------------
+\item[0.] {\bf Not to submit}  Let $w \in \Sigma^*$ be a string. We say that
+  $u_1,u_2,\ldots,u_h$ where each $u_i \in \Sigma^*$ is a valid split
+  of $w$ iff $w = u_1u_2\ldots u_h$ (the concatenation of
+  $u_1,u_2,\ldots,u_h$). Given a valid split $u_1,u_2,\ldots,u_h$ of
+  $w$ we define its $\ell_2$ measure as $\sum_{i=1}^h |u_i|^2$.
+
+  Given a language $L \subseteq \Sigma^*$ a string $w$ is in $L^*$ iff
+  there is a valid split $u_1,u_2,\ldots,u_h$ of $w$ such that each
+  $u_i \in L$; we call such a split an $L$-valid split of $w$.  Assume
+  you have access to a subroutine $\IsSinL(x)$ which outputs whether
+  the input string $x$ is in $L$ or not. To evaluate the running time
+  of your solution you can assume that each call to $\IsSinL()$ takes
+  constant time.
+
+  Describe an efficient algorithm that given a string $w$ and access to
+  a language $L$ via $\IsSinL(x)$ outputs an $L$-valid split of $w$
+  with minimum $\ell_2$ measure if one exists.
+
+ %----------------------------------------------------------------------
+\item Given a graph $G=(V,E)$ a vertex cover of $G$ is a subset
+  $S \subseteq V$ of vertices such that for every edge $(u,v) \in E$,
+  $u$ or $v$ is in $S$. The goal in the minimum vertex cover problem
+  is to find a vertex cover $S$ of smallest size. In the weighted
+  version of the problem, vertices have non-negative weights
+  $w: V \rightarrow \mathbb{Z}_+$, and the goal is to find a vertex
+  cover of minimum weight.  You can find some examples and discussion
+  at the following Wikipedia link
+  \url{https://en.wikipedia.org/wiki/Vertex_cover}.  Describe a {\em
+    recursive} algorithm that given a graph $G=(V,E)$ and weights
+  $w(v), v \in V$ outputs a vertex cover of $G$ with minimum
+  weight. Do not worry about the running time.
+
+%----------------------------------------------------------------------
+\item Let $\Sigma$ be a finite alphabet and let $L_1$ and $L_2$ be two
+  languages over $\Sigma$. Assume you have access to two routines
+  $\IsSinlang{1}(u)$ and $\IsSinlang{2}(u)$. The former routine
+  decides whether a given string $u$ is in $L_1$ and the latter
+  whether $u$ is in $L_2$. Using these routines as black boxes
+  describe an efficient algorithm that given an arbitrary string
+  $w \in \Sigma^*$ decides whether $w \in (L_1 \cup L_2)^*$. To
+  evaluate the running time of your solution you can assume that calls
+  to $\IsSinlang{1}()$ and $\IsSinlang{2}()$ take constant time. Note
+  that you are not assuming any property of $L_1$ or $L_2$ other than
+  being able to test membership in those languages.
+
+
+%----------------------------------------------------------------------
+\item Recall that a \emph{palindrome} is any string that is exactly
+  the same as its reversal, like \Sym{I}, or \Sym{DEED}, or
+  \Sym{RACECAR}, or \Sym{AMANAPLANACATACANALPANAMA}. For technical
+  reasons, in this problem, we will only be interested in palindromes
+  that are of length at least one, hence we will
+  not treat the string $\epsilon$ as a palindrome.
+
+Any string can be decomposed into a sequence of palindrome substrings.  For example, the string \Sym{BUBBASEESABANANA} (“Bubba sees a banana.”\@) can be broken into palindromes in the following ways (among many others):
+\begin{gather*}
+	\Sym{BUB} \Cdot \Sym{BASEESAB} \Cdot \Sym{ANANA}\\
+	\Sym{B} \Cdot \Sym{U} \Cdot \Sym{BB} \Cdot \Sym{A} \Cdot \Sym{SEES} \Cdot \Sym{ABA} \Cdot \Sym{NAN} \Cdot \Sym{A}\\
+	\Sym{B} \Cdot \Sym{U} \Cdot \Sym{BB} \Cdot \Sym{A} \Cdot \Sym{SEES} \Cdot \Sym{A} \Cdot \Sym{B} \Cdot \Sym{ANANA}\\
+	\Sym{B} \Cdot \Sym{U} \Cdot \Sym{B} \Cdot \Sym{B} \Cdot
+        \Sym{A} \Cdot \Sym{S} \Cdot \Sym{E} \Cdot \Sym{E} \Cdot
+        \Sym{S} \Cdot \Sym{A} \Cdot \Sym{B} \Cdot \Sym{ANA}  \Cdot
+        \Sym{N} \Cdot \Sym{A}\\
+        	\Sym{B} \Cdot \Sym{U} \Cdot \Sym{B} \Cdot \Sym{B}
+                \Cdot \Sym{A} \Cdot \Sym{S} \Cdot \Sym{E} \Cdot
+                \Sym{E} \Cdot \Sym{S} \Cdot \Sym{A} \Cdot \Sym{B}
+                \Cdot \Sym{A} \Cdot \Sym{N} \Cdot \Sym{A}  \Cdot \Sym{N} \Cdot \Sym{A}
+\end{gather*}
+
+Since any string $w \neq \epsilon$ can always be decomposed to palindromes we
+may want to find a decomposition that optimizes some objective. Here
+are two example objectives. The first objective is to decompose $w$ into the
+smallest number of palindromes. A second objective is to find a
+decomposition such that each palindrome in the decomposition has
+length at least $k$ where $k$ is some given input parameter. Both of
+these can be cast as special cases of an abstract problem. Suppose we
+are given a function called $cost()$ that takes a positive integer $h$
+as input and outputs an integer $\cost(h)$.  Given a
+decomposition of $w$ into $u_1,u_2,\ldots, u_r$ (that is,
+$w = u_1u_2\ldots u_r$) we can define the cost of the decomposition as
+$\sum_{i=1}^r \cost(|u_i|)$.
+
+For example if we define $\cost(h) = 1$ for all $h \ge 1$ then finding
+a minimum cost palindromic decomposition of a given string $w$ is the
+same as finding a decomposition of $w$ with as few palindromes as
+possible. Suppose we define $\cost()$ as follows: $\cost(h) = 1$
+for $h < k$ and $\cost(h) = 0$ for $h \ge k$. Then finding a
+minimum cost palindromic decomposition would enable us to decide
+whether there is a decomposition in which all palindromes are
+of length at least $k$; it is possible iff the minimum cost is $0$.
+
+Describe an efficient algorithm that given  black box access to
+a function $\cost()$, and a string $w$, outputs the
+value of a minimum cost palindromic decomposition of $w$.
+
+%----------------------------------------------------------------------
+\item {\bf Not to submit:}   The McKing chain wants to open several restaurants along Red street
+  in Shampoo-Banana. The possible locations are at $L_1,L_2, \ldots,
+  L_n$ where $L_i$ is at distance $m_i$ meters from the start of Red
+  street. Assume that the street is a straight line and the locations
+  are in increasing order of distance from the starting point (thus $0
+  \leq m_1 < m_2 < \ldots < m_n$). McKing has collected some data
+  indicating that opening a restaurant at location $L_i$ will yield a
+  profit of $p_i$ independent of where the other restaurants are
+  located. However, the city of Shampoo-Banana has a zoning law which
+  requires that any two McKing locations should be $D$ or more meters
+  apart. Describe an algorithm that McKing can use to figure out the
+  maximum profit it can obtain by opening restaurants while
+  satisfying the city's zoning law.
+
+
+\end{enumerate}
+%---------------------------------------
+\vspace{1in}
+
+
+\subsection*{Solved Problem}
+
+\begin{enumerate}\parindent 1.5em
+\item[5.]
+A \emph{shuffle} of two strings $X$ and $Y$ is formed by interspersing the characters into a new string, keeping the characters of $X$ and $Y$ in the same order. For example, the string \Sym{BANANAANANAS} is a shuffle of the strings \SymBlue{BANANA} and \Sym{ANANAS} in several different ways.
+\begin{center}
+	\Sym{\u{BANANA}ANANAS}
+	\qquad
+	\Sym{\u{BAN}ANA\u{ANA}NAS}
+	\qquad
+	\Sym{\u{B}AN\u{AN}A\u{A}NA\u{NA}S}
+\end{center}
+Similarly, the strings \Sym{PRODGYRNAMAMMIINCG} and \Sym{DYPRONGARMAMMICING} are both shuffles of \SymBlue{DYNAMIC} and \Sym{PROGRAMMING}:
+\begin{center}
+	\Sym{PRO\u{D}G\u{Y}R\u{NAM}AMMI\u{I}N\u{C}G}
+	\qquad
+	\qquad
+	\Sym{\u{DY}PRO\u{N}G\u{A}R\u{M}AMM\u{IC}ING}
+\end{center}
+Given three strings $A[1\,..\,m]$, $B[1\,..\,n]$, and $C[1\,..\,m+n]$, describe and analyze an algorithm to determine whether $C$ is a shuffle of $A$ and $B$.
+
+\begin{solution}
+We define a boolean function $\emph{Shuf}(i,j)$, which is $\textsc{True}$ if and only if the prefix $C[1\,..\,i+j]$ is a shuffle of the prefixes $A[1\,..\,i]$ and $B[1\,..\,j]$.  This function satisfies the following recurrence:
+\[
+	\emph{Shuf}(i,j) =
+	\begin{cases}
+		\textsc{True} & \text{if $i=j=0$}
+\\[0.5ex]
+		\emph{Shuf}(0,j-1) \strut\land (B[j]=C[j]) & \text{if $i=0$ and $j>0$}
+\\[0.5ex]
+		\emph{Shuf}(i-1,0) \strut\land (A[i]=C[i]) & \text{if $i>0$ and $j=0$}
+\\[0.5ex]
+		\left(\emph{Shuf}(i-1,j) \strut\land (A[i]=C[i+j])\right)
+\\
+			\qquad {}\lor \left(\emph{Shuf}(i,j-1) \strut\land (B[j]=C[i+j])\right)
+			& \text{if $i>0$ and $j>0$}
+	\end{cases}
+\]
+
+We need to compute $\emph{Shuf}(m,n)$.
+
+We can memoize all function values into a two-dimensional array $\emph{Shuf}[0\,..\,m][0\,..\,n]$.  Each array entry $\emph{Shuf}[i,j]$ depends only on the entries immediately below and immediately to the right: $\emph{Shuf}[i-1,j]$ and $\emph{Shuf}[i,j-1]$.  Thus, we can fill the array in standard row-major order.  The original recurrence gives us the following pseudocode:
+\begin{algo}
+	\textul{$\textsc{Shuffle?}(A[1\,..\,m],~ B[1\,..\,n],~ C[1\,..\,m+n])$:}\+
+\\	$\emph{Shuf}[0,0] \gets \textsc{True}$
+\\	for $j\gets 1$ to $n$\+
+\\		$\emph{Shuf}[0,j] \gets \emph{Shuf}[0,j-1] \strut\land (B[j]=C[j])$\-
+\\[0.5ex]
+	for $i\gets 1$ to $n$\+
+\\		$\emph{Shuf}[i,0] \gets \emph{Shuf}[i-1,0] \strut\land (A[i]=B[i])$
+\\[0.5ex]
+		for $j\gets 1$ to $n$\+
+\\			$\emph{Shuf}[i,j] \gets \textsc{False}$
+\\			if $A[i]=C[i+j]$\+
+\\				$\emph{Shuf}[i,j] \gets
+					\emph{Shuf}[i,j] \lor \emph{Shuf}[i-1,j]$\-
+\\			if $B[i]=C[i+j]$\+
+\\				$\emph{Shuf}[i,j] \gets
+					\emph{Shuf}[i,j] \lor \emph{Shuf}[i,j-1]$\-\-\-
+\\[1ex]
+	return $\emph{Shuf}[m,n]$
+\end{algo}
+The algorithm runs in \EMPH{$O(mn)$ time}.
+\end{solution}
+
+\begin{rubric}
+Max 10 points: Standard dynamic programming rubric.  No proofs required.  Max 7 points for a slower polynomial-time algorithm; scale partial credit accordingly.
+\end{rubric}
+
+\end{enumerate}
+
+
+\begin{rubric}{Standard dynamic programming rubric} For problems worth 10 poins:
+
+\begin{itemize}
+\item 6 points for a correct recurrence, described either using mathematical notation or as pseudocode for a recursive algorithm.
+\begin{itemize}\cramped
+\item[$+$]
+1 point for a clear \textbf{English} description of the function you are trying to evaluate.  (Otherwise, we don’t even know what you’re \emph{trying} to do.)  \textbf{Automatic zero if the English description is missing.}
+\item[$+$]
+1 point for stating how to call your function to get the final answer.
+\item[$+$]
+1 point for base case(s).  $-$\textonehalf\ for one \emph{minor} bug, like a typo  or an off-by-one error.
+\item[$+$]
+3 points for recursive case(s).  $-$1 for each \emph{minor} bug, like a typo or an off-by-one error.
+\textbf{No credit for the rest of the problem if the recursive case(s) are incorrect.}
+\end{itemize}
+\item
+4 points for details of the dynamic programming algorithm
+\begin{itemize}\cramped
+\item[$+$]
+1 point for describing the memoization data structure
+\item[$+$]
+2 points for describing a correct evaluation order; a clear picture is usually sufficient.  If you use nested loops, be sure to specify the nesting order.
+\item[$+$]
+1 point for time analysis
+\end{itemize}
+\item
+It is \emph{not} necessary to state a space bound.
+
+\item
+For problems that ask for an algorithm that computes an optimal \emph{structure}---such as a subset, partition, subsequence, or tree---an algorithm that computes only the \emph{value} or \emph{cost} of the optimal structure is sufficient for full credit, unless the problem says otherwise.
+
+\item
+Official solutions usually include pseudocode for the final iterative dynamic programming algorithm, \EMPH{but iterative psuedocode is not required for full credit}.  If your solution includes iterative pseudocode, you do not need to separately describe the recurrence, memoization structure, or  evaluation order.  (But you still need to describe the underlying recursive function in English.)
+
+\item
+Official solutions will provide target time bounds.  Algorithms that are faster than this target are worth more points; slower algorithms are worth fewer points, typically by 2 or 3 points (out of 10) for each factor of $n$.  Partial credit is scaled to the new maximum score, and all points above 10 are recorded as extra credit.
+
+\qquad We rarely include these target time bounds in the actual questions, because when we have included them, significantly more students turned in algorithms that meet the target time bound but didn’t work (earning 0/10) instead of correct algorithms that are slower than the target time bound (earning 8/10).
+\end{itemize}
+
+\end{rubric}
+
+
+
+
+\end{document}

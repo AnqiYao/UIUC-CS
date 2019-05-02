@@ -1,0 +1,102 @@
+% ---------
+%  Compile with "pdflatex hw4".
+% --------
+%!TEX TS-program = pdflatex
+%!TEX encoding = UTF-8 Unicode
+
+\documentclass[11pt]{article}
+\usepackage{jeffe,handout,graphicx}
+\usepackage[utf8]{inputenc}		% Allow some non-ASCII Unicode in source
+
+%  Redefine suits
+\usepackage{pifont}
+\def\Spade{\text{\ding{171}}}
+\def\Heart{\text{\textcolor{Red}{\ding{170}}}}
+\def\Diamond{\text{\textcolor{Red}{\ding{169}}}}
+\def\Club{\text{\ding{168}}}
+
+\def\Cdot{\mathbin{\text{\normalfont \textbullet}}}
+\def\Sym#1{\textbf{\texttt{\color{BrickRed}#1}}}
+
+
+
+% =====================================================
+%   Define common stuff for solution headers
+% =====================================================
+\Class{CS/ECE $374$}
+\Semester{FALL $2018$}
+\Authors{3}
+\AuthorOne{Zhe Zhang}{zzhan157@illinois.edu}
+\AuthorTwo{Ray Ying}{xinruiy2@illinois.edu}
+\AuthorThree{Anqi Yao}{anqiyao2@illinois.edu}
+%\Section{}
+% =====================================================
+\documentclass[12pt]{article}
+\usepackage{tikz}
+\begin{document}
+
+% ---------------------------------------------------------
+
+\HomeworkHeader{$10$}{$3$}
+\item Given an undirected graph $G=(V,E)$, a partition of $V$
+  into $V_1,V_2,\ldots,V_k$ is said to be a clique cover of size $k$
+  if each $V_i$ is a clique in $G$. CLIQUE-COVER is the following
+  decision problem: given $G$ and integer $k$, does $G$ have a clique
+  cover of size at most $k$?
+  \begin{itemize}
+  \item Describe a polynomial-time reduction from CLIQUE-COVER to
+    SAT. Does this prove that CLIQUE-COVER is NP-Complete? For this
+    part you just need to describe the reduction clearly, no proof of
+    correctness is necessary. {\em Hint:} Use variablex $x(u,i)$ to
+    indicate that node $u$ is in partition $i$.
+  \item Prove that CLIQUE-COVER is NP-Complete.
+  \end{itemize}
+ $$ $$
+\hrule
+\begin{solution}
+$$ $$
+\begin{enumerate}
+    \item 
+        To convert the CLIQUE-COVER to SAT, we will have every variable in SAT in the format of $(a,b)$ where $a$ is the node in the original graph and $b$ indicates the index of the partition(for the partitions in CLIQUE-COVER), so $b$ will be in the range of $1\leq b $(It's possible to add some new clause during the process). We will initially have $k$ number of empty clause in CNF in SAT. We also want array of length $n$ to calculate the number of times the vertex show up in CNF. Each index represent a corresponding vertex in the graph and initialize the array with all $0$. Starting from an arbitrary vertex $v$, put $v$ in the first clause and name it with $(v,1)$, add $1$ to the index in the array corresponding to the vertex $v$. First, we are going to do BFS through the graph. We look at all the vertices in the queue one by one each time. Traversing all the every non-empty clause, if there is no literal $(x,y)$ that $x=v$ and $v$ is connected to all the nodes represent by the literal in that clause, we will add $v$ into that clause in the form of $(v,i)$ where $i$ is the index of the clause, add $1$ to the array for its vertex. Else, we just put the vertex in the next empty clause. If there is no empty clause left, we will create a new clause to put it, and add $1$ to the array for its vertex. 
+        \newline
+        \newline
+        After the BFS, if there is more than $k$ clause, we will traverse all the vertices again to see if we can add a vertex $v$ to any of the clause if there is no literal $(x,y)$ that $x=v$ and $v$ is connected to all the nodes represent by the literal in that clause, if added, also add $1$ to the array for its vertex. The reason for this part is the in BFS, we only go to the vertex once, and the previous vertex won't be able to be in the clause after it. After doing this, we will have a complete array containing the number of each vertex showed up in CNF. We go through all the clause one by one, if a clause has every vertex in it all appear more than once in the whole CNF(all vertex has number more than $1$ in the array we build), we simply delete the clause. 
+        \newline
+        \newline
+        In the end, if there are $z$ clause where $z>k$, we will add two clause in the end, one contains $(v',z+1)$ and one contains $(v',z+2)$ where $v' \in V(G)$, if there exists empty clauses, delete them. The total size of the reduction will be in polynomial since there will be at most $k+n$ clauses. The running time will be $O(k(m+n))$ for the first BFS and $O(kn)$ for the second part. The third part will check the number of clause in the CNF, which will also be polynomial. So, it is polynomial reduction. The Certificate and Certifier will be as following:\begin{itemize}
+            \item Certificate: Assign $0$ or $1$ to each of the variables in the CNF where for $(a,b)$ where $a$ is the same and $b$ in $1\leq b$, exactly one of the variables will be $1$ and all other will be $0$.
+            \item Certifier: Check each clause and say “yes” if all clauses are true.
+        \end{itemize}
+        \newline
+        \newline
+        This won't be able to prove that CLIQUE-COVER is NP-Complete since in class we are given that $P \subseteq NP$, also we are told that by Cook-Levin's Theorem, SAT is NP-Complete. Then, for any $Y \in NP$, there is a polynomial reduction from $Y$ to SAT. Based on that, here we have $Y$ as CLIQUE-COVER, $CLIQUE-COVER \in NP$, however, we cannot deny the possibility that $CLIQUE-COVER \in P \subseteq NP$. We are only able to say that SAT is at least as hard as CLIQUE-COVER as we solve SAT we can solve CLIQUE-COVER.
+    \item 
+        To prove CLIQUE-COVER is NP-Complete, there are two requirements:
+        \begin{itemize}
+            \item CLIQUE-COVER $\in$ NP
+            \item For every problem $X \in NP$, $X$ can be reduced to CLIQUE-COVER in polynomial-time.
+        \end{itemize}
+        Since we are given that $k-$coloring is NP-Complete(in piazza), and in order to prove CLIQUE-COVER is NP-Complete, we just need to show that CLIQUE-COVER is in NP and there is a polynomial-time reduction from k-coloring to CLIQUE-COVER. Since in part $1$, we proved that a polynomial-time reduction from CLIQUE-COVER to SAT. Since SAT is in NP, then CLIQUE-COVER is also in NP as we can solve SAT in polynomial time by a non-deterministic Turing machine. We only need to have a polynomial-time reduction from k-coloring to CLIQUE-COVER.
+        \newline
+        \newline
+        To reduce $k-$coloring to CLIQUE-COVER, we make the complement graph $G'$ of the graph $G$ for $k-$coloring and make the Certificate and Certifier will be as following:\begin{itemize}
+            \item Certificate: A partition of $V(G')$ into $V_1,V_2,...,V_k$
+            \item Certifier: For every vertex set $v_i$ where $1 \leq i \leq k$, the set is a clique set.
+            \end{itemize}
+        We then need to prove that it satisfies the property that answer to $I_{k-coloring}$ is YES iff $I_{CLIQUE-COVER}$ is YES.
+        \newline
+        \newline
+        $==>$
+        \newline
+        Suppose we find the solution that the graph $G$ can be draw with $k-$color, we want to prove that the complement graph $G'$ can be partition into $k$ clique sets. Since by $k-$color, if we take the vertex in the same color, we guarantee that for any pair of vertex in the same color, there is no edge between them in graph $G$. Then, by making the complement of the graph $G'$, the pair of vertex that originally has no edge between them will have an edge in the graph $G'$. Consequently, we guarantee that the any pair of vertex with the same color will have an edge between them in the graph $G'$. The set of vertex of same color will be clique set in graph $G'$ by definition. Since there are $k$ number of colors in graph $G$, there will be $k$ number of clique set in $G'$. There will be no vertex with two colors and no vertex with no color. We can assume that the $k$ clique set is a partition of $V(G')$. So we also prove the CLIQUE-COVER is true.
+        \newline
+        \newline
+        $<==$
+        \newline
+        Suppose that we have a graph $G$ and we can make a partition into $k$ CLIQUE-COVER sets, we want to show that the complement graph $G'$ can be $k-$coloring. Since any pair of vertex in the set in CLIQUE-COVER will have an edge between them, in the complement graph, these sets will all be independent set. Thus, they can be draw with the same color. The CLIQUE-COVER is size $k$, so there will be $k$ independent set in graph $G'$. Each set have one unique color and there will be $k$ colors. So we proved that the $k-$coloring is also true. 
+        \newline
+        \newline
+        Hence, we complete the prove that CLIQUE-COVER is NP-Complete.
+\end{enumerate}
+\end{solution}
+\end{document}

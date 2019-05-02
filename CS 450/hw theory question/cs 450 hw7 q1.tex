@@ -1,0 +1,77 @@
+% ---------
+%  Compile with "pdflatex hw0".
+% --------
+%!TEX TS-program = pdflatex
+%!TEX encoding = UTF-8 Unicode
+
+\documentclass[11pt]{article}
+\usepackage{jeffe,handout,graphicx}
+\usepackage[utf8]{inputenc}		% Allow some non-ASCII Unicode in source
+
+%  Redefine suits
+\usepackage{pifont}
+\usepackage{algorithm}
+\usepackage{algorithmic}
+\usepackage{amsmath}
+\documentclass{article}
+\usepackage{amsmath}
+
+\def\Spade{\text{\ding{171}}}
+\def\Heart{\text{\textcolor{Red}{\ding{170}}}}
+\def\Diamond{\text{\textcolor{Red}{\ding{169}}}}
+\def\Club{\text{\ding{168}}}
+
+\def\Cdot{\mathbin{\text{\normalfont \textbullet}}}
+\def\Sym#1{\textbf{\texttt{\color{BrickRed}#1}}}
+
+
+% =====================================================
+%   Define common stuff for solution headers
+% =====================================================
+\Class{CS $450$}
+\Semester{Spring $2019$}
+\Authors{1}
+%\Section{}
+
+% =====================================================
+\begin{document}
+
+% ---------------------------------------------------------
+
+
+% ---------------------------------------------------------
+% Change authors again
+\AuthorOne{Ray Ying}{xinruiy2@illinois.edu}
+
+
+\HomeworkHeader{$7$}{$1$}
+
+\begin{quote}
+
+\end{quote}
+\hrule
+
+
+\begin{solution}
+\item  
+    \begin{enumerate}
+        \item Let the entries of $x$ written as $x_1, x_2 ... x_n$. $x$ is a vector, makes $x^T$ also having same entries. Therefore, $x^Tx$ will be a scalar. We are safe to assume that we are taking the gradient with respect to $x$, $\triangledown (x^Tx) = x^T\frac{\partial x}{\partial x} + x^T\frac{\partial x}{\partial x} = 2x^T$.\\
+        proof: Let $y^Tx$ be a scalar, $\triangledown y^Tx = x^T\frac{\partial y}{\partial x} + y^T\frac{\partial x}{\partial x}$. (Reference at the end)
+        
+        \item $\triangledown (x^TAx) = x^TA^T\frac{\partial x}{\partial x} + x^TA\frac{\partial x}{\partial x} = x^TA^T + x^TA = x^T(A^T + A)$\\
+        proof: Take $w^T = x^TA$, then $\triangledown w^Tx = x^T\frac{\partial w}{\partial x} + w^T\frac{\partial x}{\partial x}$. Our answer is derived by substituting back in for $w$.  
+        
+        \item $\triangledown \frac{x^TAx}{x^Tx} = \frac{(x^Tx)^T \triangledown (x^TAx) - x^TAx \triangledown (x^Tx)}{(x^Tx)^2} = \frac{x^Txx^T(A^T+A) - 2x^TAxx^T}{(x^Tx)^2} = \frac{x^Txx^TA^T + x^Txx^TA - 2x^TAxx^T}{(x^Tx)^2}$\\
+        \\
+        We know $x^TAx$ and $x^Tx$ are both scalar, we can shift them or divide them. $A^T = A$ for $A$ being symmetric. \\
+        \\
+        $\frac{x^Txx^TA^T + x^Txx^TA - 2x^TAxx^T}{(x^Tx)^2} = \frac{x^TA^T + x^TA - \frac{2x^TAxx^T}{x^Tx}}{(x^Tx)} = \frac{2x^TA  - 2x^T\frac{x^TAx}{\norm{x}_2^2}}{\norm{x}_2^2} = \frac{2x^T}{\norm{x}_2^2}(A - I\frac{x^TAx}{\norm{x}_2^2})$
+        \item If $x$ is an eigenvector of $A$, then by definition, $Ax = \lambda x$ for some $\lambda$ and $x$ is non-trivial. Since $Ax$ is a matrix-vector multiplication, let $y = Ax$, $y_i = \sum_k A_{ik}x_k = \lambda x_i$. Here, we can tell that all entry besides $A_{ik}$ are $0$ except the entry of $A_{ii}$. (If they are not all $0$, there will be other $x_k$ where $k \neq i$). Hence, we can see that the only entries of $A$ that's not $0$ are the diagonal ones and all the diagonal has the same value, $\lambda$.\\
+        $Ax = \lambda x \implies x^TAx = \lambda x^Tx \implies \frac{x^TAx}{x^Tx} = \lambda \implies \lambda = \frac{x^TAx}{\norm{x}_2^2}$\\
+        $A = I\lambda = I\frac{x^TAx}{\norm{x}_2^2} \implies A - I\frac{x^TAx}{\norm{x}_2^2} = 0 \implies \triangledown \frac{x^TAx}{x^Tx} = 0$
+    \end{enumerate}
+\end{solution}
+References: \\ 
+https://atmos.washington.edu/~dennis/MatrixCalculus.pdf \\
+http://www.math.ubc.ca/~feldman/m317/vectorId.pdf
+\end{document}

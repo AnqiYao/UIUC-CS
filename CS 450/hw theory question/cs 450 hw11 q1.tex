@@ -1,0 +1,113 @@
+% ---------
+%  Compile with "pdflatex hw0".
+% --------
+%!TEX TS-program = pdflatex
+%!TEX encoding = UTF-8 Unicode
+
+\documentclass[11pt]{article}
+\usepackage{jeffe,handout,graphicx}
+\usepackage[utf8]{inputenc}		% Allow some non-ASCII Unicode in source
+
+%  Redefine suits
+\usepackage{pifont}
+\usepackage{algorithm}
+\usepackage{algorithmic}
+\usepackage{amsmath}
+\documentclass{article}
+\usepackage{amsmath}
+
+\def\Spade{\text{\ding{171}}}
+\def\Heart{\text{\textcolor{Red}{\ding{170}}}}
+\def\Diamond{\text{\textcolor{Red}{\ding{169}}}}
+\def\Club{\text{\ding{168}}}
+
+\def\Cdot{\mathbin{\text{\normalfont \textbullet}}}
+\def\Sym#1{\textbf{\texttt{\color{BrickRed}#1}}}
+
+
+% =====================================================
+%   Define common stuff for solution headers
+% =====================================================
+\Class{CS $450$}
+\Semester{Spring $2019$}
+\Authors{1}
+%\Section{}
+
+% =====================================================
+\begin{document}
+
+% ---------------------------------------------------------
+
+
+% ---------------------------------------------------------
+% Change authors again
+\AuthorOne{Ray Ying}{xinruiy2@illinois.edu}
+
+
+\HomeworkHeader{$11$}{$1$}
+
+\begin{quote}
+
+\end{quote}
+
+\hrule
+
+\begin{solution}
+\item 
+
+\begin{enumerate}
+    \item $\norm{\triangledown f_k}_Q^2 = \triangledown f_k^T Q \triangledown f_k$ \\
+    $\norm{\triangledown f_k}_2^2 = \triangledown f_k^T \triangledown f_k = (Qx_k - b)^T (Qx_k - b)$\\
+    $\frac{\norm{\triangledown f_k}_2^2}{\norm{\triangledown f_k}_Q^2}\cdot  \triangledown f_k = \frac{\triangledown f_k^T \triangledown f_k}{\triangledown f_k^T Q \triangledown f_k}\cdot  \triangledown f_k$\\
+    
+    We are doing line search to find the $\alpha_k$, such that $f(x_k - \alpha \triangledown f_k)$ is minimized. We find the root of $\triangledown_\alpha(f(x_k - \alpha \triangledown f_k)) = 0$\\
+        
+    $f(x_k - \alpha \triangledown f_k) = \frac{1}{2} (x_k - \alpha \triangledown f_k)^T Q (x_k - \alpha \triangledown f_k) - b^T (x_k - \alpha \triangledown f_k)$ \\
+    If we only take the terms contain $\alpha$, which is\\
+    $(\frac{1}{2}\triangledown f_k^T Q \triangledown f_k)\alpha^2 - \frac{1}{2}(\triangledown f_k^T Q x_k + x_k^T Q \triangledown f_k)\alpha + b^T \triangledown f_k \alpha$\\
+    
+    As both $\triangledown f_k^T Q x_k$ and $x_k^T Q \triangledown f_k$ scalar and transpose of one of them is equal to the other, we can say $\triangledown f_k^T Q x_k = x_k^T Q \triangledown f_k$. \\
+    
+    $\triangledown_\alpha(f(x_k - \alpha \triangledown f_k)) = \alpha \triangledown f_k^T Q \triangledown f_k - ( x_k^T Q \triangledown f_k) + b^T \triangledown f_k = 0 \implies \alpha = \frac{(Qx_k^T - b^T) \triangledown f_k}{\triangledown f_k^T Q \triangledown f_k} = \frac{(Qx_k - b)^T \triangledown f_k}{\triangledown f_k^T Q \triangledown f_k} = \frac{\triangledown f_k^T \triangledown f_k}{\triangledown f_k^T Q \triangledown f_k}$\\
+    
+    Hence, $\alpha = \frac{\norm{\triangledown f_k}_2^2}{\norm{\triangledown f_k}_Q^2}$
+    
+    \item $f(x_{k+1}) = f(x_k - \alpha \triangledown f_k) = \frac{1}{2}(x_k - \alpha \triangledown f_k)^T Q (x_k - \alpha \triangledown f_k) - b^T (x_k - \alpha \triangledown f_k) =\\ \frac{1}{2}x_k^T Q x_k -\frac{1}{2}x_k^T Q \alpha \triangledown f_k - \frac{1}{2}(\alpha \triangledown f_k^T Q x_k) + \frac{1}{2}(\alpha^2 \triangledown f_k^T Q \triangledown f_k) - b^T x_k + \alpha b^T \triangledown f_k =\\f(x_k) + (\frac{1}{2}\triangledown f_k^T Q \triangledown f_k)\alpha^2 - \frac{1}{2}(\triangledown f_k^T Q x_k + x_k^T Q \triangledown f_k)\alpha + b^T \triangledown f_k \alpha = \\
+    f(x_k) + \frac{1}{2}\frac{\norm{\triangledown f_k}_2^4} {\norm{\triangledown f_k}_Q^2} - (x_k^T Q - b) \triangledown f_k \alpha$\\
+    $\triangledown f_k = Qx_k - b = x_k^TQ - b$ as $Q$ is symmetric \implies\\
+    $f(x_k) + \frac{1}{2}\frac{\norm{\triangledown f_k}_2^4} {\norm{\triangledown f_k}_Q^2} - (x_k^T Q - b) \triangledown f_k \alpha = f(x_k) + \frac{1}{2}\frac{\norm{\triangledown f_k}_2^4} {\norm{\triangledown f_k}_Q^2} - \frac{\norm{\triangledown f_k}_2^4}{\norm{\triangledown f_k}_Q^2} = f(x_k) - \frac{1}{2}\frac{\norm{\triangledown f_k}_2^4} {\norm{\triangledown f_k}_Q^2}$\\
+    
+    Hence, $f(x_{k+1}) = f(x_k) - \frac{1}{2}\frac{\norm{\triangledown f_k}_2^4} {\norm{\triangledown f_k}_Q^2}$
+    
+    \item    $\frac{1}{2} \norm{x - x^*}_Q^2 = \frac{1}{2}(x - x^*)^T Q (x - x^*) = \frac{1}{2}x^TQx - \frac{1}{2}x^TQx^* - \frac{1}{2}x^*^T Q x + \frac{1}{2} x^*^T Q x^*^T = \frac{1}{2}x^TQx - x^*^T Q x + \frac{1}{2} x^*^T Q x^*^T $\\
+    
+    Since $Qx^* = b$, $b^T = x^*^T Q^T \implies b^Tx = x^*^T Q x$\\
+    
+    $f(x) - f(x^*) = \frac{1}{2}(x^T Q x) - b^T x - \frac{1}{2}(x^*^T Q x^*) + b^T x^* = \frac{1}{2}(x^T Q x) - x^*^T Q x - \frac{1}{2}(x^*^T Q x^*) + (x^*^T Q x^*) = \frac{1}{2}x^TQx - x^*^T Q x + \frac{1}{2} x^*^T Q x^*^T = \frac{1}{2} \norm{x - x^*}_Q^2$\\
+    
+    Hence, $\frac{1}{2} \norm{x - x^*}_Q^2 = f(x) - f(x^*)$
+    
+    \item   Based on question $3$, we know that $f(x_k) - f(x^*) = \frac{1}{2}\norm{x_k - x^*}_Q^2 = \frac{1}{2}(x_k - x^*)^T Q (x_k - x^*) = \frac{1}{2} x_k^T Q x_k - x_k^T Q x^* + \frac{1}{2} x^*^T Q x^*$\\
+    
+    $\norm{\triangledown f_k}_{Q^{-1}}^2 = (Qx_k - b)^T Q^{-1} (Qx_k - b) = (Qx_k - Qx^*)^T Q^{-1} (Qx_k - Qx^*) = x_k^T Q Q^{-1}Q x_k - x_k^T Q Q ^{-1} Q x^* - x^*^T Q Q^{-1} Q x_k + x^*^T Q Q^{-1} Q x^* = x_k^T Q x_k - x_k^T Q x^* - x^*^T Q x_k + x^*^T Q x^* = x_k^T Q x_k - 2(x_k^T Q x^*) + x^*^T Q x^*$\\
+    
+    $\frac{1}{2}\norm{\triangledown f_k}_{Q^{-1}}^2 = \frac{1}{2}x_k^T Q x_k - x_k^T Q x^* + \frac{1}{2} x^*^T Q x^* = f(x_k) - f(x^*)$\\
+    
+    Hence, $f(x_k) = f(x^*) + \frac{1}{2}\norm{\triangledown f_k}_{Q^{-1}}^2$
+    
+    \item From part $3$ and $4$, we can express\\
+    $\norm{x_k - x^*}_Q^2 = \frac{1}{2}(f(x_k) - f(x^*)) = \frac{1}{4}\norm{\triangledown f_k}_{Q^{-1}}^2$\\
+    $\norm{x_{k+1} - x^*}_Q^2 = \frac{1}{2}(f(x_{k+1}) - f(x^*)) = \frac{1}{4}\norm{\triangledown f_{k+1}}_{Q^{-1}}^2 = \frac{1}{4}\norm{Qx_{k+1 } - b}_{Q^{-1}}^2 = \frac{1}{4}\norm{Q(x_k - \alpha_k\triangledown f(x_k)) - b}_{Q^{-1}}^2 = \frac{1}{4}\norm{Qx_k - \alpha_k Q \triangledown f(x_k) - b}_{Q^{-1}}^2 = \frac{1}{4}\norm{\triangledown f_k(1-\alpha Q)}_{Q^{-1}}^2 = \frac{1}{4}\norm{\triangledown f_k}_{Q^{-1}}^2(1 - \frac{\norm{\triangledown f_k}_2^4}{\norm{\triangledown f_k}_Q^2 \norm{\triangledown f_k}_{Q^{-1}}^2}) = (1 - \frac{\norm{\triangledown f_k}_2^4}{\norm{\triangledown f_k}_Q^2 \norm{\triangledown f_k}_{Q^{-1}}^2})\norm{x_k - x^*}_Q^2 $\\
+    
+    Hence, $\norm{x_{k+1} - x^*}_Q^2 = (1 - \frac{\norm{\triangledown f_k}_2^4}{\norm{\triangledown f_k}_Q^2 \norm{\triangledown f_k}_{Q^{-1}}^2})\norm{x_k - x^*}_Q^2 $
+    
+    \item IDK
+    
+    
+    
+\end{enumerate}
+
+\end{solution}
+References: \\ 
+
+\end{document}

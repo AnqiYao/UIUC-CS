@@ -1,0 +1,73 @@
+% ---------
+%  Compile with "pdflatex hw0".
+% --------
+%!TEX TS-program = pdflatex
+%!TEX encoding = UTF-8 Unicode
+
+\documentclass[11pt]{article}
+\usepackage{jeffe,handout,graphicx}
+\usepackage[utf8]{inputenc}		% Allow some non-ASCII Unicode in source
+
+%  Redefine suits
+\usepackage{pifont}
+\usepackage{algorithm}
+\usepackage{algorithmic}
+\usepackage{amsmath}
+
+\def\Spade{\text{\ding{171}}}
+\def\Heart{\text{\textcolor{Red}{\ding{170}}}}
+\def\Diamond{\text{\textcolor{Red}{\ding{169}}}}
+\def\Club{\text{\ding{168}}}
+
+\def\Cdot{\mathbin{\text{\normalfont \textbullet}}}
+\def\Sym#1{\textbf{\texttt{\color{BrickRed}#1}}}
+
+
+% =====================================================
+%   Define common stuff for solution headers
+% =====================================================
+\Class{CS $450$}
+\Semester{Spring $2019$}
+\Authors{1}
+%\Section{}
+
+% =====================================================
+\begin{document}
+
+% ---------------------------------------------------------
+
+
+% ---------------------------------------------------------
+% Change authors again
+\AuthorOne{Ray Ying}{xinruiy2@illinois.edu}
+
+
+\HomeworkHeader{$4$}{$1$}
+
+\begin{quote}
+
+\end{quote}
+\hrule
+
+
+\begin{solution}
+\item
+\begin{enumerate}
+    \item   Since we know $A$ is non-singular, we can show that $\norm{Ax}_2 \cdot \norm{A^{-1}}_2 = \norm{A^{-1}}_2 \cdot \norm{Ax}_2 \geq \norm{A^{-1} \cdot Ax}_2 = \norm{x}_2$. \\
+    Hence, $\norm{Ax}_2 \cdot \norm{A^{-1}}_2 \geq \norm{x}_2 \implies \frac{1}{\norm{A^{-1}}_2} \cdot \norm{x}_2 \leq \norm{Ax}_2$. 
+    
+    \item   Take the right side of the inequality, we can first show that $\norm{A-B}_2 \cdot \norm{x}_2 + \norm{Bx}_2 \geq \norm{(A-B)x}_2 + \norm{Bx}_2 = \norm{Ax - Bx}_2 + \norm{Bx}_2$. \\
+    From triangular inequality, $\norm{Ax - Bx}_2 \geq \norm{Ax}_2 - \norm{Bx}_2 \implies \norm{Ax - Bx}_2 + \norm{Bx}_2 \geq \norm{Ax}_2$.\\
+    Hence, we can show that $\norm{A-B}_2 \cdot \norm{x}_2 + \norm{Bx}_2 \geq \norm{Ax - Bx}_2 + \norm{Bx}_2 \geq \norm{Ax}_2 \implies \norm{A-B}_2 \cdot \norm{x}_2 + \norm{Bx}_2 \geq \norm{Ax}_2$.
+    
+    \item   $k_2(A) = \norm{A^{-1}}_2 \cdot \norm{A}_2$, then we can have the following:
+    $$ \frac{\norm{A-B}_2}{\norm{A}_2} < \frac{1}{\norm{A^{-1}}_2 \cdot \norm{A}_2} $$ 
+    Since $\norm{x}_2 \geq 0$, we can multiply $\norm{x}_2$ on both side of the inequality and divide $\norm{A}_2$. We will have $$ \norm{A-B}_2 \cdot \norm{x}_2 < \frac{\norm{x}_2}{\norm{A^{-1}}_2}$$
+    Based on what we prove in part $a$, $\frac{\norm{x}_2}{\norm{A^{-1}}_2} \leq \norm{Ax}_2$. Similar, based on part $b$, we have $\norm{A-B}_2 \cdot \norm{x}_2 \geq \norm{Ax}_2 - \norm{Bx}_2$. Therefore, we can rewrite the inequality to:
+    $$ \norm{Ax}_2 - \norm{Bx}_2 < \norm{Ax}_2 $$
+    In order this to be true, we want to have $Bx = 0$ only have a trivial solution, when $x = 0$. \\
+    Hence, we can prove that if we have $A$ non-singular and $\frac{\norm{A-B}_2}{\norm{A}_2} < \frac{1}{K_2(A)}$, then $B$ is non-singular.
+        
+    \end{enumerate}
+\end{solution}
+\end{document}

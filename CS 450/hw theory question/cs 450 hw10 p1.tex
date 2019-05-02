@@ -1,0 +1,97 @@
+% ---------
+%  Compile with "pdflatex hw0".
+% --------
+%!TEX TS-program = pdflatex
+%!TEX encoding = UTF-8 Unicode
+
+\documentclass[11pt]{article}
+\usepackage{jeffe,handout,graphicx}
+\usepackage[utf8]{inputenc}		% Allow some non-ASCII Unicode in source
+
+%  Redefine suits
+\usepackage{pifont}
+\usepackage{algorithm}
+\usepackage{algorithmic}
+\usepackage{amsmath}
+\documentclass{article}
+\usepackage{amsmath}
+
+\def\Spade{\text{\ding{171}}}
+\def\Heart{\text{\textcolor{Red}{\ding{170}}}}
+\def\Diamond{\text{\textcolor{Red}{\ding{169}}}}
+\def\Club{\text{\ding{168}}}
+
+\def\Cdot{\mathbin{\text{\normalfont \textbullet}}}
+\def\Sym#1{\textbf{\texttt{\color{BrickRed}#1}}}
+
+
+% =====================================================
+%   Define common stuff for solution headers
+% =====================================================
+\Class{CS $450$}
+\Semester{Spring $2019$}
+\Authors{1}
+%\Section{}
+
+% =====================================================
+\begin{document}
+
+% ---------------------------------------------------------
+
+
+% ---------------------------------------------------------
+% Change authors again
+\AuthorOne{Ray Ying}{xinruiy2@illinois.edu}
+
+
+\HomeworkHeader{$10$}{$1$}
+
+\begin{quote}
+
+\end{quote}
+
+\hrule
+
+\begin{solution}
+\item 
+
+\begin{enumerate}
+    \item $\Phi(x) = \frac{1}{2}((x+1)^2 + (\lambda x^2 + x - 1)^2)$\\
+    $\Phi'(x) = 2 \lambda^2 x^3 + 3 \lambda x^2 - 2 \lambda x + 2x$\\
+    $\Phi''(x) = 6 \lambda^2 x^2 + 6\lambda x - 2\lambda + 2$\\
+    
+    If $\lambda < 1$ and $x = 0$, $\Phi'(x) = 0$ and $\Phi''(x) = 2 - 2\lambda \geq 0$ $\implies$ it has local minimum at $x = 0$.\\
+    
+    If $\lambda < \frac{7}{16}$, there are two complex roots and only one real root at $x = 0$.\\
+    
+    \item  $x_{k+1} = x_k + s_k$\\
+    $J_{xk}s_k \cong -F(x_k) \implies s_k =- (J^T \cdot J)^{-1}\cdot J^T \cdot F(x_k)$\\
+    $J = [1 ,2 \lambda x_k + 1] \implies J^T\cdot J = 1 + (2 \lambda x_k + 1)^2$\\
+    $g(x) = x_k - \frac{1}{1 + (2 \lambda x_k + 1)^2}\cdot J^T \cdot F(x_k) = x_k - \frac{1 + x + (2 \lambda x_k + 1)(\lambda x^2 + x - 1)}{1 + (2 \lambda x_k + 1)^2}$\\
+    $g'(x) = 1 - (\frac{\lambda}{2\lambda^2x^2+2\lambda x+1} + \frac{-4 \lambda^2 x + 2\lambda x- 4\lambda + 1}{2(2\lambda^2 x^2+2\lambda x+ 1)^2} + \frac{1}{2})$\\
+    $g'(x = 0) = 1 - (\lambda + \frac{-4\lambda + 1}{2} + \frac{1}{2}) = 1 - \lambda + 2\lambda - 1 = \lambda \implies |g'(x = 0)| = |\lambda| > 1 $ \\
+    
+    
+    \item Using Levenberg-Marquardt method, 
+    $s_k =- (J^T \cdot J + \lambda I)^{-1}\cdot J^T \cdot F(x_k)$,\\
+    $g(x) = x_k - (J^T \cdot J + |\lambda| I)^{-1}\cdot J^T \cdot F(x_k) = x_k - \frac{1 + x + (2 \lambda x_k + 1)(\lambda x^2 + x - 1)}{1 + (2 \lambda x_k + 1)^2 + |\lambda|}$\\
+    $g'(x) = 1 - \frac{2(4\lambda^4x^4 + 8 \lambda^3x^3 + 4a^3x^2+3a^2x^2|\lambda| + 8\lambda^2 x^2+ 3\lambda x|\lambda| - \lambda|\lambda| + |\lambda| + 6\lambda x - 2\lambda +2 )}{(4\lambda^2x^2 + |\lambda| + 4\lambda x + 2)^2}$\\
+    $g'(x = 0) = 1 - \frac{2(-|\lambda|\lambda + |\lambda| - \lambda + 2)}{(|\lambda| + 2)^2}$\\
+    
+    Given $\lambda < \frac{7}{16}$, we divided into $\lambda < 0$ and $\frac{7}{16} > \lambda \geq 0$.\\
+    
+    $\lambda < 0$, $|\lambda| = -\lambda$. $g'(x = 0) = 1 - \frac{2(\lambda^2 - 2\lambda + 2)}{(2 - \lambda)^2} = 1 - \frac{(2-\lambda)^2+\lambda^2}{(2-\lambda^2)} = \frac{\lambda^2}{(2-\lambda)^2}$. Since $\lambda < 0$, $(2-\lambda)^2 > \lambda^2 \implies \frac{\lambda^2}{(2-\lambda)^2} < 1$. Also, both $\lambda^2$ and $(2-\lambda)^2$ are greater than $0$, $\frac{\lambda^2}{(2-\lambda)^2} > 0$. Thus, $|g'(x = 0)| < 1$ $\forall { \lambda < 0}$\\
+    
+    $\frac{7}{16} > \lambda \geq 0$, $|\lambda| = \lambda$. $g'(x = 0) = 1 - \frac{2(\lambda^2 + 2)}{(\lambda + 2)^2}$. Since both $2(\lambda^2 + 2)$ and $(\lambda + 2)^2$ are greater than $0$, $\frac{2(\lambda^2 + 2)}{(\lambda + 2)^2} > 0 \implies g'(x = 0) < 1$.\\
+    $2(\lambda^2 + 2) - (\lambda + 2)^2  = \lambda^2 - 4\lambda < 0 \implies \frac{2(\lambda^2 + 2)}{(\lambda + 2)^2} < 1 \implies g'(x = 0) > 0$\\
+    Thus, $|g'(x = 0)| < 1$ $\forall { \frac{7}{16} > \lambda \geq 0}$\\
+    
+    Therefore, when $\lambda < \frac{7}{16}$, $|g'(x=0)| < 1$
+    
+    
+\end{enumerate}
+
+\end{solution}
+References: \\ 
+
+\end{document}

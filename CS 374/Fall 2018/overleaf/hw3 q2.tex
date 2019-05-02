@@ -1,0 +1,122 @@
+% ---------
+%  Compile with "pdflatex hw0".
+% --------
+%!TEX TS-program = pdflatex
+%!TEX encoding = UTF-8 Unicode
+
+\documentclass[11pt]{article}
+\usepackage{jeffe,handout,graphicx}
+\usepackage[utf8]{inputenc}		% Allow some non-ASCII Unicode in source
+
+%  Redefine suits
+\usepackage{pifont}
+\def\Spade{\text{\ding{171}}}
+\def\Heart{\text{\textcolor{Red}{\ding{170}}}}
+\def\Diamond{\text{\textcolor{Red}{\ding{169}}}}
+\def\Club{\text{\ding{168}}}
+
+\def\Cdot{\mathbin{\text{\normalfont \textbullet}}}
+\def\Sym#1{\textbf{\texttt{\color{BrickRed}#1}}}
+
+
+
+% =====================================================
+%   Define common stuff for solution headers
+% =====================================================
+\Class{CS/ECE 374}
+\Semester{FALL $2018$}
+\Authors{3}
+\AuthorOne{Zhe Zhang}{zzhan157@illinois.edu}
+\AuthorTwo{Ray Ying}{xinruiy2@illinois.edu}
+\AuthorThree{Anqi Yao}{anqiyao2@illinois.edu}
+%\Section{}
+% =====================================================
+\documentclass[12pt]{article}
+\usepackage{tikz}
+\begin{document}
+
+% ---------------------------------------------------------
+
+\HomeworkHeader{3}{2}
+
+\begin{quote}
+
+\item Describe a context free grammar for the following languages.
+Clearly explain how they work and the role of each non-terminal.
+Unclear grammars will receive little to no credit.
+\begin{enumerate}
+\item $\{a^ib^jc^k \mid k = 3(i+j)\}$.
+\item $\{a^ib^jc^kd^\ell \mid  i,j,k,\ell \ge 0 \mbox{~and~} i+\ell = j+k\}$.
+\item $L = \{0,1\}^* \setminus \{ 0^n1^{2n} \mid n \ge 0\}$. In other words
+the complement of the language $\{ 0^n1^{2n} \mid n \ge 0\}$.
+\end{enumerate}
+
+\end{quote}
+\hrule
+
+
+\begin{solution}
+\item
+\begin{enumerate}
+\item $$S_0 \rightarrow aS_0ccc | S_1 \hspace{8 mm} (1)$$
+        $$S_1 \rightarrow bS_1ccc | \epsilon \hspace{9 mm} (2)$$
+    \begin{itemize}
+        \item We have to make the number of $c$ three times of number of $a$ and number of $b$ combined. Since $a$ is outer than the location of $b$, we need $a$ and $c$ to wrap $b$ and $c$.
+        \begin{itemize}
+            \item $L(S_0)$ = $\{a^ib^jc^k \mid k = 3(i+j)\}$ \space \space \space
+            \item $L(S_1)$ = $\{ b^ic^k \mid k = 3i \}$
+        \end{itemize}
+    \end{itemize}
+\item $\text{There are two cases to consider:}$
+    
+\begin{enumerate}[(1)]
+\item If $i \geq j$, the number of b's is at most as the number of a's in the string. Then we could represent i with $j + n$ where n is a non-negative integer.
+Since $i + \ell = j + k$, we get $j + n + \ell = j + k$ so that $n + \ell = k$. Then we rewrite the original form of the string $a^ib^jc^kd^\ell$ by substituting j with $i-n$ and k with $n+l$,
+and we get $a^ib^{i-n}c^{n+\ell}d^\ell = a^ib^{i-n}c^nc^\ell d^\ell$. The grammar to generate the string $a^ib^{i-n}c^n$ are:
+$$S_0 \rightarrow aS_0c \mid S_1$$   
+$$S_1 \rightarrow aS_1b \mid \epsilon$$
+since the number of a’s is equal to the number of b’s plus the number of c’s. Every time we get the a or b, we also get the c. The grammar to generate the string $c^\ell d^\ell$ is:
+$$S_2 \rightarrow cS_2d \mid \epsilon$$
+since the number of c’s is equal to the number of d’s. Every time we get the c, we also get the d.
+Hence the grammar to generate the string $a^ib^{i-n}c^nc^\ell d^\ell$ is:
+$$A \rightarrow S_0S_2$$
+\item If $i \le j$, the number of a's is at most as the number of b's in the string. Then we could represent j with $i + n$ where n is a non-negative integer.
+Since $i + \ell = j + k$, we get $i + \ell = i + n + k$ so that $\ell = n + k$. Then we rewrite the original form of the string $a^ib^jc^kd^\ell$ by substituting j with $i+n$ and l with $n+k$,
+and we get $a^ib^{i+n}c^kd^{n+k} = a^ib^ib^nc^kd^{n+k}$. The grammar to generate the string $a^ib^i$ is:
+$$S_1 \rightarrow aS_1b \mid \epsilon$$
+since the number of a’s is equal to the number of b’s. Every time we get the a, we also get the b. The grammar to generate the string $b^nc^kd^{n+k}$ is:
+$$S_3 \rightarrow bS_3d \mid S_2$$
+$$S_2 \rightarrow cS_2d \mid \epsilon$$
+since the number of d's is equal to the number of b’s plus the number of c’s. Every time we get the b or c, we also get the d.
+Hence the grammar to generate the string $a^ib^ib^nc^kd^{n+k}$ is:
+$$B \rightarrow S_1S_3$$
+\end{enumerate}
+Therefore, the CFG for the language $\{a^ib^jc^kd^\ell \mid  i,j,k,\ell \ge 0 \mbox{~and~} i+\ell = j+k\}$ are:
+$$S \rightarrow A \mid B {~ ~} {~ ~} {~ ~}  \{a^ib^jc^kd^\ell \mid  i,j,k,\ell \ge 0 \mbox{~and~} i+\ell = j+k\} $$ 
+$$A \rightarrow S_0S_2  {~ ~} {~ ~} {~ ~} \{a^ib^jc^kd^\ell \mid  i,j,k,\ell \ge 0 \mbox{~and~} i+\ell = j+k{~and~} i \ge j {~ ~} (k \ge \ell)\} $$
+$$B \rightarrow S_1S_3 {~ ~} {~ ~} {~ ~} \{a^ib^jc^kd^\ell \mid  i,j,k,\ell \ge 0 \mbox{~and~} i+\ell = j+k{~and~} i \le j {~ ~} (k \le \ell)\}$$
+$$S_0 \rightarrow aS_0c \mid S_1 {~ ~} {~ ~} {~ ~} \{a^ib^jc^k \mid  i,j,k \ge 0 \mbox{~and~} i+\ell = j+k{~and~} i \ge j {~ ~} (i \ge k)\}$$
+$$S_1 \rightarrow aS_1b \mid \epsilon {~ ~} {~ ~} {~ ~} \{a^ib^j\mid  i,j \ge 0 \mbox{~and~} i+\ell = j+k{~and~} i = j \}$$
+$$S_2 \rightarrow cS_2d \mid \epsilon {~ ~} {~ ~} {~ ~} \{c^kd^\ell \mid  i,j,k,\ell \ge 0 \mbox{~and~} i+\ell = j+k{~and~} k = \ell \}$$
+$$S_3 \rightarrow bS_3d \mid S_2 {~ ~} {~ ~} {~ ~} \{b^jc^kd^\ell \mid j,k,\ell \ge 0 \mbox{~and~} i+\ell = j+k{~and~} i \le \ell {~ ~} (k \le \ell)\}$$
+
+
+\item
+We can write $L$ as the union of two languages $L_1$ and $L_2$,
+\newline where $L_1$ = ${0^m1^n | n \neq 2m, m, n \ge 0}$ and $L_2 = (0+1)^*10(0+1)^*$. Since $L_2$ is the complement of $0^*1^*1^*$, and $L_1$ is contained by $L$ by definition of L, it is obvious that $L$ is either in $L_1$ or $L_2$.
+\newline So we have the following constructions for the cfg:
+\newline $S$ -> $S_0|S_1$ \indent\indent\indent $\{0,1\}^* \setminus \{ 0^n1^{2n} \mid n \ge 0\}$
+\newline $S_0$ -> $0S_011|S_2|S_3$\indent $\{0^m1^n | n \neq 2m, m, n \ge 0\}$
+\newline $S_2$ -> $0|0S_2$ \indent\indent \ \ \ \ \ $0^+$
+\newline $S_3$ -> $1|1S_3$ \indent\indent \ \ \ \ \ $1^+$
+\newline $S_1$ -> $S_410S_4$ \indent\indent \ \ $(0+1)^*10(0+1)^*$
+\newline $S_4$ -> $\epsilon|0S_4|1S_4$ \indent \ \ \  $(0+1)^*$
+
+
+\end{enumerate}
+
+\end{solution}
+
+
+
+\end{document}

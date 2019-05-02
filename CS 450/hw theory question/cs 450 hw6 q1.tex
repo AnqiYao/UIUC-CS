@@ -1,0 +1,67 @@
+% ---------
+%  Compile with "pdflatex hw0".
+% --------
+%!TEX TS-program = pdflatex
+%!TEX encoding = UTF-8 Unicode
+
+\documentclass[11pt]{article}
+\usepackage{jeffe,handout,graphicx}
+\usepackage[utf8]{inputenc}		% Allow some non-ASCII Unicode in source
+
+%  Redefine suits
+\usepackage{pifont}
+\usepackage{algorithm}
+\usepackage{algorithmic}
+\usepackage{amsmath}
+\documentclass{article}
+\usepackage{amsmath}
+
+\def\Spade{\text{\ding{171}}}
+\def\Heart{\text{\textcolor{Red}{\ding{170}}}}
+\def\Diamond{\text{\textcolor{Red}{\ding{169}}}}
+\def\Club{\text{\ding{168}}}
+
+\def\Cdot{\mathbin{\text{\normalfont \textbullet}}}
+\def\Sym#1{\textbf{\texttt{\color{BrickRed}#1}}}
+
+
+% =====================================================
+%   Define common stuff for solution headers
+% =====================================================
+\Class{CS $450$}
+\Semester{Spring $2019$}
+\Authors{1}
+%\Section{}
+
+% =====================================================
+\begin{document}
+
+% ---------------------------------------------------------
+
+
+% ---------------------------------------------------------
+% Change authors again
+\AuthorOne{Ray Ying}{xinruiy2@illinois.edu}
+
+
+\HomeworkHeader{$6$}{$1$}
+
+\begin{quote}
+
+\end{quote}
+\hrule
+
+
+\begin{solution}
+\item
+    \begin{enumerate}
+    \item  I think the reason it's called a "shift matrix" because given an vector $x$, it moves the first entry of $x$ to the last entry and shifts the whole subvector except the first entry up.  
+    \item To calculate the eigenvalue, we want to find the $Sx = \lambda x$. Therefore, $|\lambda| = \frac{\norm{Sx}}{\norm{x}}$. As we know all $S$ does is shifting the vector instead of changing the value inside. When apply $S$ $n$ times to the vector $x$ will shift $x$ to the initial state $\implies$ $S^n = 1$. Taking to the formula above, we can see there is an $|\lambda| = 1$.
+    \item The reason is for any arbitrary vector excepts an eigenvector, we are just shifting the vector. We apply $S$ $n$ times to a vector brings the vector to its original state. Therefore, the power method never converges as every $n$ iterations, we are getting the initial vector.
+    \item The reason that power method never converges is because the eigenvalues $|\lambda_1| = |\lambda_2|$. We can actually prove $|\lambda_1| = |\lambda_2| = ... = |\lambda_n|$ by do the Gaussian-Elimination on $S$ to make it triangular and calculate the determinant by multiplying the diagonals. (we will get $\lambda^n = 1$)
+    \item What we know from the parts above, for any not eigenvector $x$, $S^nx = x$. Then, $(S^{-1})^nx = (S^{-1})^nS^nx$. Since we know that $S^{-1}S = I$, $(S^{-1})^nS^nx = x$. Therefore, apply $S^{-1}$ $n$ times to $x$ will bring $x$ to its initial state. Hence, the power method never converges as every $n$ iterations, we are back to the start.
+    \item Let's assume that $u = x + yi$, and each eigenvalue is on the unit circle which will be $(cos(2n\pi/k), i\cdot sin(2n\pi/k))$ where $n \in N$ and $n\in[1,k]$. We want to find the angle of $u$ to the original and then therefore find the two closest eigenvalue since we are shifting $S$ and taking the inverse of that. $\theta_u = $ arctan$(\frac{y}{x})$. We define a "round" function that allow us to find the two closest $n$ where $n \in N$ and $n\in[1,k]$ to (arctan$(\frac{y}{x})\cdot k/2\pi$). Suppose the closest rounded $n$ given is $n_1$ and the second closest rounded $n$ given is $n_2$, we calculate the convergent rate by the distance of the closest to $u$ divided the second closest to $u$. The convergent rate $R$
+    $$ R = \frac{|\sqrt{(cos(2n_1\pi/k) - x)^2 + (sin(2n_1\pi/k) - y)^2}|}{|\sqrt{(cos(2n_2\pi/k) - x)^2 + (sin(2n_2\pi/k) - y)^2}|} $$
+    \end{enumerate}
+\end{solution}
+\end{document}

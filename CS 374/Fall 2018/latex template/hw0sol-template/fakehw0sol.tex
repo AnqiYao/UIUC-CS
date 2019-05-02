@@ -1,0 +1,310 @@
+% ---------
+%  Compile with "pdflatex hw0".
+% --------
+%!TEX TS-program = pdflatex
+%!TEX encoding = UTF-8 Unicode
+
+\documentclass[11pt]{article}
+\usepackage{jeffe,handout,graphicx}
+\usepackage[utf8]{inputenc}		% Allow some non-ASCII Unicode in source
+
+%  Redefine suits
+\usepackage{pifont}
+\def\Spade{\text{\ding{171}}}
+\def\Heart{\text{\textcolor{Red}{\ding{170}}}}
+\def\Diamond{\text{\textcolor{Red}{\ding{169}}}}
+\def\Club{\text{\ding{168}}}
+
+\def\Cdot{\mathbin{\text{\normalfont \textbullet}}}
+\def\Sym#1{\textbf{\texttt{\color{BrickRed}#1}}}
+
+
+
+% =====================================================
+%   Define common stuff for solution headers
+% =====================================================
+\Class{CS/ECE 374}
+\Semester{Spring 2017}
+\Authors{3}
+\AuthorOne{Violet Baudelaire}{vbeaudel@vfd.org}
+\AuthorTwo{Friday Caliban}{fcaliban@vfd.org}
+\AuthorThree{Duncan Quagmire}{dquagmir@vfd.org}
+%\Section{}
+
+% =====================================================
+\begin{document}
+
+% ---------------------------------------------------------
+
+
+\HomeworkHeader{0}{1}	% homework number, problem number
+
+\begin{quote}
+\begin{enumerate}[(a)]
+\item
+List the nodes in Professor Džunglová’s tree in post-order. 
+
+\item
+Draw Professor Džunglová’s tree.
+
+\end{enumerate}
+\end{quote}
+\hrule
+
+
+
+\begin{solution}
+\begin{enumerate}[(a)]
+\item 
+\Sym{PIETRISYCAMOLLAVIADELRECHIOTEMEXITY!}
+
+\item ~%start on the next line
+
+\begin{center}
+\includegraphics[scale=0.5]{Fig/GranMaPa} % automatically tries .png, .jpg, and .pdf
+\end{center}
+
+\end{enumerate}
+\end{solution}
+
+
+
+
+% ---------------------------------------------------------
+% Change authors for all future solutions
+\AuthorOne{Marceline Abadeer}{mabadeer}
+\AuthorTwo{Finn Mertens}{fmertens}
+\AuthorThree{Simon Petrikov}{iceking}
+\HomeworkHeader{0}{2}
+
+\begin{quote}
+\begin{enumerate}[(a)]
+\item
+Prove by induction that $\abs{w} = \abs{w^c}$ for every string $w$.
+\item
+Prove by induction that $(x\Cdot y)^c = x^c \Cdot y^c$ for all strings $x$ and $y$.
+\end{enumerate}
+\end{quote}
+\hrule
+
+
+\begin{solution}[\href{https://en.wikipedia.org/wiki/Lazy_Sunday_(The_Lonely_Island_song)}{Parnell and Samberg 2005}]
+
+You thinkin’ what I’m thinkin’? \textbf{Narnia!} Man, it’s happenin’!
+\begin{quote}
+\small
+But first my hunger pains are stickin’ like duct tape.\\
+Let’s hit up Magnolia and mack on some cupcakes.\\
+(No doubt that bakery’s got all da bomb frostings)\footnote{I love those cupcakes like McAdams loves Gosling!}
+\end{quote}
+\[
+	2 \leadsto 6 \leadsto 12 \leadsto 13
+\]
+I told you that I’m crazy for these cupcakes, cousin!
+
+\begin{enumerate}[(a)]
+\item
+Yo, where’s the movie playin’?  Upper West Side, dude.
+\begin{itemize}
+\item
+Well, let’s hit up \href{https://maps.yahoo.com/beta/}{Yahoo!~Maps} to find the dopest route.
+\item
+I prefer \href{http://www.mapquest.com/}{MapQuest}. That’s a good one, too.
+\item
+\href{https://www.google.com/maps}{Google Maps} is the best. True dat.  $\mathbb{DOUBLE~TRUE}!$
+\end{itemize}
+
+\item
+Yo, stop at the deli. The theater's over-priced. You've got the backpack? Gonna pack it up nice.  Don't want security to get suspicious.
+\[
+	\mfbox{\text{Mr. Pibb} + \text{Red Vines} = \text{\emph{crazy delicious!}}}
+\]
+
+I’ll reach in my pocket, pull out some dough.  Girl actin' like she never seen a ten before.  \textcolor{Green}{\textbf{It's all about the \textsf{Hamiltons}, baby.}} Throw the snacks in a bag, and I’m \textcolor{Gray}{ghost \small like \footnotesize Swayze.}
+
+\end{enumerate}
+Roll up to the theater, ticket buying, what we’re handlin’.  You can call us Aaron Burr from the way we’re \raisebox{-1ex}{droppin’} \raisebox{-2ex}{Hamiltons.}
+
+\begin{algo}
+	\textul{$\textsc{MovieTrivia}(\textit{question}[1\,..\,n])$:}\+
+\\	$\textit{illest} \gets \textsc{True}$
+\\	for $i \gets 1$ to $n$\+
+\\		if $\textit{question}[i] = $ “\textsf{Which Friends alum starred in f{}ilms with Bruce Willis?}”\+
+\\			$\textit{speed} \gets \infty$
+\\			$\textit{scary} \gets \textsc{True}$
+\\			Shout  “\textsf{Matthew Perry!}”\-\-
+\\[0.5ex]	% vertical space
+	if $\textit{quiet} \not\in \textit{theater}$\+
+\\		$\textit{tragic} \gets \textsc{True}$\-
+\\[0.5ex]
+	return $\textsc{DreamWorld}(\textit{magic})$
+\end{algo}
+\end{solution}
+
+% ---------------------------------------------------------
+
+\HomeworkHeader{0}{3}
+
+\begin{quote}
+\begin{enumerate}[(a)]
+\item
+Prove that the string \Sym{01000110111001} is in $L$.
+
+\item
+Prove by induction that every string in $L$ has exactly the same number of \Sym0s and \Sym1s.  (You may assume without proof that $\#(a, xy) = \#(a, x) + \#(a, y)$ for any symbol $a$ and any strings $x$ and $y$.)
+
+\item
+Prove by induction that $L$ contains every string with the same number of \Sym0s and \Sym1s.
+
+\end{enumerate}
+\end{quote}
+\hrule
+
+
+\begin{solution}[induction]
+Let $k$ be an arbitrary non-negative integer. There are several cases to consider:
+\begin{itemize}
+\item
+Blah
+
+\item
+Snort
+\begin{itemize}
+\item
+Squee
+
+\item
+Flub
+\end{itemize}
+
+\item
+Kronk
+\end{itemize}
+In all cases, we conclude that when $k$ 5-card poker hands are dealt from a standard shuffled deck, the player with the Big Blind gets the cards \textsf{7\Spade}, \textsf{4\Diamond}, \textsf{5\Heart}, \textsf{3\Club}, and \textsf{2\Heart} with probability $(\sqrt{5}-1)/2 = 0.618033989$.
+\end{solution}
+
+\begin{solution}[combinatorial]
+This result follows immediately from Flobbersnort’s Fundamental Theorem of negative-dimensional motivic $k$-schemes, which is in turn an obvious consequence of  Flibbertygibbet’s Cocohohomomolology Lemma, as described in footnote 17 on the back of page 213 of the 1865 edition of Jeff’s induction notes (in the original Flemish).
+\end{solution}
+
+
+% ---------------------------------------------------------
+% Change authors again
+\AuthorOne{Hunson Abadeer}{habadeer}
+\AuthorTwo{Martin Mertens}{mmertens}
+\AuthorThree{Urgence Evergreen}{gunterno}
+
+\HomeworkHeader{0}{4}
+
+\begin{quote}
+\begin{enumerate}[(a)]
+\item
+Give a recursive definition of a palindrome over the alphabet $\Sigma$.
+
+\item
+Prove $w = w^R$ for every palindrome $w$ (according to your recursive definition).  
+
+\item
+Prove that every string $w$ such that $w = w^R$ is a palindrome (according to your recursive definition).
+
+\end{enumerate}
+\end{quote}
+\hrule
+
+
+\begin{solution}
+\begin{enumerate}[(a)]
+\item
+A string $w\in\Sigma^*$ is a palindrome if and only if either
+\begin{itemize}
+\item $w = \e$, or
+\item $w = a$ for some symbol $a\in\Sigma$, or
+\item $w = axa$ for some symbol $a\in\Sigma$ and some \emph{palindrome} $x\in\Sigma^*$.
+\end{itemize}
+
+
+\medskip
+\item
+Let $w$ be an arbitrary palindrome.
+
+Assume that $x = x^R$ for every palindrome $x$ such that $\abs{x}<\abs{w}$.
+
+There are three cases to consider (mirroring the three cases in the definition):
+\begin{itemize}
+\item
+If $w = \e$, then $w^R = \e$ by definition, so $w = w^R$.
+
+\item
+If $w = a$ for some symbol $a\in\Sigma$, then $w^R = a$ by definition, so $w = w^R$.
+
+\item
+Suppose $w = axa$ for some symbol $a\in\Sigma$ and some palindrome $x\in P$.  Then 
+\begin{align*}
+	w^R
+	&=	(a \cdot x \Cdot a)^R		\\
+	&=	(x\Cdot a)^R \Cdot a		& \text{by definition of reversal} \\
+	&=	a^R \Cdot x^R \Cdot a		& \text{You said we could assume this.}\\
+	&=	a \Cdot x^R \Cdot a			& \text{by definition of reversal} \\
+	&=	a \Cdot x \Cdot a			& \text{by the inductive hypothesis} \\
+	&=	w							& \text{by assumption}
+\end{align*}
+\end{itemize}
+In all three cases, we conclude that $w = w^R$.
+
+
+\medskip
+\item
+Let $w$ be an arbitrary string such that $w = w^R$.
+
+Assume that every string $x$ such that $\abs{x} < \abs{w}$ and $x = x^R$ is a palindrome.
+
+There are three cases to consider (mirroring the definition of “palindrome”):
+\begin{itemize}
+\item 
+If $w = \e$, then $w$ is a palindrome by definition.
+\item 
+If $w = a$ for some symbol $a\in\Sigma$, then $w$ is a palindrome by definition.
+\item
+Otherwise, we have $w = ax$ for some symbol $a$ and some \emph{non-empty} string $x$.
+  
+The definition of reversal implies that $w^R = (ax)^R = x^R a$.
+
+Because $x$ is non-empty, its reversal $x^R$ is also non-empty.
+
+Thus, $x^R = by$ for some symbol $b$ and some string~$y$.
+
+It follows that $w^R = bya$, and therefore $w = (w^R)^R = (bya)^R = a y^R b$.
+
+
+\medskip
+\emph{[At this point, we need to prove that $a=b$ and that $y$ is a palindrome.]}
+\medskip
+
+Our assumption that $w = w^R$ implies that $bya = a y^R b$.
+
+The recursive definition of string equality immediately implies $a=b$.
+
+\medskip
+Because $a=b$, we have $w = ay^Ra$ and $w^R = a y a$.
+
+The recursive definition of string equality implies $y^Ra = ya$.
+
+It immediately follows that $(y^R a)^R = (ya)^R$.
+
+Known properties of reversal imply $(y^R a)^R = a (y^R)^R = ay$ and $(ya)^R = a y^R$.
+
+It follows that $ay^R = ay$, and therefore $y = y^R$.
+
+The inductive hypothesis now implies that $y$ is a palindrome.
+
+\medskip
+We conclude that $w$ is a palindrome by definition.
+\end{itemize}
+In all three cases, we conclude that $w$ is a palindrome.
+\end{enumerate}
+
+\end{solution}
+
+
+
+\end{document}

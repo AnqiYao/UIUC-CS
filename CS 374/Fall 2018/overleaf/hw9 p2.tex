@@ -1,0 +1,98 @@
+% ---------
+%  Compile with "pdflatex hw4".
+% --------
+%!TEX TS-program = pdflatex
+%!TEX encoding = UTF-8 Unicode
+
+\documentclass[11pt]{article}
+\usepackage{jeffe,handout,graphicx}
+\usepackage[utf8]{inputenc}		% Allow some non-ASCII Unicode in source
+
+%  Redefine suits
+\usepackage{pifont}
+\def\Spade{\text{\ding{171}}}
+\def\Heart{\text{\textcolor{Red}{\ding{170}}}}
+\def\Diamond{\text{\textcolor{Red}{\ding{169}}}}
+\def\Club{\text{\ding{168}}}
+
+\def\Cdot{\mathbin{\text{\normalfont \textbullet}}}
+\def\Sym#1{\textbf{\texttt{\color{BrickRed}#1}}}
+
+
+
+% =====================================================
+%   Define common stuff for solution headers
+% =====================================================
+\Class{CS/ECE $374$}
+\Semester{FALL $2018$}
+\Authors{3}
+\AuthorOne{Zhe Zhang}{zzhan157@illinois.edu}
+\AuthorTwo{Ray Ying}{xinruiy2@illinois.edu}
+\AuthorThree{Anqi Yao}{anqiyao2@illinois.edu}
+%\Section{}
+% =====================================================
+\documentclass[12pt]{article}
+\usepackage{tikz}
+\begin{document}
+
+% ---------------------------------------------------------
+
+\HomeworkHeader{$9$}{$2$}
+Suppose you have just purchased a new type of hybrid car that
+  uses fuel extremely efficiently, but can only travel $100$ miles on a
+  single battery. The car’s fuel is stored in a single-use battery,
+  which must be replaced after at most $100$ miles. The actual fuel is
+  virtually free, but the batteries are expensive and can only be
+  installed by licensed battery-replacement technicians. Thus, even if
+  you decide to replace your battery early, you must still pay full
+  price for the new battery to be installed. Moreover, because these
+  batteries are in high demand, no one can afford to own more than one
+  battery at a time.  Suppose you are trying to get from San Francisco
+  to New York City on the new InterContinental Super-Highway, which
+  runs in a direct line between these two cities. There are several
+  fueling stations along the way; each station charges a different
+  price for installing a new battery. Before you start your trip, you
+  carefully print the Wikipedia page listing the locations and prices
+  of every fueling station on the ICSH.
+
+  Given this information, how do
+  you decide the best places to stop for fuel?  More formally, suppose
+  you are given two arrays $D[1 .. n]$ and $C[1 .. n]$, where $D[i]$ is the
+  distance from the start of the highway to the ith station, and $C[i]$
+  is the cost to replace your battery at the $i$th station. Assume that
+  your trip starts and ends at fueling stations (so $D[1] = 0$ and $D[n]$
+  is the total length of your trip), and that your car starts with an
+  empty battery (so you must install a new battery at station $1$).
+
+
+  \begin{itemize}
+  \item   Describe and analyze a greedy algorithm to find the minimum number
+  of refueling stops needed to complete your trip. Don’t forget to
+  prove that your algorithm is correct.
+\item But what you really want
+  to minimize is the total cost of travel. Show that your greedy
+  algorithm in the preceding part does not produce an optimal solution when
+  extended to this setting.
+\item {\bf Not to submit but encouraged to solve:} Describe an efficient algorithm to
+  compute the locations of the fuel stations you should stop at to
+  minimize the total cost of travel.
+  \end{itemize}
+\hrule
+
+
+\begin{solution}
+$$  $$
+\begin{enumerate}
+    \item  
+       In order to have a have the minimum number of refueling stops needed to complete your trip, we want to refueling as less as possible. The greedy algorithm goes like this:
+       \begin{itemize}
+           \item Initialize count $= 0$ and start from station $1$.
+           \item If New York is within $100$ miles, then straightly go to New York. Otherwise, choose the last fueling station that is in your $100$ miles from the current station, add one to the count. If you cannot be able to find the next station within $100$ miles, return false saying there is no way to get to New York in this hybrid car.
+           \item Starting at next fueling stations, recursively do the first step.
+       \end{itemize}
+       Proof of this greedy algorithm: Suppose that the greedy algorithm gives the sequence of station $(a_1,..a_i)$, there exists one other sequence of station $(b_1,...b_k)$ that also allows him to go to New York and $k<i$, where in this sequence, he does not always choose the last station that are within his $100$ miles. Suppose they went to the same station until starting from one particular step $x(1\leq x\leq k)$, he choose a different station other than the last station, then $D[b_x] < D[a_x]$ since $a_x$ is the farthest station that he can reach. Recursively, every steps after this step, the station $b_y(x\leq y\leq k)$ he choose will be less than or equal to $a_y$, which means $D[b_k] \leq D[a_k]$. We assume in the beginning that $k<i$, so $D[a_k] < D[a_i]$, since at $a_k$, he would directly drive to New York without any station if New York is less than $100$ miles, so DIS(New York)$ - D[a_k] > 100$ and DIS(New York)$ - SD[b_k] > 100$ which means the sequence $(b_1,...b_k)$ will not work. Hence, we prove that the greedy algorithm is correct and generates a optimal result.
+    \item
+       To show that the greedy algorithm won't work in this question, let's just make a contradiction. Suppose at each mile, there is a station. The stations that the previous greedy algorithm selected always cause 200 units. All other stations cause 1 units. Assume that New York is more than 100 miles from San Francisco(Otherwise we can just go to New York without any fueling station). We can choose all stations except the stations that are selected in the greedy algorithm. Then for per hundred miles, the greedy algorithm costs 200 units and the new strategy costs 99 units. Since the stations next to the station that greedy algorithm selected will be 2 miles apart, so it's no problem he can drive from one to another. To the last 100 miles, the new strategy will cost maximum 99 units additional. The total cost of greedy algorithm is $200*x$ and the total cost of new strategy will less $99*x + 99$(where x is the integer number of total distance divided by 100). Since we can safely assume there is at least more than 100 mile between San Francisco to New York, $x\geq 1$ so $200x - 99x - 99 = 101x - 99 \geq 2$. So the total cost of greedy algorithm will be greater then the new strategy. Hence, the greedy algorithm in the first question will not always produce an optimal solution for second question. 
+\end{enumerate}
+\end{solution}
+\end{document}

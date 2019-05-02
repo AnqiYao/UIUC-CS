@@ -1,0 +1,105 @@
+% ---------
+%  Compile with "pdflatex hw0".
+% --------
+%!TEX TS-program = pdflatex
+%!TEX encoding = UTF-8 Unicode
+
+\documentclass[11pt]{article}
+\usepackage{jeffe,handout,graphicx}
+\usepackage[utf8]{inputenc}		% Allow some non-ASCII Unicode in source
+
+%  Redefine suits
+\usepackage{pifont}
+\usepackage{algorithm}
+\usepackage{algorithmic}
+\usepackage{amsmath}
+\documentclass{article}
+\usepackage{amsmath}
+
+\def\Spade{\text{\ding{171}}}
+\def\Heart{\text{\textcolor{Red}{\ding{170}}}}
+\def\Diamond{\text{\textcolor{Red}{\ding{169}}}}
+\def\Club{\text{\ding{168}}}
+
+\def\Cdot{\mathbin{\text{\normalfont \textbullet}}}
+\def\Sym#1{\textbf{\texttt{\color{BrickRed}#1}}}
+
+
+% =====================================================
+%   Define common stuff for solution headers
+% =====================================================
+\Class{CS $450$}
+\Semester{Spring $2019$}
+\Authors{1}
+%\Section{}
+
+% =====================================================
+\begin{document}
+
+% ---------------------------------------------------------
+
+
+% ---------------------------------------------------------
+% Change authors again
+\AuthorOne{Ray Ying}{xinruiy2@illinois.edu}
+
+
+\HomeworkHeader{$8$}{$1$}
+
+\begin{quote}
+
+\end{quote}
+\hrule
+
+
+\begin{solution}
+\item  \begin{enumerate}
+            \item Given $x_{\in} = Q_k Q_k^T x$, $x_\perp = (I - Q_k Q_k^T) x$ and $A = Q_k^T T_k Q_k$ \\
+            $Ax_{\in} = A Q_k Q_k^T x$\\
+            $Ax_\perp = A(I - Q_k Q_k^T)x = Ax - AQ_k Q_k^T x$\\
+            $Ax_{\in} + Ax_{\perp} =  A Q_k Q_k^T x + Ax - AQ_k Q_k^T x = Ax \implies Ax = Ax_{\in} + Ax_{\perp}$ 
+            
+            \item $Ax_{\in} + Ax_{\perp} = A Q_k Q_k^T x + Ax_{\perp} = \lambda x$\\
+            multiply both side with $Q_k^T$, we get 
+            $Q_k^T A Q_k Q_k^T x + Q_k^TAx_{\perp} = \lambda Q_k^T x \implies$ \\
+            $T_kQ_k^T x - \lambda Q_k^T x =  -Q_k^TAx_{\perp}$
+            
+            \item By eigendecompopsition, $H = U\Lambda U^T$. (By reference, $U^TU = I$ and $UU^T = I$ for $U$ being a square matrix)\\
+            \\
+            $r = (H-\mu I)z \implies \norm {(U\Lambda U^T - \mu I)z}_2 = \norm {r}_2$\\ 
+            \\
+            $\norm{(U\Lambda U^T - \mu I)z}_2 = \norm{U(U^T U \Lambda U^T U - U^T U \mu I) U^T z}_2 = \norm{U(\Lambda - \mu I)U^T z}_2$\\
+            \\
+            By reference, we can assume $\norm{Ur}_2 = \norm{r}_2$\\
+            \\
+            $\norm{U(\Lambda - \mu I)U^T z}_2 = \norm{(\Lambda - \mu I)U^T z}_2 = \norm{r}_2$\\
+            \\
+            Essentially, $(\Lambda - \mu I)U^T z$ is a vector as the first part $\Lambda - \mu I$ is a diagonal matrix and the second part $U^Tz$ is a vector. $\norm{U^Tz}_2 = \norm{z}_2$ , the $2$-norm of it would be $\sqrt{\sum_i((\Lambda - \mu I)[i] \cdot (z)[i])^2}$.\\
+            \\
+            If we find a lower bound for $\norm{(\Lambda - \mu I)z}_2$, we find a lower bound for $ \norm{r}_2$. So we want to take the minimum of $\lambda - \mu I$, which is $min_h |\lambda - \mu|$.\\
+            \\
+            If we take out the minimum eigenvalue everytime in the above square formula, it would just be  $min_h |\lambda - \mu| \sqrt{\sum_i z[i]^2} = min_h |\lambda - \mu| \cdot \norm{z}_2 \leq \norm{(\Lambda - \mu I)z}_2 = \norm{r}_2$
+            $$min_h |\lambda - \mu| \leq \frac{\norm{r}_2}{\norm{z}_2}$$
+
+            \item Since $Q_k$ is non-square, we won't have $\norm{Q_k^Tx}_2 = \norm{x}_2$, but we still have $\norm{Qx}_2 = \norm{x}_2$.\\
+            \\
+            Combining the results from part $2$ and part $3$, since $T_k$ is a symmetric matrix, let $T_k$ be $H$ in part $3$, $Q_k^Tx$ be $z$ in part $3$, $-Q_k^TAx_{\perp}$ be $r$.\\
+            \\
+            Therefore, we have 
+            $$ min_{T_k}|\lambda_{T_k} - \lambda| \leq \frac{\norm{Q_k^TAx_{\perp}}_2}{\norm{Q_k^Tx}_2} $$
+            
+            $\norm{Q_k^Tx}_2 = \norm{Q_k(Q_k^Tx)}_2 = \norm{x_\in}$\\
+            \\
+            We see in the graph that $\frac{\norm{x_{\perp}}_2}{\norm{x_\in}_2} = tan\theta$\\
+            \\
+            Hence, now we can show there will exist an eigenvalue $\mu$ of $T_k$, such that \\
+            $|\mu - \lambda| = |\lambda - \mu|\leq \frac{\norm{Q_k^TAx_{\perp}}_2}{\norm{Q_k^Tx}_2} \leq \norm{Q_k^T}_2 \norm{A}_2 tan\theta \leq \norm{A}_2 tan\theta$ ($Q_k^TA$ has same singular value as $A$)
+            
+            
+            
+        \end{enumerate}
+    
+\end{solution}
+References: \\ 
+http://www.seas.ucla.edu/~vandenbe/133A/lectures/orthogonal.pdf\\
+\end{document}

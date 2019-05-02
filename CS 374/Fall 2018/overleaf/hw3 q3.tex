@@ -1,0 +1,92 @@
+% ---------
+%  Compile with "pdflatex hw0".
+% --------
+%!TEX TS-program = pdflatex
+%!TEX encoding = UTF-8 Unicode
+
+\documentclass[11pt]{article}
+\usepackage{jeffe,handout,graphicx}
+\usepackage[utf8]{inputenc}		% Allow some non-ASCII Unicode in source
+
+%  Redefine suits
+\usepackage{pifont}
+\def\Spade{\text{\ding{171}}}
+\def\Heart{\text{\textcolor{Red}{\ding{170}}}}
+\def\Diamond{\text{\textcolor{Red}{\ding{169}}}}
+\def\Club{\text{\ding{168}}}
+
+\def\Cdot{\mathbin{\text{\normalfont \textbullet}}}
+\def\Sym#1{\textbf{\texttt{\color{BrickRed}#1}}}
+
+
+
+% =====================================================
+%   Define common stuff for solution headers
+% =====================================================
+\Class{CS/ECE 374}
+\Semester{FALL $2018$}
+\Authors{3}
+\AuthorOne{Zhe Zhang}{zzhan157@illinois.edu}
+\AuthorTwo{Ray Ying}{xinruiy2@illinois.edu}
+\AuthorThree{Anqi Yao}{anqiyao2@illinois.edu}
+%\Section{}
+% =====================================================
+\documentclass[12pt]{article}
+\usepackage{tikz}
+\begin{document}
+
+% ---------------------------------------------------------
+
+\HomeworkHeader{3}{3}
+
+\begin{quote}
+
+\item Given languages $L_1$ and $L_2$ we define $\text{\em insert}(L_1,L_2)$
+to be the language $\{uvw \mid v \in L_1, uw \in L_2\}$ to be the
+set of strings obtained by ``inserting'' a string of $L_1$ into a
+string of $L_2$. For example if $L_1 = \{isfun\}$ and $L_2 = \{0, CS\}$
+then
+$$\text{\em insert}(L_1,L_2) = \{isfun0,0isfun,isfunCS,CisfunS,CSisfun\}$$
+\begin{itemize}
+\item The goal is to show that if $L_1$ and $L_2$ are regular
+  languages then $\text{\em insert}(L_1,L_2)$ is also regular.  In
+  particular you should describe how to construct an NFA $N =
+  (Q,\Sigma, \delta,s, A)$ from two DFAs
+  $M_1=(Q_1,\Sigma,\delta_1,s_1,A_1)$ and
+  $M_2=(Q_2,\Sigma,\delta_2,s_2,A_2)$ such that $L(N) = \text{\em
+    insert}(L(M_1),L(M_2))$. You do not need to prove the correctness of
+  your construction but you should explain the ideas behind the
+  construction (see lab 3 solutions).
+\end{itemize}
+\end{quote}
+\hrule
+
+
+\begin{solution}
+\item
+\begin{enumerate}
+\item   Let $M_1=(Q_1,\Sigma,\delta_1,s_1,A_1)$ and $M_2=(Q_2,\Sigma,\delta_2,s_2,A_2)$ such that $L(N) = \text{\em
+    insert}(L(M_1),L(M_2))$, We construct an NFA $N =
+  (Q,\Sigma, \delta,s, A)$ that accepts ${\em
+    insert}(L(M_1),L(M_2))$ as follows: \newline
+    ${\em Q} := Q_1 * Q_2$ \newline
+    ${\em \Sigma} := \Sigma$ \newline
+    ${\em \delta((q_2, before), a)} := \left\{\begin{array}{l}$\{\delta((q_2, a), before), (q_2,after)\}$   a $\in$ L(M_1)\\ \{\delta((q_2, a), before)\}
+    otherwise\end{array}\right.$ \newline
+    ${\em \delta((q_2, after), a)} := \{\delta((q_2, a), after)\}$ a $\in$ $L(M_2)$\newline 
+    ${\em s} := \{s_1, s_2\}$ \newline
+    ${\em A} := A_1 \cap A_2 $\newline
+    For the states in the NFA, $Q$ is going to be $Q_1 * Q_2$ without any doubts. Since we can start at both old state $s_1$ and $s_2$, the start state for NFA is just the set contain both $s_1$ and $s_2$. Same reason apply for accepting state, we can end at both old accepting states, the accepting states for NFA is the union of $A_1$ and $A_2$. As for the language it accepts, doesn't matter if the input language that start with $L(M_1)$ or $L(M_2)$, once it receive the language in $L(M_1)$, because $L(N) = \text{\em
+    insert}(L(M_1),L(M_2))$, only breaks the language that is in $L(M_2)$ in half, that means once we pass or enter the start state in $L(M_1)$, there is only one way to the accepting state (only one accepting state as there is only one route).
+    \begin{itemize}
+        \item The state ($q_2$, before) means (the simulation of) $M_2$ is in state $q_2$ and $N$ has not yet enter the start state for $M_1$.
+        \item The state ($q_2$, after) means (the simulation of) $M_2$ is in state $q_2$ and $N$ has passed the accepting state for $M_1$.
+    \end{itemize}
+\end{enumerate}
+
+
+\end{solution}
+
+
+
+\end{document}

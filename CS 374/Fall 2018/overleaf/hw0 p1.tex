@@ -1,0 +1,68 @@
+% ---------
+%  Compile with "pdflatex hw0".
+% --------
+%!TEX TS-program = pdflatex
+%!TEX encoding = UTF-8 Unicode
+
+\documentclass[11pt]{article}
+\usepackage{jeffe,handout,graphicx}
+\usepackage[utf8]{inputenc}		% Allow some non-ASCII Unicode in source
+
+%  Redefine suits
+\usepackage{pifont}
+\def\Spade{\text{\ding{171}}}
+\def\Heart{\text{\textcolor{Red}{\ding{170}}}}
+\def\Diamond{\text{\textcolor{Red}{\ding{169}}}}
+\def\Club{\text{\ding{168}}}
+
+\def\Cdot{\mathbin{\text{\normalfont \textbullet}}}
+\def\Sym#1{\textbf{\texttt{\color{BrickRed}#1}}}
+
+
+
+% =====================================================
+%   Define common stuff for solution headers
+% =====================================================
+\Class{CS/ECE 374}
+\Semester{Fall 2018}
+\Authors{1}
+%\Section{}
+
+% =====================================================
+\begin{document}
+
+% ---------------------------------------------------------
+
+
+% ---------------------------------------------------------
+% Change authors again
+\AuthorOne{Xinrui Ying}{xinruiy2@illinois.edu}
+
+
+\HomeworkHeader{$0$}{$1$}
+
+\begin{quote}
+\begin{enumerate}[(a)]
+% ---------------------------------------------------------
+\item
+Suppose $S$ is a set of $103$ integers. Prove that there is a
+    subset $S' \subseteq S$ of at least $15$ numbers such that 
+    the difference of any two numbers in $S'$ is a multiple of $7$.
+% ---------------------------------------------------------
+
+\end{enumerate}
+\end{quote}
+\hrule
+
+
+\begin{solution}
+\item
+\begin{enumerate}[(a)]
+\item
+    Since $S$ is a set, by definition of set, there is no duplicate in set $S$. $S$ contains 103 integers, then we can have x1, x2, x3 ... x103 from smallest to largest in S. For any integer k, k mod 7 will result in [0,6]. By pigeon hole principle, let b0, b1, b2, b3, b4, b5, b6 where bi = xi mod 7. Now 103 / 7 > 14, means that there is at least one b containing 15 x. Since integers in one hole will have same result mod 7, then the difference between them will be a multiple of 7. Hence, there is always a subset $S'$ of $S$ containing 15 integers such that the difference between any two numbers in the set $S'$ will be a multiple of 7.
+\medskip
+
+\end{enumerate}
+
+\end{solution}
+\end{document}

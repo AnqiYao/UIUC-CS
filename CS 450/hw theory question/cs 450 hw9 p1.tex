@@ -1,0 +1,85 @@
+% ---------
+%  Compile with "pdflatex hw0".
+% --------
+%!TEX TS-program = pdflatex
+%!TEX encoding = UTF-8 Unicode
+
+\documentclass[11pt]{article}
+\usepackage{jeffe,handout,graphicx}
+\usepackage[utf8]{inputenc}		% Allow some non-ASCII Unicode in source
+
+%  Redefine suits
+\usepackage{pifont}
+\usepackage{algorithm}
+\usepackage{algorithmic}
+\usepackage{amsmath}
+\documentclass{article}
+\usepackage{amsmath}
+
+\def\Spade{\text{\ding{171}}}
+\def\Heart{\text{\textcolor{Red}{\ding{170}}}}
+\def\Diamond{\text{\textcolor{Red}{\ding{169}}}}
+\def\Club{\text{\ding{168}}}
+
+\def\Cdot{\mathbin{\text{\normalfont \textbullet}}}
+\def\Sym#1{\textbf{\texttt{\color{BrickRed}#1}}}
+
+
+% =====================================================
+%   Define common stuff for solution headers
+% =====================================================
+\Class{CS $450$}
+\Semester{Spring $2019$}
+\Authors{1}
+%\Section{}
+
+% =====================================================
+\begin{document}
+
+% ---------------------------------------------------------
+
+
+% ---------------------------------------------------------
+% Change authors again
+\AuthorOne{Ray Ying}{xinruiy2@illinois.edu}
+
+
+\HomeworkHeader{$9$}{$1$}
+
+\begin{quote}
+
+\end{quote}
+\hrule
+
+
+\begin{solution}
+\item  
+    $f(x) = h(x)(x - x^*)^{m}$\\
+    $f'(x) = h'(x)(x - x^*)^{m} + m\cdot h(x)(x - x^*)^{m-1}$\\
+    $f''(x) = h''(x)(x-x^*)^m + 2m\cdot h'(x)(x-x^*)^{m-1} + m(m-1)h(x)(x-x^*)^{m-2}$
+        \begin{enumerate}
+            \item $g(x) = x - \frac{h(x)(x - x^*)^{m}}{m \cdot (x - x^*)^{m-1}h(x) + h'(x)(x - x^*)^{m}} = x - \frac{h(x)(x - x^*)}{m \cdot h(x) + h'(x)(x - x^*)}$
+
+            \item $g'(x) = 1 - \frac{(m \cdot h(x) + h'(x)(x - x^*)) \cdot (h(x) + h'(x)(x-x^*))- h(x)(x-x^*)(m \cdot h'(x) + h''(x)(x-x^*) + h'(x))}{(m \cdot h(x) + h'(x)(x - x^*))^2} \\
+            = 1 - \frac{(m \cdot h(x) + h'(x)(x - x^*)) \cdot (h(x) + h'(x)(x-x^*))- h(x)(x-x^*)(m \cdot h'(x) + h''(x)(x-x^*) + h'(x))}{(m \cdot h(x) + h'(x)(x - x^*))^2}$\\
+            = $\frac{(m \cdot h(x) + h'(x)(x - x^*))^2 - (m \cdot h(x) + h'(x)(x - x^*)) \cdot (h(x) + h'(x)(x-x^*))+ h(x)(x-x^*)(m \cdot h'(x) + h''(x)(x-x^*) + h'(x))}{(m \cdot h(x) + h'(x)(x - x^*))^2}$\\
+            
+            $g'(x^*) = \frac{(m\cdot h(x^*))^2 - m\cdot h(x^*)^2}{(m\cdot h(x^*))^2} = 1 - \frac{1}{m}$
+            \\
+            Because $m \neq 0$, $g'(x^*) \neq 0$ for all $x^*$. Therefore, it's linearity convergence. 
+            
+            \item Having $g(x) = x - k\cdot f(x)/f'(x)$, $g(x) = x - \frac{k\cdot h(x)(x - x^*)}{ m \cdot h(x) + h'(x)(x - x^*)} $\\
+            
+            $g'(x) = 1 - \frac{k \cdot (m \cdot h(x) + h'(x)(x - x^*)) \cdot (h(x) + h'(x)(x-x^*))- k \cdot h(x)(x-x^*)(m \cdot h'(x) + h''(x)(x-x^*) + h'(x))}{(m \cdot h(x) + h'(x)(x - x^*))^2}$\\
+            
+            When $g'(x^*) = 0$, it has quadratic convergence.\\
+            $1 =  \frac{k \cdot m \cdot h(x)^2}{m^2h(x)^2} \implies k = m$\\
+            
+            
+            
+        \end{enumerate}
+    
+\end{solution}
+References: \\ 
+
+\end{document}

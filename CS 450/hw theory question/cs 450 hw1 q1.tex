@@ -1,0 +1,66 @@
+% ---------
+%  Compile with "pdflatex hw0".
+% --------
+%!TEX TS-program = pdflatex
+%!TEX encoding = UTF-8 Unicode
+
+\documentclass[11pt]{article}
+\usepackage{jeffe,handout,graphicx}
+\usepackage[utf8]{inputenc}		% Allow some non-ASCII Unicode in source
+
+%  Redefine suits
+\usepackage{pifont}
+\def\Spade{\text{\ding{171}}}
+\def\Heart{\text{\textcolor{Red}{\ding{170}}}}
+\def\Diamond{\text{\textcolor{Red}{\ding{169}}}}
+\def\Club{\text{\ding{168}}}
+
+\def\Cdot{\mathbin{\text{\normalfont \textbullet}}}
+\def\Sym#1{\textbf{\texttt{\color{BrickRed}#1}}}
+
+
+
+% =====================================================
+%   Define common stuff for solution headers
+% =====================================================
+\Class{CS $450$}
+\Semester{Spring $2019$}
+\Authors{1}
+%\Section{}
+
+% =====================================================
+\begin{document}
+
+% ---------------------------------------------------------
+
+
+% ---------------------------------------------------------
+% Change authors again
+\AuthorOne{Ray Ying}{xinruiy2@illinois.edu}
+
+
+\HomeworkHeader{$1$}{$1$}
+
+\begin{quote}
+
+\end{quote}
+\hrule
+
+
+\begin{solution}
+\item
+\begin{enumerate}
+    \item   To prove that $k(f)$ is bounded by  $\frac{1}{\epsilon}$, we know in lecture that $k(f) = max_x (\frac{\Delta y/ y}{\Delta x/ x})$. Here, as the input is $(x,y)$, then $k(f)$ will be the max of $(\frac{|f(\Delta x + x,\Delta y + y) - f(x,y)|/ |f(x,y)|}{|(\Delta x,\Delta y)|/ |(x,y)|})$.\newline
+    \newline
+    Since the input size $(x,y)$ is said to be measured by $|x| + |y|$, $|(x,y)|$ = 1. Similarly, the input size of $(\Delta x, \Delta y) = |\Delta x| + |\Delta y|$, which is small but not necessarily equal to $\epsilon$. Since $f(x,y) = x - y = \epsilon$, then $f(x + \Delta x, y + \Delta y) = (x + \Delta x) - (y + \Delta y)$ is also very small but not necessarily equal to $\epsilon$.\newline
+    \newline
+    Some transformations to the equation above, $\frac{|f(\Delta x + x,\Delta y + y)-f(x,y)|/ |f(x,y)|}{|(\Delta x,\Delta y)|/ |(x,y)|} = \frac{|f(\Delta x + x,\Delta y + y)-f(x,y)| |(x,y)|}{|(\Delta x,\Delta y)| |f(x,y)|}$
+    \newline
+    $= \frac{|(\Delta x + x) - (\Delta y + y) - (x - y)| }{|\Delta x|  + |\Delta y| \epsilon} = \frac{|\Delta x - \Delta y| }{|\Delta x|  + |\Delta y| \epsilon}$. Since by the triangle inequality, $|\Delta x - \Delta y| \leq |\Delta x|  + |\Delta y|$, then we can see $\frac{|\Delta x - \Delta y| }{|\Delta x|  + |\Delta y| \epsilon} \leq \frac{|\Delta x|  + |\Delta y| }{|\Delta x|  + |\Delta y| \epsilon} = \frac{1}{\epsilon}$. Therefore, the max of $(\frac{|f(\Delta x + x,\Delta y + y) - f(x,y)|/ |f(x,y)|}{|(\Delta x,\Delta y)|/ |(x,y)|})$ is $\frac{1}{\epsilon}$, $k(f)$ is bounded by $\frac{1}{\epsilon}$.
+    
+    
+    \item   I can conclude that subtraction is very sensitive. As $1/\epsilon$ is very large because $\epsilon$ is close to $0$, the problem is ill-conditioned or sensitive.
+\end{enumerate}
+
+\end{solution}
+\end{document}

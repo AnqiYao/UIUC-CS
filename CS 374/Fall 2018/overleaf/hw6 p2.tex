@@ -1,0 +1,91 @@
+% ---------
+%  Compile with "pdflatex hw4".
+% --------
+%!TEX TS-program = pdflatex
+%!TEX encoding = UTF-8 Unicode
+
+\documentclass[11pt]{article}
+\usepackage{jeffe,handout,graphicx}
+\usepackage[utf8]{inputenc}		% Allow some non-ASCII Unicode in source
+
+%  Redefine suits
+\usepackage{pifont}
+\def\Spade{\text{\ding{171}}}
+\def\Heart{\text{\textcolor{Red}{\ding{170}}}}
+\def\Diamond{\text{\textcolor{Red}{\ding{169}}}}
+\def\Club{\text{\ding{168}}}
+
+\def\Cdot{\mathbin{\text{\normalfont \textbullet}}}
+\def\Sym#1{\textbf{\texttt{\color{BrickRed}#1}}}
+
+
+
+% =====================================================
+%   Define common stuff for solution headers
+% =====================================================
+\Class{CS/ECE 374}
+\Semester{FALL $2018$}
+\Authors{3}
+\AuthorOne{Zhe Zhang}{zzhan157@illinois.edu}
+\AuthorTwo{Ray Ying}{xinruiy2@illinois.edu}
+\AuthorThree{Anqi Yao}{anqiyao2@illinois.edu}
+%\Section{}
+% =====================================================
+\documentclass[12pt]{article}
+\usepackage{tikz}
+\begin{document}
+
+% ---------------------------------------------------------
+
+\HomeworkHeader{$6$}{$2$}
+
+\begin{enumerate}[2.]
+\item Let $\Sigma$ be a finite alphabet and let $L_1$ and $L_2$ be two
+  languages over $\Sigma$. Assume you have access to two routines
+  IsStringIn$L_{1}(u)$ and IsStringIn$L_{2}(u)$. The former routine decides whether a given string $u$ is in $L_1$ and the latter whether $u$ is in $L_2$. Using these routines as black boxes describe an efficient algorithm that given an arbitrary string $w \in \Sigma^*$ decides whether $w \in (L_1 \cup L_2)^*$. To evaluate the running time of your solution you can assume that calls to IsStringIn$L_{1}(u)$ and IsStringIn$L_{2}(u)$ take constant time. Note that you are not assuming any property of $L_1$ or $L_2$ other than being able to test membership in those languages.
+\end{enumerate}
+
+\hrule
+
+
+\begin{solution}
+$\lur$
+boolean values belong[1],belong[2],...,belong[n] are used to indicate whether the substring $w[i,...,n] \in (L_1 \cup L_2)^*$. The outer loop goes from the end of the string w to the start of the string w, and i indicates the index. The inner loop goes from $i^{th}$ position to the end of the string w, and j also indicates the index. $j = n$ is a special case. When $j \neq n$ and belong[j+1] = TRUE which means substring $w[j+1,...,n] \in (L_1 \cup L_2)^*$ so that we only need to check whether $w[i,...,j] \in L_1$ || $w[i,...,j] \in L_2$ or not. If it is in either $L_1$ or $L_2$, we set belong[i] = TRUE which means the substring $w[i,...,n] \in (L_1 \cup L_2)^*$. At the end, if belong[1] = TRUE, then $w \in (L_1 \cup L_2)^*$
+
+\begin{quote}
+        \newline
+        \fbox{\begin{minipage}{36em}
+        \underline{FUNCTION(w):}
+        \newline
+        \hspace*{2ex} boolean belong[1,2,...,n]
+        \newline
+        \hspace*{2ex} for $i$ $\leftarrow$ n down to $1$
+        \newline
+        \hspace*{4ex} belong[i] = FALSE
+        \newline
+        \hspace*{4ex} for j $\leftarrow$ $i$ to n
+        \newline
+        \hspace*{6ex} if (j==n)
+        \newline
+        \hspace*{8ex} if (IsStringIn$L_{1}(w[i,...,n])$ || IsStringIn$L_{2}(w[i,...,n])$)
+        \newline
+        \hspace*{12ex} belong[i] = TRUE
+        \newline
+        \hspace*{12ex} break
+        \newline
+        \hspace*{6ex} else
+        \newline
+        \hspace*{8ex} if (belong[j+1] \&\& (IsStringIn$L_{1}(w[i,...,j])$ || IsStringIn$L_{2}(w[i,...,j])$) )
+        \newline
+        \hspace*{12ex}
+        belong[i] = TRUE
+        \newline
+        \hspace*{12ex} break
+        \newline
+        \hspace*{2ex} return belong[1]
+        \end{minipage}}
+\end{quote} \\
+The resulting algorithm runs in $O(n^2)$ time.
+\end{solution}
+
+\end{document}

@@ -1,0 +1,90 @@
+% ---------
+%  Compile with "pdflatex hw0".
+% --------
+%!TEX TS-program = pdflatex
+%!TEX encoding = UTF-8 Unicode
+
+\documentclass[11pt]{article}
+\usepackage{jeffe,handout,graphicx}
+\usepackage[utf8]{inputenc}		% Allow some non-ASCII Unicode in source
+
+%  Redefine suits
+\usepackage{pifont}
+\def\Spade{\text{\ding{171}}}
+\def\Heart{\text{\textcolor{Red}{\ding{170}}}}
+\def\Diamond{\text{\textcolor{Red}{\ding{169}}}}
+\def\Club{\text{\ding{168}}}
+
+\def\Cdot{\mathbin{\text{\normalfont \textbullet}}}
+\def\Sym#1{\textbf{\texttt{\color{BrickRed}#1}}}
+
+
+
+% =====================================================
+%   Define common stuff for solution headers
+% =====================================================
+\Class{CS $450$}
+\Semester{Spring $2019$}
+\Authors{1}
+%\Section{}
+
+% =====================================================
+\begin{document}
+
+% ---------------------------------------------------------
+
+
+% ---------------------------------------------------------
+% Change authors again
+\AuthorOne{Ray Ying}{xinruiy2@illinois.edu}
+
+
+\HomeworkHeader{$2$}{$1$}
+
+\begin{quote}
+
+\end{quote}
+\hrule
+
+
+\begin{solution}
+\item
+\begin{enumerate}
+    \item 
+        Since the rounded number $\tilde{x} = x(1+\delta)$ where $\delta$ does not depend on the number x, $\tilde{x_i} = x_i(1+\delta)$ and $\tilde{y_i} = y_i(1+\delta)$. The  $\sum_{i=1}^{n}\tilde{x_i}\tilde{y_i}  = \sum_{i=1}^{n} x_i(1+\delta)*y_i(1+\delta) =(1+\delta)^2*(\sum_{i=1}^{n} x_iy_i)$.
+    \item
+        $\otimes$ should appears $n$ times and $\oplus$ should appears $n-1$ times. Based on the rule of $\otimes$, for each small expression in the parenthesis, $x_i \otimes y_i$, the result should be $x_iy_i(1+\delta)$. The whole expression will be $\oplus$ of these small expression in the parenthesis, that is $(x_1y_1(1+\delta)) \otimes (x_2y_2(1+\delta)) ... (x_ny_n(1+\delta)) $. We evaluate the expression from left to right, first we do the $\otimes$ on the first two parenthesis: $(x_1y_1(1+\delta)) \otimes (x_2y_2(1+\delta)) = (x_1y_1(1+\delta)+x_2y_2(1+\delta)) (1+\delta) = ((1+\delta)(x_1y_1+x_2y_2))*(1+\delta) = (1+\delta)^2(x_1y_1+x_2y_2)$. Then, if you do the $\otimes$ on the third parenthesis, you will have $((1+\delta)^2(x_1y_1+x_2y_2) + x_3y_3(1+\delta))(1`+\delta) = (1+\delta)^3(x_1y_1+x_2y_2) + x_3y_3(1+\delta)^2$.
+        \newline
+        
+        Based on the calculations above, we want to give an assumption that the result of $n$ where $n\geq2$ such small parenthesis connected with $\otimes$ is $(1+\delta)^{n}x_1y_1  + \sum_{i=2}^{n}(1+\delta)^{n+2-i}x_iy_i $. We want to prove it by induction, base case $n=2$ is just $(1+\delta)^2(x_1y_1+x_2y_2) = x_1y_1(1+\delta)^2 + x_2y_2(1+\delta)^2$ , which is true. Let's suppose that it's true for $n= 2,3...k$, we want to show that $n=k+1$ is also correct. Since $n=k$ is true, we can conclude that $(x_1y_1(1+\delta)) \otimes (x_2y_2(1+\delta)) ... (x_ky_k(1+\delta)) = (1+\delta)^{n}x_1y_1  + \sum_{i=2}^{k}(1+\delta)^{k+2-i}x_iy_i$.
+        \newline
+        \newline
+        Then $(x_1y_1(1+\delta)) \otimes (x_2y_2(1+\delta)) ... (x_{k+1}y_{k+1}(1+\delta)) = (x_1y_1(1+\delta)) \otimes (x_2y_2(1+\delta)) ... (x_ky_k(1+\delta)) \otimes (x_{k+1}y_{k+1}(1+\delta)) = ((1+\delta)^{n}x_1y_1  + \sum_{i=2}^{k}(1+\delta)^{k+2-i}x_iy_i) \otimes (x_{k+1}y_{k+1}(1+\delta))$.
+        \newline
+        \newline
+        We then use the definition defined for $\otimes$, $((1+\delta)^{n}x_1y_1  + \sum_{i=2}^{k}(1+\delta)^{k+2-i}x_iy_i) \otimes (x_{k+1}y_{k+1}(1+\delta)) = ((1+\delta)^{n}x_1y_1  + \sum_{i=2}^{k}(1+\delta)^{k+2-i}x_iy_i + x_{k+1}y_{k+1}(1+\delta))*(1+\delta) = (1+\delta)^{n+1}x_1y_1  + \sum_{i=2}^{k}(1+\delta)^{(k+1)+2-i}x_iy_i + x_{k+1}y_{k+1}(1+\delta)^2$. Since $(k+1)+2-(k+1)= 2$, we can combine $\sum_{i=2}^{k}(1+\delta)^{(k+1)+2-i}x_iy_i + x_{k+1}y_{k+1}(1+\delta)^2$ to get one sum expression: $\sum_{i=2}^{k+1}(1+\delta)^{(k+1)+2-i}x_iy_i$, then the whole $(x_1y_1(1+\delta)) \otimes (x_2y_2(1+\delta)) ... (x_{k+1}y_{k+1}(1+\delta)) = (1+\delta)^{(k+1)}x_1y_1 + \sum_{i=2}^{k+1}(1+\delta)^{(k+1)+2-i}x_iy_i$. Thus, we prove that $n = k+1$ is also correct. Therefore, we conclude the expression is 
+        $$(1+\delta)^{n}x_1y_1 + \sum_{i=2}^{n}(1+\delta)^{n+2-i}x_iy_i \thinspace \thinspace \thinspace \thinspace \thinspace \thinspace \thinspace \thinspace \thinspace \thinspace \thinspace \thinspace \thinspace \thinspace \thinspace \thinspace \thinspace \thinspace \thinspace \thinspace \thinspace \thinspace n\geq2$$
+        
+        $$(1+\delta)x_1y_1  \thinspace \thinspace \thinspace \thinspace \thinspace \thinspace \thinspace \thinspace \thinspace \thinspace \thinspace \thinspace \thinspace \thinspace \thinspace \thinspace \thinspace \thinspace \thinspace \thinspace \thinspace \thinspace n = 1$$
+        
+        \newpage
+
+        \item
+            \textbf {fma} applied $n$ times in the expression. The expression will also first solve the innermost fma expression. $fma(x_1,y_1,0) = (x_1y_1 + 0)(1+\delta) = x_1y_1(1+\delta)$. Then, $fma(x_2,y_2,x_1y_1(1+\delta)) = (x_2y_2 + x_1y_1(1+\delta))(1+\delta) = x_2y_2(1+\delta) + x_1y_1(1+\delta)^2$. 
+            \newline
+            Based on the results above, we make an assumption that for if the same expression evaluate $n$ times in the order of $fma(x_n,y_n,fma(x_{n-1},y_{n-1},...fma(x_2,y_2,fma(x_1,y_1,0))))$, the result will be in the form of $\sum_{i = 1}^{n}(1+\delta)^{n-i+1}x_iy_i$. We will prove it by induction.
+            \newline
+            \newline
+            Since the base case is $n=1$ and we just proved it in the first paragraph of this sub-problem. We will assume that it is true for $n=1,2,3...k$, we want to prove $k+1$ is also true. 
+            \newline
+            As $n=k$ is true, we have that $fma(x_k,y_k,fma(x_{k-1},y_{k-1},...fma(x_2,y_2,fma(x_1,y_1,0)))) = \sum_{i = 1}^{k}(1+\delta)^{k-i+1}x_iy_i$, then for $n=k+1$, the expression is:
+            \newline
+            $fma(x_{k+1},y_{k+1},fma(x_k,y_k,...fma(x_2,y_2,fma(x_1,y_1,0)))) = fma(x_{k+1},y_{k+1},\sum_{i = 1}^{k}(1+\delta)^{k-i+1}x_iy_i)$. 
+            \newline
+            Based on the rule for fma, we have that:$fma(x_{k+1},y_{k+1},\sum_{i=1}^{k}(1+\delta)^{k-i+1}x_iy_i) = (x_{k+1}y_{k+1} + \sum_{i=1}^{k}(1+\delta)^{k-i+1}x_iy_i)(1+\delta) = (1+\delta)x_{k+1}y_{k+1} + \sum_{i=1}^{k}(1+\delta)^{(k+1)-i+1}x_iy_i$. Combining the two get one sum expression: $(1+\delta)x_{k+1}y_{k+1} + \sum_{i=1}^{k}(1+\delta)^{(k+1)-i+1}x_iy_i = \sum_{i=1}^{k+1}(1+\delta)^{(k+1)-i+1}x_iy_i$. Thus, we prove that it is true for $n=k+1$ as well. We can conclude that the expression is  
+            $$\sum_{i = 1}^{n}(1+\delta)^{n-i+1}x_iy_i$$
+            
+\end{enumerate}
+
+\end{solution}
+\end{document}
