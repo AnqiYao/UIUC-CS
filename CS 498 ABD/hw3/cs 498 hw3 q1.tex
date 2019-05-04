@@ -1,0 +1,80 @@
+% ---------
+%  Compile with "pdflatex hw0".
+% --------
+%!TEX TS-program = pdflatex
+%!TEX encoding = UTF-8 Unicode
+
+\documentclass[11pt]{article}
+\usepackage{jeffe,handout,graphicx}
+\usepackage[utf8]{inputenc}		% Allow some non-ASCII Unicode in source
+
+%  Redefine suits
+\usepackage{pifont}
+\def\Spade{\text{\ding{171}}}
+\def\Heart{\text{\textcolor{Red}{\ding{170}}}}
+\def\Diamond{\text{\textcolor{Red}{\ding{169}}}}
+\def\Club{\text{\ding{168}}}
+
+\def\Cdot{\mathbin{\text{\normalfont \textbullet}}}
+\def\Sym#1{\textbf{\texttt{\color{BrickRed}#1}}}
+
+
+
+% =====================================================
+%   Define common stuff for solution headers
+% =====================================================
+\Class{CS $498$ algorithm}
+\Semester{Spring $2019$}
+\Authors{2}
+%\Section{}
+
+% =====================================================
+\begin{document}
+
+% ---------------------------------------------------------
+
+
+% ---------------------------------------------------------
+% Change authors again
+\AuthorOne{Ray Ying}{xinruiy2@illinois.edu}
+\AuthorTwo{Aditya Pillai}{apillai4@illinois.edu}
+
+\HomeworkHeader{$3$}{$1$}
+
+\begin{quote}
+
+\end{quote}
+\hrule
+
+
+\begin{solution}
+\item
+\begin{enumerate}
+    \item  $\sum_i f_i - k \cdot \sum_j f_j \leq m'$, $m = \sum_i f_i + \sum_j f_j$.  $\forall {f_i > \frac{m}{k}}, \forall {f_j \leq \frac{m}{k}}$\\
+    We know that the difference between any two $f_i$ and $\hat{f_i}$ will be get most the total number of item with $f_j \leq \frac{m}{k}$, which is $\sum_j f_j$ \\
+    \begin{align*}
+        f_i - \hat {f_i}
+        &\leq \sum_j f_j\\
+        (k + 1) (f_i - \hat {f_i})
+        &\leq (k+1) \sum_j f_j \\
+        (k + 1) (f_i - \hat {f_i}) &\leq m - m' \\
+        f_i - \hat {f_i} &\leq \frac{m - m'}{k+1} \\
+        f_i - \frac{m - m'}{k+1}  &\leq \hat {f_i}
+    \end{align*}    
+    We already have $\hat{f_i} \leq f_i$, then $f_i - \frac{m - m'}{k+1} \leq \hat {f_i} \leq f_i$
+    \item  Based on the algorithm, we are choosing the highest $k$ counters left after combining and minus the number from the $k+1$ counter. We want to show that it is the good high frequency summary for $\sigma_1 \cdot \sigma_2$ satisfying part $1$.\\
+    
+    Proof: Let $f_i$ for $\sigma_1$ and $f_i'$ for $\sigma_2$(They represent same word), $f_i - \frac{m - m'}{k+1} \leq \hat {f_i} \leq f_i$ and $f_i' - \frac{m_1 - m_1'}{k+1} \leq \hat {f_i'} \leq f_i'$, then $f_i - \frac{m - m'}{k+1} + f_i' - \frac{m_1 - m_1'}{k+1} \leq \hat {f_i} + \hat {f_i'} \leq f_i + f_i'$(from part $1$)\\
+    
+    Let $f_j = f_i + f_i'$, the true frequency in $\sigma_1 \cdot \sigma_2$\\
+    
+    Let $\hat{f_j}$ be the estimate frequency of $\sigma_1 \cdot \sigma_2$, $\hat{f_j} = \hat{f_i} + \hat{f_i'} - c$. (let c be the $k+1$ counter size)\\
+    
+    Let $m_j$ be the total number of item in $\sigma_1 \cdot \sigma_2$ and $\hat{m_j}$ be the estimate, $m_j = m + m_1$, $m_j' = m' + m_1' - c \cdot k'$, $k' \geq (k+1)$ (we minus $c$ to at least $k+1$ counters)\\
+    
+    $(f_j - \hat{f_j}) \leq f_i + f_i' - (\hat{f_i} + \hat{f_i'}) + c \leq c + \frac{m - m'}{k+1} + \frac{m_1 - m_1'}{k+1} = c + \frac{m - m' + m_1 - m_1'}{k + 1} = c + \frac{m_j - m_j' - c \cdot k'}{k+1} \leq \frac{m_j - m_j'}{k + 1} \implies f_j - \frac{m_j - m_j'}{k + 1} \leq \hat{f_j}\leq f_j$\\
+
+\end{enumerate}
+
+\end{solution}
+\end{document}

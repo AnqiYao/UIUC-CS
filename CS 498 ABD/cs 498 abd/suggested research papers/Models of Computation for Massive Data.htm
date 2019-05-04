@@ -1,0 +1,356 @@
+
+<!-- saved from url=(0048)http://www.cs.utah.edu/~jeffp/teaching/MCMD.html -->
+<html class="gr__cs_utah_edu"><head><meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<title>Models of Computation for Massive Data</title>
+
+</head><body link="#BB0033" vlink="#550055" alink="#6666BB" bgcolor="#FFFFFF" data-gr-c-s-loaded="true">
+
+<style>
+A{text-decoration:none}
+A:hover{text-decoration:none}
+A:visited{text-decoration:none}
+</style>
+
+
+
+
+
+
+<font face="verdana, courier new, courier">
+<font size="5">
+<strong>
+Models of Computation for Massive Data
+</strong>
+</font>
+<br>
+<font face="arial" size="2">
+<strong>
+Instructor : <a href="http://www.cs.utah.edu/~jeffp">Jeff Phillips</a> 
+<br>
+Fall 2013 | Wednesday, (sometimes Fridays) 4:35 pm - 5:45 pm
+<br>
+MEB 3147
+<br>
+Catalog number: CS 7931 001
+</strong>
+<br>
+<hr>
+
+<b>Description:</b>
+<br>
+This course will explore advanced models of computation pertinent for processing massive data sets.  
+As data sets grow to terabyte and petabyte scales, traditional models and paradigms of sequential computation become obsolete.  
+Different efficiency trade-offs analyzing memory usage, I/O calls, or inter-node communication become the dominant bottlenecks.  
+These paradigms are formalized as I/O-Efficient, Parallel, Streaming, GPU-based, Map-Reduce, and other distributed algorithmic models of computation.  
+This course will study the history and specifics of these models.  
+Students in the class will learn the proper settings in which to use these paradigms, the advantages and disadvantages of each model, and how to analyze algorithms with these settings.
+
+
+
+<br>
+<br> <a href="https://www.youtube.com/channel/UCOyDDDRRarE89N_WoIzcOwQ/feed?view_as=public">YouTube Channel</a> for Class.
+
+<br>
+<br>
+Students in the class are lucky to use resources from <a href="http://www.emulab.net/">EmuLab</a> and <a href="http://aws.amazon.com/">Amazon Web Services</a>.  
+
+
+<hr>
+
+<b>Project Sechedule:</b>
+<br>
+Here is the schedule for the <a href="http://www.cs.utah.edu/~jeffp/teaching/MCMD/proj-schedule.txt">project</a>.
+
+
+<br><hr>
+
+<b>Schedule:</b>
+
+<table width="100%" rules="all">
+<tbody><tr>
+ <th>Date</th>
+ <th>Topic</th>
+ <th>Video</th>
+ <th>Link</th>
+ <th>Assignment</th>
+</tr>
+<tr>
+ <td>Wed  8.28</td>
+ <td><a href="http://www.cs.utah.edu/~jeffp/teaching/MCMD/MMD-intro.pdf">Class Overview</a> + <a href="http://www.cs.utah.edu/~jeffp/teaching/MCMD/L1seq-review.pdf">Review of RAM</a></td>
+<td> - </td>
+ <td>read before class: <a href="http://arxiv.org/abs/1306.3295">Big Data Abstractions</a> </td>
+ <td></td>
+</tr>
+<tr>
+ <td>Fri  8.30</td>
+ <td><a href="http://www.cs.utah.edu/~jeffp/teaching/MCMD/IO-intro.pdf">I/O : Overview and History of Model</a></td>
+ <td> - </td>
+ <td><a href="http://www.daimi.au.dk/~large/ioS11/">Arge Class</a> | <a href="http://web.cs.dal.ca/~nzeh/Teaching/6104/">Zeh class and links</a> | <a href="http://www.ittc.ku.edu/~jsv/Papers/Vit.IO_book.pdf">Vitter book</a></td>
+ <td><a href="http://www.cs.utah.edu/~jeffp/teaching/MCMD/project.pdf">Project</a> Proposal Due</td>
+</tr>
+<tr>
+ <td>Wed  9.04</td>
+ <td><a href="http://www.cs.utah.edu/~jeffp/teaching/MCMD/L3-IO-sorting.pdf">I/O : Sorting</a></td>
+ <td><a href="https://www.youtube.com/watch?v=u-CdKPBaH08">V3</a></td>
+ <td><a href="http://www.ittc.ku.edu/~jsv/Papers/AgV88.IO.pdf">Aggarwal + Vitter</a> | <a href="http://www.daimi.au.dk/~large/ioS11/Lecture1.pdf">Arge notes</a></td>
+<td></td>
+</tr>
+<tr>
+ <td>Fri  9.06</td>
+ <td><a href="http://www.cs.utah.edu/~jeffp/teaching/MCMD/L4-IO-searching.pdf">I/O : Searching with B-Trees</a></td>
+ <td><a href="https://www.youtube.com/watch?v=w-A6tofWf8c">V4</a></td>
+ <td><a href="http://www.daimi.au.dk/~large/ioS11/Lecture2.pdf">Arge notes</a></td>
+ <td></td>
+</tr>
+<tr>
+ <td>Wed  9.11</td>
+ <td><a href="http://www.cs.utah.edu/~jeffp/teaching/MCMD/L5-IO-cacheO+para.pdf">I/O : Extensions (Cache Oblivious, Parallel External)</a> (<a href="http://www.cs.utah.edu/~jeffp/teaching/MCMD/S5-Cacheoblivious.pdf">notes</a>, <a href="http://www.cs.utah.edu/~jeffp/teaching/MCMD/S5-Cacheoblivious2.pdf">+</a>)</td>
+ <td><a href="https://www.youtube.com/watch?v=W-BolEPLyVI">V5</a> <a href="https://www.youtube.com/watch?v=IEDPSi4gZVk">+</a></td>
+ <td><a href="http://erikdemaine.org/papers/BRICS2002/paper.pdf">CacheObliv</a> | <a href="http://www.ics.uci.edu/~nodari/spaa_08_pem.pdf">Parallel EM</a> | <a href="http://www.ittc.ku.edu/~jsv/Papers/Vit.IO_book.pdf">Parallel Disk</a></td>
+ <td></td>
+</tr>
+<tr>
+ <td>Fri  9.13</td>
+ <td><a href="http://www.cs.utah.edu/~jeffp/teaching/MCMD/L6-IO-graph.pdf">I/O : Graph Algorithms</a> (<a href="http://www.cs.utah.edu/~jeffp/teaching/MCMD/S6-IOGraph.pdf">notes</a>)</td>
+ <td><a href="https://www.youtube.com/watch?v=cy1rHu_28-c">V6</a></td>
+ <td><a href="http://web.cs.dal.ca/~nzeh/Teaching/6104/Notes/zeh02.pdf">Zeh notes</a> | <a href="ftp://ftp.daimi.au.dk/BRICS/Reports/RS/96/28/BRICS-RS-96-28.pdf">Buffer Tree</a> |  <a href="http://www.win.tue.nl/~hermanh/teaching/2IL35/AMM/04-elementary-graph-algorithms.pdf">Katriel + Meyer</a></td>
+ <td></td>
+</tr>
+<tr>
+ <td>Wed  9.18</td>
+ <td align="center"><font size="2">(travelling - No Class)</font></td>
+ <td></td>
+ <td><a href="http://simons.berkeley.edu/talks/graham-cormode-2013-09-05">Cormode Overview</a></td>
+ <td></td>
+</tr>
+<tr>
+ <td>Fri  9.20</td>
+ <td><a href="http://www.cs.utah.edu/~jeffp/teaching/MCMD/stream-intro.pdf">Streaming : Overview of Model</a> + <a href="http://www.cs.utah.edu/~jeffp/teaching/MCMD/L7.5-stream-reservoir-sampling.pdf">Reservoir Sampling</a> (<a href="http://www.cs.utah.edu/~jeffp/teaching/MCMD/S7.2-sampling.pdf">notes</a>)</td>
+ <td><a href="http://www.cs.utah.edu/~jeffp/teaching/MCMD.html">V</a></td>
+ <td><a href="http://www.cs.mcgill.ca/~denis/notes09.pdf">Muthu Notes</a> | <a href="http://www.cs.dartmouth.edu/~ac/Teach/CS85-Fall09/Notes/lecnotes.pdf">Chakrabarti Notes</a> |  <a href="http://www.cs.umd.edu/~samir/498/vitter.pdf">Reservoir Sampling</a></td>
+ <td></td>
+</tr>
+<tr>
+ <td>Wed  9.25</td>
+ <td>Streaming : <a href="http://www.cs.utah.edu/~jeffp/teaching/MCMD/L8-stream-heavy-hitters.pdf">Heavy-Hitters</a> + <a href="http://www.cs.utah.edu/~jeffp/teaching/MCMD/L8.5-stream-count-min.pdf">Count-Min</a> (<a href="http://www.cs.utah.edu/~jeffp/teaching/cs5955/L12-Heavy-Hitters.pdf">notes</a>)</td>
+ <td><a href="http://youtu.be/OOLhjHnQ9ss">V8</a></td>
+ <td><a href="http://www.cs.dartmouth.edu/~ac/Teach/CS85-Fall09/Notes/lecnotes.pdf">Chapter 1</a> | <a href="http://blogs.law.harvard.edu/pamphlet/2011/09/23/tales-of-peer-review-episode-1-boyer-and-moores-mjrty-algorithm/">MJRTY</a> + <a href="http://www.cs.dartmouth.edu/~ac/Teach/CS85-Fall09/Notes/lecnotes.pdf">Chapter 3</a> | <a href="https://sites.google.com/site/countminsketch/">Count-Min</a>
+</td>
+ <td></td>
+</tr>
+<tr>
+ <td>Fri  9.27</td>
+ <td><a href="http://www.cs.utah.edu/~jeffp/teaching/MCMD/L8.5-stream-count-min.pdf">Streaming : Count-Sketch</a></td>
+ <td><a href="https://www.youtube.com/watch?v=J5rh_HmpzXk">V9</a><a href="https://www.youtube.com/watch?v=ojlDnINF-aQ">+</a> <a href="https://www.youtube.com/watch?v=NgM8pYAZEmQ">*</a></td>
+ <td><a href="http://www.cs.dartmouth.edu/~ac/Teach/CS85-Fall09/Notes/lecnotes.pdf">Chapter 3</a> | <a href="https://sites.google.com/site/countminsketch/">Count-Min</a></td>
+ <td></td>
+</tr>
+<tr>
+ <td>Wed 10.02</td>
+ <td>Streaming :  Sliding Windows + <a href="http://www.cs.utah.edu/~jeffp/teaching/MCMD/L9-stream-count.pdf">Distinct Elements</a> (<a href="http://www.cs.utah.edu/~jeffp/teaching/MCMD/S10.2-distinct.pdf">notes</a>) + <a href="http://www.cs.utah.edu/~jeffp/teaching/MCMD/L9.5-stream-apxRank.pdf">Rank</a></td>
+ <td><a href="https://www.youtube.com/watch?v=JQE2PHG6cr8">*</a></td>
+ <td><a href="http://research.microsoft.com/pubs/77611/quantiles.pdf">Sliding Windows</a> + <a href="http://www.cs.dartmouth.edu/~ac/Teach/CS85-Fall09/Notes/lecnotes.pdf">Chapter 2</a> + <a href="http://www.cs.dartmouth.edu/~ac/Teach/CS85-Fall09/Notes/lecnotes.pdf">Chapter 8</a></td>
+ <td></td>
+</tr>
+<tr>
+ <td>Fri 10.04</td>
+ <td><a href="http://www.cs.utah.edu/~jeffp/teaching/MCMD/parallel-intro.pdf">Parallel : Overview and History of Model</a></td>
+ <td><a href="https://www.youtube.com/watch?v=SK-GK7DQmYY">V11</a></td>
+ <td><a href="http://www.umiacs.umd.edu/~vishkin/PUBLICATIONS/classnotes.pdf"> Vishkin on PRAM</a> | <a href="http://www.podre.com.br/trabalhos/GraduacaoComputacaoUnisinos/2006-1/PPD/artigos/pdf/SkillHillMcColl_QA.pdf">on BSP</a></td>
+ <td></td>
+</tr>
+<tr>
+ <td>Wed 10.09</td>
+ <td>Parallel : <a href="http://www.cs.utah.edu/~jeffp/teaching/MCMD/L12-parallel-(prefix)Sum.pdf">Prefix Sum and Scanning</a></td>
+ <td><a href="https://www.youtube.com/watch?v=nwnGXS5lwuo">V12</a></td>
+ <td><a href="http://www.umiacs.umd.edu/~vishkin/PUBLICATIONS/classnotes.pdf"> Vishkin Chap 3</a></td>
+ <td></td>
+</tr>
+<tr>
+ <td>Fri 10.11</td>
+ <td>Parallel : <a href="http://www.cs.utah.edu/~jeffp/teaching/MCMD/L13-parallel-Sorting.pdf">Merging and Sorting</a></td>
+ <td><a href="https://www.youtube.com/watch?v=D6kFX3UDB2M">V13</a></td>
+ <td><a href="http://www.umiacs.umd.edu/~vishkin/PUBLICATIONS/classnotes.pdf"> Vishkin Chap 4</a></td>
+ <td></td>
+</tr>
+<tr>
+ <td>Wed 10.16</td>
+ <td align="center"><font size="2">(Fall Break - No Class)</font></td>
+ <td></td>
+ <td></td>
+ <td></td>
+</tr>
+<tr>
+ <td>Fri 10.18</td>
+ <td align="center"><font size="2">(Fall Break - No Class)</font></td>
+ <td></td>
+ <td></td>
+ <td></td>
+</tr>
+<tr>
+ <td>Wed 10.23</td>
+ <td>Parallel : <a href="http://www.cs.utah.edu/~jeffp/teaching/MCMD/L14-parallel-Selection.pdf">Selection</a> (<a href="http://www.cs.utah.edu/~jeffp/teaching/MCMD/S14-Parallel-Selection.pdf">notes</a>)</td>
+ <td><a href="http://youtu.be/pHA7N3uwdIo">V14</a></td>
+ <td><a href="http://www.umiacs.umd.edu/~vishkin/PUBLICATIONS/classnotes.pdf"> Vishkin Chap 5</a></td>
+  <td>Intermediate <a href="http://www.cs.utah.edu/~jeffp/teaching/MCMD/project.pdf">Project</a> Report</td>
+</tr>
+<tr>
+ <td>Fri 10.25</td>
+ <td>MapReduce : <a href="http://www.cs.utah.edu/~jeffp/teaching/MCMD/MR-intro.pdf">Overview and History of Model</a> (<a href="http://www.cs.utah.edu/~jeffp/teaching/cs5955/L23-MapReduce.pdf">notes</a>)</td>
+ <td><a href="http://youtu.be/_toBCEq4WM0">V15</a></td>
+ <td><a href="http://www.stanford.edu/class/cs246/cs246-11-mmds/slides/01-mapreduce.pdf">Slides by Leskovec</a> | <a href="http://www.wired.com/wiredenterprise/2011/10/how-yahoo-spawned-hadoop/">Wired Article</a></td>
+ <td></td>
+</tr>
+<tr>
+ <td>Wed 10.30</td>
+ <td align="center"><font size="2">(travelling - No Class)</font></td>
+ <td></td>
+ <td></td>
+ <td></td>
+</tr>
+<tr>
+ <td>Fri 11.01</td>
+ <td align="center"><font size="2">(travelling - No Class)</font></td>
+ <td></td>
+ <td></td>
+ <td></td>
+</tr>
+<tr>
+ <td>Wed 11.06</td>
+ <td>MapReduce : <a href="http://www.cs.utah.edu/~jeffp/teaching/MCMD/L16-MR-triangle-count.pdf">Counting Triangles</a> (<a href="http://www.cs.utah.edu/~jeffp/teaching/MCMD/S16-MR-triangles.pdf">notes</a>)</td>
+ <td><a href="http://youtu.be/Ce8rA8C_WuY">V16</a></td>
+ <td><a href="http://theory.stanford.edu/~sergei/papers/www11-triangles.pdf">SV paper</a> | <a href="http://theory.stanford.edu/~sergei/slides/www11-triangles-slides.pdf">SV Slides</a></td>
+ <td></td>
+</tr>
+<tr>
+ <td>Fri 11.08</td>
+ <td>MapReduce : <a href="http://www.cs.utah.edu/~jeffp/teaching/MCMD/L17-MR-simulate.pdf">Formalizing the Model</a></td>
+ <td><a href="https://www.youtube.com/watch?v=49moSLw3Zyg">V17</a></td>
+ <td><a href="http://arxiv.org/abs/1101.1902">Goodrich model</a> | <a href="http://theory.stanford.edu/~sergei/papers/soda10-mrc.pdf">MRC model</a> | <a href="http://arxiv.org/abs/cs.CC/0611108">MUD model</a> | <a href="http://www.cse.cuhk.edu.hk/~taoyf/paper/sigmod13-mr.pdf">Minimal</a></td>
+ <td></td>
+</tr>
+<tr>
+ <td>Wed 11.13</td>
+ <td>MapReduce : <a href="http://www.cs.utah.edu/~jeffp/teaching/MCMD/L18-MR-filtering.pdf">Filtering</a> + Dremel</td>
+ <td><a href="http://youtu.be/Mr-rojl88i0">V18</a></td>
+ <td><a href="http://theory.stanford.edu/~sergei/papers/spaa11-matchings.pdf">Filtering paper</a></td>
+ <td></td>
+</tr>
+<tr>
+ <td>Fri 11.15</td>
+ <td>MapReduce : <a href="http://www.cs.utah.edu/~jeffp/teaching/MCMD/L19-MR-sort+slide.pdf">Minimal MapReduce Algorithms</a></td>
+ <td><a href="http://youtu.be/F2HFs4m_I3U">V19</a></td>
+ <td><a href="http://www.cse.cuhk.edu.hk/~taoyf/paper/sigmod13-mr.pdf">Tao + Lin + Xiao</a></td>
+ <td></td>
+</tr>
+<tr>
+ <td>Wed 11.20</td>
+ <td>GPU : <a href="http://www.cs.utah.edu/~jeffp/teaching/MCMD/GPU-intro.pdf">Overview and History of Model</a> (<a href="http://www.cs.utah.edu/~jeffp/teaching/MCMD/S20-GPU.pdf">notes</a>) + <a href="http://www.cs.utah.edu/~jeffp/teaching/MCMD/L20+-GPU-Sorting.pdf">Bitonic Sort</a></td>
+ <td><a href="http://youtu.be/r99w6m0SBGU">V20</a></td>
+ <td><a href="http://www.cs.caltech.edu/courses/cs101gpu/lectures/lec2_history.pdf">Desbrun: Histroy of GPU</a> | <a href="http://supercomputingblog.com/cuda-tutorials/">CUDA tutorial</a> | <a href="http://vis.cs.ucdavis.edu/Ultravis/papers/17_SurveyofGeneralPurposeComp.pdf">GPGPU Survey</a></td>
+ <td></td>
+</tr>
+<tr>
+ <td>Fri 11.22</td>
+ <td>GPU : <a href="http://www.cs.utah.edu/~jeffp/teaching/MCMD/L21-GPU-Algo.pdf">Memory Bank Algorithms</a></td>
+ <td><a href="http://www.cs.utah.edu/~jeffp/teaching/MCMD.html">V</a></td>
+ <td><a href="http://arxiv.org/pdf/1306.5076v1.pdf">Sitchinava+Weichert</a> | <a href="http://www.cis.upenn.edu/~suvenkat/700/lectures/19/sorting-kider.pdf">Kider on sorting</a> | <a href="http://www.cse.chalmers.se/~uffe/hybridsortElsevier.pdf">Hybrid sort</a></td>
+ <td></td>
+</tr>
+<!--
+<tr>
+ <td>Fri 11.22</td>
+ <td>GPU : <a href="cs7960/L23-GPU-bridge.pdf">Multi-BSP for GPUs</a></td>
+ <td><a href="">V</a></td>
+ <td><a href="http://people.seas.harvard.edu/~valiant/bridging-2010.pdf">Multi-BSP</a></td>
+ <td></td>
+</tr>
+-->
+<tr>
+ <td>Wed 11.27</td>
+ <td align="center"><font size="2">(Thanksgiving - No Class)</font></td> <td><a href="http://www.cs.utah.edu/~jeffp/teaching/MCMD.html">V</a></td>
+ <td>Distributed Computing : <a href="http://www.cs.utah.edu/~jeffp/teaching/cs7960/distrib-intro.pdf">Overview and History of Model</a></td>
+ <td></td>
+</tr>
+<tr>
+ <td>Fri 11.29</td>
+ <td align="center"><font size="2">(Thanksgiving - No Class)</font></td>
+ <td></td>
+ <td></td>
+ <td></td>
+</tr>
+<tr>
+ <td>Wed 12.04</td>
+ <td>Distributed Computing : <a href="http://www.cs.utah.edu/~jeffp/teaching/MCMD/L22-distrib-DHT.pdf">Peer-to-Peer Networks</a></td>
+ <td><a href="http://youtu.be/bLwzBk08Vjs">V22</a></td>
+ <td><a href="http://www.freepastry.org/">PASTRY</a> | <a href="http://pdos.csail.mit.edu/chord/">CHORD</a> | <a href="http://en.wikipedia.org/wiki/Distributed_hash_table">Wikipedia</a></td>
+ <td></td>
+</tr>
+<tr>
+ <td>Fri 12.06</td>
+ <td>Distributed Computing : <a href="http://www.cs.utah.edu/~jeffp/teaching/cs7960/L26-distrib-mergeable.pdf">Distributed Streaming</a></td>
+ <td><a href="http://youtu.be/uJ-Tcv9yFdM">V23</a></td>
+ <td><a href="http://www.cs.utah.edu/~jeffp/papers/merge-summ-TODS.pdf">Mergeable Summaries paper</a> | <a href="http://dimacs.rutgers.edu/~graham/pubs/papers/cdsurvey.pdf">distrib monitoring</a></td>
+ <td></td>
+</tr>
+<tr>
+ <td>Wed 12.11</td>
+ <td><a href="http://www.cs.utah.edu/~jeffp/teaching/MCMD/project.pdf">Project</a> Presentations</td>
+ <td></td>
+ <td></td>
+ <td></td>
+</tr>
+<tr>
+ <td>Fri 12.13</td>
+ <td><a href="http://www.cs.utah.edu/~jeffp/teaching/MCMD/project.pdf">Project</a> Presentations</td>
+ <td></td>
+ <td></td>
+ <td></td>
+</tr>
+</tbody></table>
+<hr>
+
+<br><hr>
+<b>1 credit or 3 credit:</b>
+
+<br>The class can be taken for 1 credit or 3 credits.  
+<br>If you take the class as 1 credit, then I expect you to attend all (or almost all) of the lectures.  If I feel attendence is lagging, I may give pop quizes.  Alternatively, I may require that 1 credit students either present a lecture or scribe lecture notes.  
+<br><br>
+If you take the class for 3 credits, you must also do a <a href="http://www.cs.utah.edu/~jeffp/teaching/MCMD/project.pdf">project</a>.  The project will be quite independent, but I will try to provide feedback when asked for.  It will also require a short presentation at the end of the semester.  
+<br>
+To take the class for 3 credits, the project <b>must be approved by the instructor</b>!  
+
+
+<br><hr>
+<b>Grading:</b>
+
+<br>As this will be taught as an advanced seminar, grading will be fairly forgiving.  Those making an effort to do well, will recieve high marks.   
+
+<br>
+<br>Students will be required to video tape and scribe approximately one lecture.  Examples of <a href="http://www.cs.utah.edu/~jeffp/teaching/MCMD/example-notes/example.tex">latex</a> of how scribing <a href="http://www.cs.utah.edu/~jeffp/teaching/MCMD/example-notes/example.pdf">notes can look</a> are lined, <a href="http://www.cs.utah.edu/~jeffp/teaching/MCMD/example-notes/classMCMD13.sty">with needed style file</a>.
+<br>
+<br> <a href="http://www.cs.utah.edu/~jeffp/teaching/MCMD/scribe.txt">Scribe Assignments</a> and <a href="http://www.cs.utah.edu/~jeffp/teaching/MCMD/video.txt">Video Assignments</a>.
+
+<br><hr>
+<b>Project:</b>
+<br>(Only required for 3-credit students.)
+A major component of this class will be a project where you will investigate in-depth a focused topic in a particular model or the relation between several models.  <a href="http://www.cs.utah.edu/~jeffp/teaching/MCMD/project.pdf">Details</a>.
+
+
+<br><hr>
+<b>FAQ:</b>
+
+<br><b>Q</b>: Will there be a book?
+<br><b>A</b>: No.  Most information is available online and I will post links on the (under-construction) webpage.  
+
+
+<br>
+<br><b>Q</b>: I took undergraduate algorithms, but not graduate algorithms.  Will I be lost in the analysis?
+<br><b>A</b>: My intention is "no."  I expect you to understand big-O notation and how to analyze basic algorithms in it.  But this class will not be as intense or extensive in its analysis as CS 6150 (Advanced Algorithms).  We will apply big-O analysis to analyze aspects other than just run-time, and the goal of this course will be to teach you how and when to do that.  
+
+
+
+
+
+
+</font></font></body></html>

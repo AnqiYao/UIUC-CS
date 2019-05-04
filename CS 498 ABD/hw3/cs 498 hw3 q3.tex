@@ -1,0 +1,98 @@
+% ---------
+%  Compile with "pdflatex hw0".
+% --------
+%!TEX TS-program = pdflatex
+%!TEX encoding = UTF-8 Unicode
+
+\documentclass[11pt]{article}
+\usepackage{jeffe,handout,graphicx}
+\usepackage[utf8]{inputenc}		% Allow some non-ASCII Unicode in source
+
+%  Redefine suits
+\usepackage{pifont}
+\def\Spade{\text{\ding{171}}}
+\def\Heart{\text{\textcolor{Red}{\ding{170}}}}
+\def\Diamond{\text{\textcolor{Red}{\ding{169}}}}
+\def\Club{\text{\ding{168}}}
+
+\def\Cdot{\mathbin{\text{\normalfont \textbullet}}}
+\def\Sym#1{\textbf{\texttt{\color{BrickRed}#1}}}
+
+
+
+% =====================================================
+%   Define common stuff for solution headers
+% =====================================================
+\Class{CS $498$ algorithm}
+\Semester{Spring $2019$}
+\Authors{2}
+%\Section{}
+
+% =====================================================
+\begin{document}
+
+% ---------------------------------------------------------
+
+
+% ---------------------------------------------------------
+% Change authors again
+\AuthorOne{Ray Ying}{xinruiy2@illinois.edu}
+\AuthorTwo{Aditya Pillai}{apillai4@illinois.edu}
+
+\HomeworkHeader{$3$}{$3$}
+
+\begin{quote}
+
+\end{quote}
+\hrule
+
+
+\begin{solution}
+\item
+\begin{enumerate}
+    \item 
+    We are trying to prove that given $u$, $v$ unit vector, $<\Pi u, \Pi v> \in <u, v> \pm\epsilon$. \\
+    
+    $u$ and $v$ satisfied that $\norm{\Pi v}_2 \in (1\pm\epsilon)\norm{v}_2$ and $\norm{\Pi u}_2 \in (1\pm\epsilon)\norm{u}_2$  \\
+    
+    Because $u$ and $v$ are unit vector, $<\Pi u, \Pi u> = \norm{\Pi u}_2^2 \in (1\pm\epsilon)^2\norm{u}_2^2 ,<\Pi v, \Pi v> = \norm{\Pi v}_2^2 \in (1\pm\epsilon)^2\norm{v}_2^2 $, $<\Pi v + \Pi u, \Pi u + \Pi v> = \norm{\Pi u + \Pi v}_2^2 = \norm{\Pi u}_2^2 + \norm{\Pi v}_2^2 + 2 \times <\Pi u,\Pi v>$ \\
+    
+    $<u,v> = (\norm{u+v}_2^2 - \norm{u}_2^2 - \norm{v}_2^2)/2$\\
+    $<\Pi u, \Pi v> = (\norm{\Pi u + \Pi v}_2^2 - \norm{\Pi u}_2^2 - \norm{\Pi v}_2^2)/2 = (\norm{\Pi (u + v)}_2^2 - \norm{\Pi u}_2^2 - \norm{\Pi v}_2^2)/2$\\
+    
+    Therefore, because $<u,v>$ is at most $1$, $<\Pi u, \Pi v> - <u,v> \in 2\epsilon$ \\
+    
+    Then given dimension $O(4\cdot log(1/\delta)/\epsilon^2)$, with possibility $1-\delta$ that dot product preserves $\epsilon$- addictive factor. 
+
+    \item We are trying to show that 
+    
+    $$\arccos\frac{<\Pi u, \Pi v>}{\norm{\Pi u}_2\norm{\Pi v}_2} \in \arccos\frac{<u, v>}{\norm{u}_2\norm{v}_2} \pm\epsilon$$
+
+    By Taylor expansion for $\arccos$, we have 
+    
+    $$ \arccos {x} = \frac{2}{\pi} -  \sum_{n=0}^{\infty}\frac{(2n)!}{4^n(n!)^2(2n+1)}x^{2n+1} $$
+    
+    By part $1$, $\Pi$ preserves the dot product between $u$ and $v$ with $\epsilon$-additive factor if $u$ and $v$ are unit vector.\\
+    
+    Assuming $u$ and $v$ are unit vectors, $<\Pi u, \Pi v> \in <u,v> \pm\epsilon, \norm{\Pi u}_2 \in (1\pm\epsilon)\norm{u}_2 = \norm{u}_2 \pm \epsilon, \norm{\Pi v}_2 \in (1\pm\epsilon)\norm{v}_2 = \norm{v}_2 \pm \epsilon$\\
+    
+    $\frac{<u, v>}{\norm{u}_2\norm{v}_2} = <u,v> = Y \\
+    \frac{<\Pi u, \Pi v>}{\norm{\Pi u}_2\norm{\Pi v}_2} \in \frac{<u, v>\pm\epsilon}{\norm{u}_2\norm{v}_2 \pm \epsilon(\norm{v}_2+\norm{u}_2)+\epsilon^2} = \frac{<u, v>\pm\epsilon}{1 \pm 2\epsilon + \epsilon^2} = \frac{<u,v> \pm \epsilon}{(1\pm\epsilon)^2} = \frac{Y\pm\epsilon}{(1\pm\epsilon)^2}$\\
+    
+    Therefore, the angle for $<u,v>$ would be $(\arccos{Y})$ and angle for $<\Pi u, \Pi v>$ would be $(\arccos{\frac{Y\pm\epsilon}{(1\pm\epsilon)^2}})$\\
+    
+    $\arccos{\frac{Y\pm\epsilon}{(1\pm\epsilon)^2}} - \arccos{Y} = \sum_{n=0}^{\infty}\frac{(2n)!}{4^n(n!)^2(2n+1)}((\frac{Y}{(1\pm\epsilon)^2}\pm \frac{\epsilon}{(1\pm\epsilon)^2})^{2n+1} - (Y)^{2n+1})$ \\
+    
+    (As $n$ becomes bigger, $((\frac{Y}{(1\pm\epsilon)^2}\pm \frac{\epsilon}{(1\pm\epsilon)^2})^{2n+1} - (Y)^{2n+1})^\frac{1}{2n+1}$ becomes smaller)\\
+    
+    Taking $n = 0$\\
+    $ \arccos{\frac{Y\pm\epsilon}{(1\pm\epsilon)^2}} - \arccos{Y} < \arcsin {((\frac{Y}{(1\pm\epsilon)^2}\pm \frac{\epsilon}{(1\pm\epsilon)^2}) - (Y))} = \arcsin(Y\frac{1 - (1\pm\epsilon)^2 \pm \epsilon}{(1\pm\epsilon)^2}) \approx \frac{\epsilon}{1}$ (slightly greater for slightly increase dimensions)\\ 
+    
+    As $\theta$ approaches $0$, $\arcsin{\theta} \approx \theta$. Therefore, we proved that the difference between angle for unit vectors preserved $\epsilon$-additive factor by showing 
+    $$ \arccos{\frac{Y\pm\epsilon}{(1\pm\epsilon)^2}} - \arccos{Y} < \epsilon \implies \arccos\frac{<\Pi u, \Pi v>}{\norm{\Pi u}_2\norm{\Pi v}_2} \in \arccos\frac{<u, v>}{\norm{u}_2\norm{v}_2} \pm\epsilon$$
+
+    Since change the length of $u$ and $v$ won't change the angle between them, therefore, by proving the unit vectors preserve angle, without lose of generosity, we can say $\Pi$ will preserve angle with $\epsilon$-additive factor between any vector $u$ and $v$.    
+\end{enumerate}
+
+\end{solution}
+\end{document}

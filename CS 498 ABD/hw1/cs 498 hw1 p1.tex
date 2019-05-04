@@ -1,0 +1,109 @@
+% ---------
+%  Compile with "pdflatex hw0".
+% --------
+%!TEX TS-program = pdflatex
+%!TEX encoding = UTF-8 Unicode
+
+\documentclass[11pt]{article}
+\usepackage{jeffe,handout,graphicx}
+\usepackage[utf8]{inputenc}		% Allow some non-ASCII Unicode in source
+
+%  Redefine suits
+\usepackage{pifont}
+\def\Spade{\text{\ding{171}}}
+\def\Heart{\text{\textcolor{Red}{\ding{170}}}}
+\def\Diamond{\text{\textcolor{Red}{\ding{169}}}}
+\def\Club{\text{\ding{168}}}
+
+\def\Cdot{\mathbin{\text{\normalfont \textbullet}}}
+\def\Sym#1{\textbf{\texttt{\color{BrickRed}#1}}}
+
+
+
+% =====================================================
+%   Define common stuff for solution headers
+% =====================================================
+\Class{CS $498$ algorithm}
+\Semester{Spring $2019$}
+\Authors{2}
+%\Section{}
+
+% =====================================================
+\begin{document}
+
+% ---------------------------------------------------------
+
+
+% ---------------------------------------------------------
+% Change authors again
+\AuthorOne{Ray Ying}{xinruiy2@illinois.edu}
+\AuthorTwo{Aditya Pillai}{apillai4@illinois.edu}
+
+\HomeworkHeader{$1$}{$1$}
+
+\begin{quote}
+
+\end{quote}
+\hrule
+
+
+\begin{solution}
+\item
+\begin{enumerate}
+    \item   We know from the last two sentences that $X$ is the random Variable donating the output value and $\alpha$ is the true average. By Chebyshev's Inequality, 
+    $$Pr[|X-\alpha| \geq \epsilon] \leq \frac{Var(X)}{\epsilon ^2} $$
+    However, we want to show that 
+    $$Pr[|X-\alpha| \geq \epsilon] \leq \delta $$
+    Therefore, we only need to show that 
+    $$\frac{Var(X)}{\epsilon ^2} \leq \delta $$
+    $\delta$ cannot be $0$ since $\delta$ can be denominator, we can transform the above inequality to 
+    $$\frac{Var(X)}{\delta \epsilon ^2} \leq 1$$
+    As we are given that 
+    $$\frac{(b-a)^2}{\delta \epsilon ^2} \leq k$$
+    We want to prove that $\frac{(b-a)^2}{k}\geq Var(X)$, as $X$ is the mean of the all $X_i$ where $X_i$ are the height of people in the $k$ sample, $X = \sum_i\frac {X_i}{k}$.
+    \newline
+    \newline
+    Based on the definition of $Var(X)$, since $X_i$ and $X_j$ where $i \neq j$, they are independent Variables, then $Var(X) = \sum Var(X_i/k)$.
+    \newline
+    \newline
+    We can prove that $Var(X_i) \leq (b-a)^2/4$.
+    Since $X_i \leq b$, $X_i \leq b$ $\sum_i b \cdot X_i \geq \sum_i X_i^2$. So $Var(X_i) = E(X_i^2) - E(X_i)^2 \leq E(b \cdot X_i) - E(X_i)^2 = b\cdot E(X_i) - E(X_i)^2 = E(X_i)(b - E(X_i))$. Since $b-a \geq b-E(X_i)$, $Var(X_i) \leq E(X_i)(b - E(X_i)) \leq  (b-a)^2/4.$
+    \newline
+
+    Therefore, $Var(X_i/k) \leq \frac{((b-a)/k)^2}{4}$ as $x_i/k \in [a/k,a/k]$, therefore, $Var(X) \leq k \cdot \frac{((b-a)/k)^2}{4}$ \implies$Var(X) \leq \frac{(b-a)^2}{4k}$ \implies
+    \newline
+    $k \cdot Var(X) = (b-a)^2/4$
+    \newline
+    \newline
+    Hence, we have $(b-a)^2 \geq k \cdot Var(X) \implies \frac{Var(X)}{\delta \epsilon ^2} \leq 1 \implies Pr[|X-\alpha| \geq \epsilon] \leq \delta$.
+    \newpage
+    \item   For Chernoff's inequality, we have the general form:
+    $$Pr[|X - \alpha| \geq \epsilon] \leq 2 \cdot e^{(\frac {-\epsilon ^2}{2k})} $$ 
+    However, for Chernoff's inequality, we need to normalize each $X$ to the range $[-1,1]$. Also, $X$ should be the total sum, therefore, $X = kX$, $\alpha = k\alpha$ and $\epsilon = k\epsilon$. We have to normalize it to satisfy the precondition, we want to assume that $X$ and $\alpha$ is in the range of $[-1,1]$, then $X$ would be some constant $z+2/(b-a)$ and $\alpha$ would be $z+ 2/(b-a)$, however, as we are taking the absolute value of the difference, the constant doesn't matter. So our Chernoff's inequality will be:
+    $$ Pr[|k \frac{2}{(b-a)} \cdot X - k \frac{2}{(b-a)}\codt \alpha| \geq \frac{2}{(b-a)}k\epsilon] \leq 2 \cdot e^{(\frac {-(\frac{2}{(b-a)}k\epsilon)^2}{2k})} $$
+    
+    We will perform transformation on the left side, the whole inequation will become 
+    $$ Pr[| X - \alpha|\geq \epsilon] \leq  2 \cdot e^{(\frac {-(\frac{2}{(b-a)}k\epsilon)^2}{2k})} $$
+    
+
+    Therefore, all we need to show is 
+    $$ \delta \geq 2 \cdot e^{(\frac {-2k\epsilon^2}{(b-a)^2})} $$
+
+    
+    From the given condition of $k \geq \frac {c(b-a)^2log(2/\delta)}{\epsilon ^2}$, we can do some transformations on the inequality. $k \geq \frac {c(b-a)^2log(2/\delta)}{\epsilon ^2}$ \implies $ (k \cdot \epsilon ^2) /( c\cdot(b-a)^2) \geq log(2/\delta) \implies e^{(k \cdot \epsilon ^2) /( c\cdot(b-a)^2)} \geq 2/\delta \implies \delta \geq 2/e^{(k \cdot \epsilon ^2) /( c\cdot(b-a)^2)}$.
+    \newline
+    \newline
+    In order to prove that $ \delta \geq 2 \cdot e^{(\frac {-2k\epsilon^2}{(b-a)^2})} $, we can prove that $ 2/e^{(k \cdot \epsilon ^2) /( c\cdot(b-a)^2)} \geq 2 \cdot e^{(\frac {-2k\epsilon^2}{(b-a)^2})} \implies 1 \geq e^{(k \cdot \epsilon ^2) /( c\cdot(b-a)^2)} \cdot e^{(\frac {-2k\epsilon^2}{(b-a)^2})}  \implies e^{(k \cdot \epsilon^2) /( c\cdot(b-a)^2) +(\frac {-2k\epsilon^2}{(b-a)^2})} \leq 1$.
+    \newline
+    \newline
+    To prove that $ e^{(k \cdot \epsilon^2) /( c\cdot(b-a)^2) + (\frac {-2k\epsilon^2}{(b-a)^2})} \leq 1$, we need to prove that $ (k \cdot \epsilon^2) /( c\cdot(b-a)^2) - (\frac {2k\epsilon^2}{(b-a)^2}) \leq 0 \implies (\frac {2k\epsilon^2}{(b-a)^2}) \geq (k \cdot \epsilon^2) /( c\cdot(b-a)^2) \implies c \geq \frac {1}{2}$. Therefore, $c \geq \frac{1}{2}$, $\delta \geq 2/e^{(k \cdot \epsilon^2) /( c\cdot(b-a)^2)} \geq 2 \cdot e^{(\frac {-2k\epsilon^2}{(b-a)^2})}$. 
+    \newline
+    Hence, we showed that there exist a constant $c = \frac{1}{2} > 0$ that
+    $$Pr[|X-\alpha| \geq \epsilon] \leq \delta $$
+    
+    
+    
+\end{enumerate}
+
+\end{solution}
+\end{document}

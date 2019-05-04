@@ -1,0 +1,160 @@
+\def\solutionMode{TRUE}%
+
+\documentclass[11pt]{article}%
+\usepackage{solutions}%
+\usepackage{374}%
+\usepackage{374_extra}% 
+\newcommand{\norm}[1]{\left\lVert#1\right\rVert}
+
+\begin{document}
+
+\noindent\textbf{\LARGE HW{3} Solution}\\
+\noindent{\textbf{\Course: \CourseName, \Semester}}
+\hfill\Version{1.0}%
+\\[-0.12cm]
+%
+\Hr%
+\smallskip%
+
+\noindent%
+Submitted by:
+\begin{compactitem}
+    \item \textbf{$\ll$Ray Ying$\gg$}:
+    \textbf{$\ll$xinruiy2$\gg$}
+    \item \textbf{$\ll$Aditya Pillai$\gg$}:
+    \textbf{$\ll$apillai4$\gg$}
+\end{compactitem}
+\Hr
+\medskip
+\SaveIndent%
+
+\begin{questions}[1]
+    \item \begin{enumerate}
+    \item   
+    \begin{enumerate}
+        \item  $\sum_i f_i - k \cdot \sum_j f_j \leq m'$, $m = \sum_i f_i + \sum_j f_j$.  $\forall {f_i > \frac{m}{k}}, \forall {f_j \leq \frac{m}{k}}$\\
+        We know that the difference between any two $f_i$ and $\hat{f_i}$ will be get most the total number of item with $f_j \leq \frac{m}{k}$, which is $\sum_j f_j$ \\
+        \begin{align*}
+            f_i - \hat {f_i}
+            &\leq \sum_j f_j\\
+            (k + 1) (f_i - \hat {f_i})
+            &\leq (k+1) \sum_j f_j \\
+            (k + 1) (f_i - \hat {f_i}) &\leq m - m' \\
+            f_i - \hat {f_i} &\leq \frac{m - m'}{k+1} \\
+            f_i - \frac{m - m'}{k+1}  &\leq \hat {f_i}
+        \end{align*}    
+        We already have $\hat{f_i} \leq f_i$, then $f_i - \frac{m - m'}{k+1} \leq \hat {f_i} \leq f_i$
+        \item  Based on the algorithm, we are choosing the highest $k$ counters left after combining and minus the number from the $k+1$ counter. We want to show that it is the good high frequency summary for $\sigma_1 \cdot \sigma_2$ satisfying part $1$.\\
+        
+        Proof: Let $f_i$ for $\sigma_1$ and $f_i'$ for $\sigma_2$(They represent same word), $f_i - \frac{m - m'}{k+1} \leq \hat {f_i} \leq f_i$ and $f_i' - \frac{m_1 - m_1'}{k+1} \leq \hat {f_i'} \leq f_i'$, then $f_i - \frac{m - m'}{k+1} + f_i' - \frac{m_1 - m_1'}{k+1} \leq \hat {f_i} + \hat {f_i'} \leq f_i + f_i'$(from part $1$)\\
+        
+        Let $f_j = f_i + f_i'$, the true frequency in $\sigma_1 \cdot \sigma_2$\\
+        
+        Let $\hat{f_j}$ be the estimate frequency of $\sigma_1 \cdot \sigma_2$, $\hat{f_j} = \hat{f_i} + \hat{f_i'} - c$. (let c be the $k+1$ counter size)\\
+        
+        Let $m_j$ be the total number of item in $\sigma_1 \cdot \sigma_2$ and $\hat{m_j}$ be the estimate, $m_j = m + m_1$, $m_j' \geq m' + m_1' - c \cdot (k + 1)$ (We ignore the non-positive part, we minus $c$ to at least $k+1$ counters)\\
+        
+        $(f_j - \hat{f_j}) \leq f_i + f_i' - (\hat{f_i} + \hat{f_i'}) + c \leq c + \frac{m - m'}{k+1} + \frac{m_1 - m_1'}{k+1} = c + \frac{m - m' + m_1 - m_1'}{k + 1} \leq c + \frac{m_j - m_j' - c \cdot (k+1)}{k+1} = \frac{m_j - m_j'}{k + 1} \implies f_j - \frac{m_j - m_j'}{k + 1} \leq \hat{f_j}\leq f_j$\\
+    \end{enumerate}
+    \newpage
+    \item Follow the same analysis in the lecture slides, let $z_l = g_l(i)C[l,h_l(i)]$. $\mathbb{E}(z_l) = x_i$ and $Var(z_l) =  (\norm{x}^2_2 - x_i^2)/ \omega = \epsilon^2(\norm{x}^2_2 - x_i^2)/6$.\\
+
+    Analysing the largest $l$ coordinate, let $A_l$ be the event that at least $1$ of the $l$ largest coordinate collides with $h_l(i)$, by linearity of expectation, $\mathbb{E}(A_l) = \frac{l}{\omega} = \frac{1}{6}$. By Markov, $Pr[A_l \geq 1] \leq \frac{1}{6}$\\
+    
+    The probability that too many small coordinates collides with $h_l(i)$ so that $|z_l - x_i| \geq \epsilon\norm{y_i}_2$. The small coordinates correspond to the non-zero coordinates in $y_i$. Let $z_l'$ be the contribution to $z_l$ from coordinates of $y_i$. $\mathbb{E}(z_l') = 0$, $Var(z_l') \leq \mathbb{E}(z_l'^2) = \norm{y_i}^2_2/\omega = \epsilon^2(\norm{y_i}^2_2)/6$. Since they are pairwise independent, by Chebyshev's inequality, $Pr[|z_l'| \geq \epsilon\norm{y_i}^2_2] \leq \frac{1}{6}. $ \\
+    
+    To have $|z_l - x_i| \geq \epsilon\norm{y_i}_2$, either any big coordinates collides with $h_l(i)$ or too many small coordinates collides with $h_l(i)$. By union bound, we have $Pr[|z_l - x_i| \geq \epsilon\norm{y_i}_2] \leq Pr[A \geq 1] + Pr[|y_i| \geq \epsilon\norm{y_i}^2_2] \leq \frac{1}{3}$\\
+    
+    By Chernoff bound, if the median is bad, then at least half of $z_l$ are bad. With $d = O(log$ $n)$, expected at most $\frac{1}{3}\cdot d$ is bad. Let $k$ be the count of good $z_l$, $\mathbb{E}(k) = \frac{2}{3} \cdot d$. If half of $z_l$ are bad, $k \leq \frac{d}{2}$
+    
+    $$ Pr[k \leq (1 - \delta)\mu] \leq e^{\frac{-(1/6)^2(\frac{2d}{3})}{2}} = \frac{1}{e^{d/108}} = e^{-cd} \leq \alpha$$
+    
+    We choose $\alpha = (log$ $n)$, by union bound, we can guarantee with probability at least (1 - 1/poly(n)) that $|\tilde{x_i} - x_i| \leq \epsilon\norm{y_i}_2$ for $i \in [n]$.
+    \newpage
+    \item 
+        \begin{enumerate}
+            \item 
+                We are trying to prove that given $u$, $v$ unit vector, $<\Pi u, \Pi v> \in <u, v> \pm\epsilon$. \\
+                
+                $u$ and $v$ satisfied that $\norm{\Pi v}_2 \in (1\pm\epsilon)\norm{v}_2$ and $\norm{\Pi u}_2 \in (1\pm\epsilon)\norm{u}_2$  \\
+                
+                Because $u$ and $v$ are unit vector, $<\Pi u, \Pi u> = \norm{\Pi u}_2^2 \in (1\pm\epsilon)^2\norm{u}_2^2 ,<\Pi v, \Pi v> = \norm{\Pi v}_2^2 \in (1\pm\epsilon)^2\norm{v}_2^2 $, $<\Pi v + \Pi u, \Pi u + \Pi v> = \norm{\Pi u + \Pi v}_2^2 = \norm{\Pi u}_2^2 + \norm{\Pi v}_2^2 + 2 \times <\Pi u,\Pi v>$ \\
+    
+                $<u,v> = (\norm{u+v}_2^2 - \norm{u}_2^2 - \norm{v}_2^2)/2$\\
+                $<\Pi u, \Pi v> = (\norm{\Pi u + \Pi v}_2^2 - \norm{\Pi u}_2^2 - \norm{\Pi v}_2^2)/2 = (\norm{\Pi (u + v)}_2^2 - \norm{\Pi u}_2^2 - \norm{\Pi v}_2^2)/2$\\
+                
+                Therefore, because $<u,v>$ is at most $1$, $<\Pi u, \Pi v> - <u,v> \in 2\epsilon$ \\
+                
+                Then given dimension $O(4\cdot log(1/\delta)/\epsilon^2)$, with possibility $1-\delta$ that dot product preserves $\epsilon$- addictive factor. 
+
+            \item 
+                We are trying to show that 
+            
+                $$\arccos\frac{<\Pi u, \Pi v>}{\norm{\Pi u}_2\norm{\Pi v}_2} \in \arccos\frac{<u, v>}{\norm{u}_2\norm{v}_2} \pm\epsilon$$
+            
+                By Taylor expansion for $\arccos$, we have 
+                
+                $$ \arccos {x} = \frac{2}{\pi} -  \sum_{n=0}^{\infty}\frac{(2n)!}{4^n(n!)^2(2n+1)}x^{2n+1} $$
+                
+                By part $1$, $\Pi$ preserves the dot product between $u$ and $v$ with $\epsilon$-additive factor if $u$ and $v$ are unit vector.\\
+    
+                Assuming $u$ and $v$ are unit vectors, $<\Pi u, \Pi v> \in <u,v> \pm\epsilon, \norm{\Pi u}_2 \in (1\pm\epsilon)\norm{u}_2 = \norm{u}_2 \pm \epsilon, \norm{\Pi v}_2 \in (1\pm\epsilon)\norm{v}_2 = \norm{v}_2 \pm \epsilon$\\
+    
+                $\frac{<u, v>}{\norm{u}_2\norm{v}_2} = <u,v> = Y \\
+                \frac{<\Pi u, \Pi v>}{\norm{\Pi u}_2\norm{\Pi v}_2} \in \frac{<u, v>\pm\epsilon}{\norm{u}_2\norm{v}_2 \pm \epsilon(\norm{v}_2+\norm{u}_2)+\epsilon^2} = \frac{<u, v>\pm\epsilon}{1 \pm 2\epsilon + \epsilon^2} = \frac{<u,v> \pm \epsilon}{(1\pm\epsilon)^2} = \frac{Y\pm\epsilon}{(1\pm\epsilon)^2}$\\
+                
+                Therefore, the angle for $<u,v>$ would be $(\arccos{Y})$ and angle for $<\Pi u, \Pi v>$ would be $(\arccos{\frac{Y\pm\epsilon}{(1\pm\epsilon)^2}})$\\
+                
+                $\arccos{\frac{Y\pm\epsilon}{(1\pm\epsilon)^2}} - \arccos{Y} = \sum_{n=0}^{\infty}\frac{(2n)!}{4^n(n!)^2(2n+1)}((\frac{Y}{(1\pm\epsilon)^2}\pm \frac{\epsilon}{(1\pm\epsilon)^2})^{2n+1} - (Y)^{2n+1})$ \\
+                
+                (As $n$ becomes bigger, $((\frac{Y}{(1\pm\epsilon)^2}\pm \frac{\epsilon}{(1\pm\epsilon)^2})^{2n+1} - (Y)^{2n+1})^\frac{1}{2n+1}$ becomes smaller)\\
+    
+                Taking $n = 0$\\
+                $ \arccos{\frac{Y\pm\epsilon}{(1\pm\epsilon)^2}} - \arccos{Y} < \arcsin {((\frac{Y}{(1\pm\epsilon)^2}\pm \frac{\epsilon}{(1\pm\epsilon)^2}) - (Y))} = \arcsin(Y\frac{1 - (1\pm\epsilon)^2 \pm \epsilon}{(1\pm\epsilon)^2})$ \\
+                
+                As $\theta$ approaches $0$, $\arcsin{\theta} \approx \theta$. $\arcsin(Y\frac{1 - (1\pm\epsilon)^2 \pm \epsilon}{(1\pm\epsilon)^2}) \approx Y\frac{1 - (1\pm\epsilon)^2 \pm \epsilon}{(1\pm\epsilon)^2} \approx \frac{\epsilon}{1}$ (slightly greater than $\epsilon$ for slightly increase dimensions)\\ 
+                
+                Therefore, we proved that the difference between angle for unit vectors preserved $\epsilon$-additive factor by showing 
+                $$ \arccos{\frac{Y\pm\epsilon}{(1\pm\epsilon)^2}} - \arccos{Y} < \epsilon \implies \arccos\frac{<\Pi u, \Pi v>}{\norm{\Pi u}_2\norm{\Pi v}_2} \in \arccos\frac{<u, v>}{\norm{u}_2\norm{v}_2} \pm\epsilon$$
+
+                Since change the length of $u$ and $v$ won't change the angle between them, therefore, by proving the unit vectors preserve angle, without lose of generosity, we can say $\Pi$ will preserve angle with $\epsilon$-additive factor between any vector $u$ and $v$. 
+        \end{enumerate}
+    \newpage
+    \item
+        \begin{enumerate}
+            \item 
+                \begin{enumerate}
+                    \item $ p = (1 - 1/k)^d \leq (1 - (1 + \epsilon)/d)^d \leq 1/e^{1 + \epsilon} = e^{-1-\epsilon} \leq e^{-1}(1+ c \epsilon)$ which holds when $c$ is slightly above 0 for small $\epsilon$
+
+                \item $ p = ((k-1)/k)^d = (1 - 1/(1 + \epsilon)\cdot d)^d = (1 + \frac{-1/(1+\epsilon)}{d})^d = e^{-1/(1+\epsilon)} \geq (1+c\epsilon)e^{-1}$ 
+                \end{enumerate}
+            \item
+                We can choose $\tilde{p_i}$ such that $(1 - c \epsilon)e^{-1}  \leq \tilde{p_i} \leq (1 + c \epsilon)e^{-1}$. This implies that $\tilde{p_i} = p_i$ by part 1 and we get that $d/(1 + \epsilon) \leq k_i \leq (1 + \epsilon) d$. Since $k_i = \lceil (1 + \epsilon)^i \rceil$ we get that $(1 + \epsilon)^{i -1} \leq d \leq (1 + \epsilon)^{i+ 2}$
+            \item We are trying to find the $i$ such that $\tilde{p_i} \in (1 \pm c\epsilon)e^{-1}$, then $k_i$ will be the estimate for $d$.
+    
+            We will calculate the each $\tilde{p_i}$ for $i \leq log(n)$ ($k_i$ is at most $d$ so $(1+\epsilon)^i\leq d$)
+            
+            Then for each $i$, we store each $\tilde{p_i}$, then it will takes $log(n)$ space in total for storing all $\tilde{p_i}$.
+    
+            we are going to calculate a unbiased $\tilde{p_i} \in (1\pm c\epsilon)e^{-1}$ through averaging and median tricks. \\
+            
+            We will use $h = O(\frac{1}{\epsilon^2})$ hash functions to compute $h$ $\tilde{p_i}$ and taking the average of it. This grantees that $Pr[|\tilde{p_i} - p_i|\geq c\epsilon p_i] \leq C$ for some constant $C$. \\
+            
+            By median tricks, we take $O(\frac{1}{\epsilon})$ space to have less than $\frac{1}{poly(n)}$ probability that the median $\tilde{p_i}$ is bad. Then, take the union bound for $\log(n)$ $i$, we can have all $\tilde{p_i} \in (1\pm c\epsilon)e^{-1}$ for all $i$.\\
+            
+            Therefore, in total we need $O(\log(n))\cdot O(\log(n))/(\epsilon^2\cdot\epsilon) = \frac{\log^2(n)}{\epsilon^3}$ space.
+        \end{enumerate}
+    \end{enumerate}
+    \newpage
+    We modify the greedy algorithm for the version without colors. Maintain $k$ counters which represent how many edges of that color have been used. When a edge with color $i$ arrives, ignore the edge if the counter for color $i$ is $b_i$, otherwise add the if adding it maintains the current matching and increment the counter for color $i$. \\
+    This creates a solution which is at least $1/3$ factor of the optimum solution. Consider some edge $e$ in the matching at the end of the algorithm. Then the optimum solution has at most 3 edges for each edge $e$. Two edges come from the endpoints of $e$. There can also be a third edge with the same color as $e$ that does not share any vertices with $e$. There is only one such edge because the only reason such a edge would not be added which does not share endpoints with the edge chosen by the algorithm is the capacity for the color of $e$ was met when this edge arrived.  
+    
+    
+\end{questions}
+
+
+\end{document}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

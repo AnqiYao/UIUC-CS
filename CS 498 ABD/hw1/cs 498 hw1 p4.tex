@@ -1,0 +1,105 @@
+% ---------
+%  Compile with "pdflatex hw0".
+% --------
+%!TEX TS-program = pdflatex
+%!TEX encoding = UTF-8 Unicode
+
+\documentclass[11pt]{article}
+\usepackage{jeffe,handout,graphicx}
+\usepackage[utf8]{inputenc}		% Allow some non-ASCII Unicode in source
+
+%  Redefine suits
+\usepackage{pifont}
+\usepackage{algorithm}
+\usepackage{algorithmic}
+\usepackage{amsmath}
+
+\def\Spade{\text{\ding{171}}}
+\def\Heart{\text{\textcolor{Red}{\ding{170}}}}
+\def\Diamond{\text{\textcolor{Red}{\ding{169}}}}
+\def\Club{\text{\ding{168}}}
+
+\def\Cdot{\mathbin{\text{\normalfont \textbullet}}}
+\def\Sym#1{\textbf{\texttt{\color{BrickRed}#1}}}
+
+% =====================================================
+%   Define common stuff for solution headers
+% =====================================================
+\Class{CS $498$ algorithm}
+\Semester{Spring $2019$}
+\Authors{2}
+%\Section{}
+
+% =====================================================
+\begin{document}
+
+% ---------------------------------------------------------
+
+
+% ---------------------------------------------------------
+% Change authors again
+\AuthorOne{Ray Ying}{xinruiy2@illinois.edu}
+\AuthorTwo{Aditya Pillai}{apillai4@illinois.edu}
+
+\HomeworkHeader{$1$}{$4$}
+
+\begin{quote}
+
+\end{quote}
+\hrule
+\begin{solution}
+    \itemLet $X_i$ be the value of the counter after $i$ events, and $Y_i = (1 + a)^{X_i}$. For $n = 0, 1$ $Y_i = 1, 1 + a$ deterministically. \\
+    $\mathbb{E}(Y_n) = an + 1$ Proof by induction on $n$
+\begin{proof}
+\begin{align*}
+\mathbb{E}(Y_n) &= \mathbb{E}((1+a)^{X_n}) \\
+&= \sum_{j = 0}^{\infty}(1+a)^j \Pr(X_n = j) \\
+&= \sum_{j = 0}^{\infty}(1+a)^j (\Pr(X_{n-1} = j) \cdot (1 - \frac{1}{(1+a)^j}) + \Pr(X_{n-1} = j - 1) \cdot \frac{1}{(1+a)^{j-1}}) \\
+&= \mathbb{E}(Y_{n-1}) + \sum_{j = 0}^{\infty}(1+a)\Pr(X_{n-1} = j - 1) - \Pr(X_{n-1} = j) \\
+&= \mathbb{E}(Y_{n-1}) + a \\
+&= a(n-1) + 1 + a \tag{By induction} \\
+&= an + 1
+\end{align*} \\\end{proof}
+So the estimate for $n$ the algorithm outputs is $\frac{(1 + a)^X - 1}{a}$ \\
+$\mathbb{E}(Y_n^2) = an(a + 2)(a(n-1) + 2)/2 + 1$. $Y_n^2 = 1, (1+a)^2$ determinstically for $n = 0, 1$. 
+\begin{proof}
+\begin{align*}
+\mathbb{E}(Y_n^2) &= \mathbb{E}((1+a)^{2X_n}) \\
+&= \sum_{j \geq 0} (1+a)^{2j}\Pr(X_n = j) \\
+&=  \sum_{j \geq 0}(1+a)^{2j} (\Pr(X_{n-1} = j) \cdot (1 - \frac{1}{(1+a)^j}) + \Pr(X_{n-1} = j - 1) \cdot \frac{1}{(1+a)^{j-1}}) \\
+&= \mathbb{E}(Y_{n-1}^2) + \sum_{j \geq 0}(1+a)^{j+1}\Pr(X_{n-1} = j-1) - (1+a)^j\Pr(X_{n-1} = j) \\
+&= \mathbb{E}(Y_{n-1}^2) + (a^2 + 2a)\mathbb{E}(Y_{n-1}) \\
+&= \mathbb{E}(Y_{n-1}^2) + (a^2 + 2a)(an - a + 1) \\
+&=  an(a + 2)(a(n-1) + 2)/2 + 1  \tag{By induction}
+\end{align*}
+\end{proof}
+$\mathrm{Var}(Y_n) = \frac{a^3n}{2}(n-1)$ and $\mathrm{Var}(\Tilde{n}) =  \frac{an}{2}(n-1)$
+By applying Chebyshev we get \\
+\begin{align*}
+    \Pr(|\Tilde{n} - n| \geq \epsilon n) &\leq \frac{an}{2n^2\epsilon^2}(n-1) \\
+    &\leq \frac{a}{2\epsilon^2}(1 - 1/n) \\
+    &\leq \frac{a}{2\epsilon^2} \\
+    &\leq 1/10 \tag{this is true when $a \leq \epsilon^2/5$}
+\end{align*}
+This implies that for $0 < a \leq \epsilon^2/5$, $\Pr(|\Tilde{n} - n| \leq \epsilon n|) \geq 9/10$ \\
+The number of bits the algorithm uses is $O(\log X)$, where $X$ is the value of the counter after $n$ increments. The previous part shows that $\Tilde{n} \leq n (1+ \epsilon)$ with probability at least $9/10$. \\
+\begin{align*}
+    \frac{(1+a)^X - 1}{a} &\leq (1+\epsilon)n \\
+    X \log(a+1) &\leq \log(an (1+\epsilon) + 1) \\ 
+    X &\leq \frac{\log (an (1+\epsilon) + 1)}{\log (a+1)} \\
+    &= \log_{a+1}(an (1+\epsilon) + 1) \\
+\end{align*}
+Therefore, $S(n) = \log(\log_{a+1}(an (1+\epsilon) + 1))$ with probability at least $9/10$, if $\epsilon \leq 1$ then $O(\log ( \log n))$ bits are used. 
+
+
+
+
+
+
+
+
+
+
+
+\end{solution}
+\end{document}

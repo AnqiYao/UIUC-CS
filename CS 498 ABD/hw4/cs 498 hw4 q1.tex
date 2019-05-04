@@ -1,0 +1,70 @@
+% ---------
+%  Compile with "pdflatex hw0".
+% --------
+%!TEX TS-program = pdflatex
+%!TEX encoding = UTF-8 Unicode
+
+\documentclass[11pt]{article}
+\usepackage{jeffe,handout,graphicx}
+\usepackage[utf8]{inputenc}		% Allow some non-ASCII Unicode in source
+
+%  Redefine suits
+\usepackage{pifont}
+\def\Spade{\text{\ding{171}}}
+\def\Heart{\text{\textcolor{Red}{\ding{170}}}}
+\def\Diamond{\text{\textcolor{Red}{\ding{169}}}}
+\def\Club{\text{\ding{168}}}
+
+\def\Cdot{\mathbin{\text{\normalfont \textbullet}}}
+\def\Sym#1{\textbf{\texttt{\color{BrickRed}#1}}}
+
+
+
+% =====================================================
+%   Define common stuff for solution headers
+% =====================================================
+\Class{CS $498$ algorithm}
+\Semester{Spring $2019$}
+\Authors{2}
+%\Section{}
+
+% =====================================================
+\begin{document}
+
+% ---------------------------------------------------------
+
+
+% ---------------------------------------------------------
+% Change authors again
+\AuthorOne{Ray Ying}{xinruiy2@illinois.edu}
+\AuthorTwo{Aditya Pillai}{apillai4@illinois.edu}
+
+\HomeworkHeader{$4$}{$1$}
+
+\begin{quote}
+
+\end{quote}
+\hrule
+
+
+\begin{solution}
+\item
+
+\begin{enumerate}
+    \item For each column of $\Pi$, there is only one entry has value $\pm 1$. The probability for each entry to be non-zero is the same, $P = \frac{1}{m}$.\\ 
+    $\mathbb{E}[((\Pi x)[j])^2] = \sum_{i = 0}^{n} \frac{1}{m} \cdot (\pm 1)^2 \cdot x[i]^2 $, $j \in {1, ... ,m}$ (columns are independent)\\
+    $\mathbb{E}[\norm{\Pi x}_2^2] = \sum_{j = 0}^{m} \mathbb{E}[((\Pi x)[j])^2] = m \cdot ( \sum_{i = 0}^{n} \frac{1}{m} \cdot (\pm 1)^2 \cdot x[i]^2) = \norm{x}_2^2$ (Linearity of expectation)\\
+    
+    Let $Z = \norm{\Pi x}_2^2$, we proved that $\mathbb{E}[Z] = \norm{x}_2^2$ \\
+    
+    $\mathbb{E}[Z^2] = \sum_{j \neq j' \in [1,..,m]} E[Z_{j'}\cdot Z_j] = \sum_{j \in [1,..,m]} E[Z_j^2] + 2 \cdot \sum_{j<j' \in [1,...,m]}E[z_jz_j']$\\
+    
+      $Var[Z] = \mathbb{E}[Z^2] - \mathbb{E}[Z]^2 = 2 \cdot \sum_{j<j' \in [1,...,m]}E[z_jz_j'] \leq 2 \mathbb{E}[Z]^2$. Because we are doing averaging tricks through the rows as the expectation of each row is the $Z/m$. $Var[Z] \leq \frac{2}{m}\mathbb{E}[Z]^2$, if $m = \frac{6}{\epsilon^2}$, $Var[Z] \leq \frac{\epsilon^2}{3}\mathbb{E}[Z]^2$. \\
+    
+    By Chebyshev's inequality, $Pr[|Z - \mathbb{E}(Z)| \geq \epsilon \norm{x}_2^2] \leq 1/3 \implies$ with $2/3$ probability that we satisfied the given inequality.\\
+    
+    \item Because part $1$ we used fully independent function to generate the bits, we only need pairwise independent function for expectation and variance. Therefore, we only need $\log{n} + \log{m}$ bits for the the pairwise independence function. As $m < n$, $\log{n} + \log{m} < 2 \cdot \log{n} \implies$ $O(\log{n})$ bits needed.
+\end{enumerate}
+
+\end{solution}
+\end{document}

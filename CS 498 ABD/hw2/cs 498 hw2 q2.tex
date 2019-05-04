@@ -1,0 +1,64 @@
+% ---------
+%  Compile with "pdflatex hw0".
+% --------
+%!TEX TS-program = pdflatex
+%!TEX encoding = UTF-8 Unicode
+
+\documentclass[11pt]{article}
+\usepackage{jeffe,handout,graphicx}
+\usepackage[utf8]{inputenc}		% Allow some non-ASCII Unicode in source
+
+%  Redefine suits
+\usepackage{pifont}
+\usepackage{algorithm}
+\usepackage{algorithmic}
+\usepackage{amsmath}
+
+\def\Spade{\text{\ding{171}}}
+\def\Heart{\text{\textcolor{Red}{\ding{170}}}}
+\def\Diamond{\text{\textcolor{Red}{\ding{169}}}}
+\def\Club{\text{\ding{168}}}
+
+\def\Cdot{\mathbin{\text{\normalfont \textbullet}}}
+\def\Sym#1{\textbf{\texttt{\color{BrickRed}#1}}}
+
+% =====================================================
+%   Define common stuff for solution headers
+% =====================================================
+\Class{CS $498$ algorithm}
+\Semester{Spring $2019$}
+\Authors{2}
+%\Section{}
+
+% =====================================================
+\begin{document}
+
+% ---------------------------------------------------------
+
+
+% ---------------------------------------------------------
+% Change authors again
+\AuthorOne{Ray Ying}{xinruiy2@illinois.edu}
+\AuthorTwo{Aditya Pillai}{apillai4@illinois.edu}
+
+\HomeworkHeader{$2$}{$2$}
+
+\begin{quote}
+
+\end{quote}
+\hrule
+\begin{solution}
+    \item Let $X_i$ be 1 if $h(b_i) \leq n/2^{i-2}$, and let $X = \sum_{i=1}^{d}X_i$. \\
+    $\mathbb{E}(X_i) = 1/2^{i-2}$ and $\mathbb{E}(X) = d/2^{i-2}$ by linearity of expectation.\\
+    $\mathrm{Var}(X_i) = \frac{1}{2^{i-2}}(1 - 1/2^{i-2})$,  $\mathrm{Var}(X) = \frac{d}{2^{i-2}}(1 - 1/2^{i-2})$, since we have pairwise independence. \\ 
+    \\
+    To use Chebyshev, we find the probability that $X - \mathbb{E}(X) \leq - \mathbb{E}(X) \implies |X - \mathbb{E}(X)| \geq  \mathbb{E}(X) $ because this implies that $X \leq 0$. \\
+    
+    $\Pr(X \leq 0 ) \leq \Pr[|X - \mathbb{E}(X)| \geq d/2^{i-2}] \leq \frac{\frac{d}{2^{i-2}}(1 - 1/2^{i-2})}{d^2/(2^{i-2})^2} = \frac{(1 - 1/2^{i-2})}{ d/2^{i-2}} < \frac{1}{d/2^{i-2}} < \frac{1}{2} $\\
+    \\
+    The expected balls falls in the range of $[1,\frac{n}{2^{i+3}})$ is $d \cdot \frac{\frac{n}{2^{i+3}}}{n}$, let $X'$ be the number of balls fall in the range of $[1,\frac{n}{2^{i+3}})$, by Markov inequality, we can have $Pr[X' \geq 1] \leq d \cdot \frac{\frac{n}{2^{i+3}}}{n}$, therefore, $Pr[X' = 0] \geq 1 - d \cdot \frac{\frac{n}{2^{i+3}}}{n} \geq \frac{3}{4}$ as $d \in [2^i, 2^{i+1})$.\\
+    \\
+    It's lower bound for $Pr[X'=0]$ and it's upper bound for $Pr[X=0]$, therefore, we can get a lower bound for the difference. Hence, $Pr[Z \in [n/2^{i+3}, n/2^{i-2})] = Pr[X' = 0] - Pr[X = 0] > 1/4$.
+    
+\end{solution}
+\end{document}
