@@ -1,0 +1,117 @@
+% ---------
+%  Compile with "pdflatex hw0".
+% --------
+%!TEX TS-program = pdflatex
+%!TEX encoding = UTF-8 Unicode
+
+\documentclass[11pt]{article}
+\usepackage{jeffe,handout,graphicx}
+\usepackage[utf8]{inputenc}		% Allow some non-ASCII Unicode in source
+
+%  Redefine suits
+\usepackage{pifont}
+\usepackage{algorithm}
+\usepackage{algorithmic}
+
+\def\Spade{\text{\ding{171}}}
+\def\Heart{\text{\textcolor{Red}{\ding{170}}}}
+\def\Diamond{\text{\textcolor{Red}{\ding{169}}}}
+\def\Club{\text{\ding{168}}}
+
+\def\Cdot{\mathbin{\text{\normalfont \textbullet}}}
+\def\Sym#1{\textbf{\texttt{\color{BrickRed}#1}}}
+
+
+
+% =====================================================
+%   Define common stuff for solution headers
+% =====================================================
+\Class{CS $498$ algorithm}
+\Semester{Spring $2019$}
+\Authors{2}
+%\Section{}
+
+% =====================================================
+\begin{document}
+
+% ---------------------------------------------------------
+
+
+% ---------------------------------------------------------
+% Change authors again
+\AuthorOne{Ray Ying}{xinruiy2@illinois.edu}
+\AuthorTwo{Aditya Pillai}{apillai4@illinois.edu}
+
+\HomeworkHeader{$1$}{$2$}
+
+\begin{quote}
+
+\end{quote}
+\hrule
+
+
+\begin{solution}
+\item
+\begin{enumerate}
+    \item The formal description of the algorithm is as following:
+    \begin{enumerate}
+        \item Choose one element uniform at random from the array and find its rank.
+        \item If the rank it's some where between $n/4$ to $3n/4$, then we choose this element as pivot. Otherwise, we repeat the previous step.
+        \item Perform quicksort on that pivot and divided the array into three subarray: those smaller than pivot, those larger than pivot, and the pivot itself.
+        \item Perform the small algorithm above on the smaller subarrays and concatenate the result.
+    \end{enumerate}
+    The Pseudocode for the algorithm is in the last page.
+    \begin{algorithm}
+        \caption{Randomized Quicksort}
+        \begin{algorithmic} 
+        \REQUIRE {$A$ is the array of size $n$,$lo$ is the lowest index and $hi$ is the highest index.}
+        \newline
+        \Function{$\textbf{RandomizedQuicksort(A, lo,hi):}$}
+        \STATE $n \leftarrow hi - lo + 1$
+        \STATE $i \leftarrow random (lo ... hi)$
+        \STATE Count $\leftarrow 0$
+        \FOR{$j \leftarrow lo$ to $hi$}
+        \IF{$A[j] < A[i]$}
+        \STATE Count $=$ Count $+ 1$
+        \ENDIF
+        \ENDFOR
+        \WHILE{$Count < n/4$  $\|$ $ Count > 3n/4$}
+        \STATE $i \leftarrow random (lo .. hi) $
+        \FOR{$j \leftarrow lo$ to $hi$}
+        \IF{$A[j] < A[i]$}
+        \STATE Count $=$ Count $+ 1$
+        \ENDIF
+        \ENDFOR
+        \ENDWHILE
+        \STATE $temp \leftarrow A[Count]$
+        \STATE $A[Count] \leftarrow A[i]$
+        \STATE $A[i] \leftarrow temp$
+        \STATE $leftstart \leftarrow lo$
+        \STATE $rightstart \leftarrow Count+1$
+        \WHILE{$ start < Count $}
+        \IF {$A[leftstart] > A[Count]$}
+        \STATE $temp \leftarrow A[leftstart]$
+        \STATE $A[leftstart] \leftarrow A[rightstart]$
+        \STATE $A[rightstart] \leftarrow temp$
+        \STATE $rightstart = rightstart + 1$
+        \ELSE $leftstart = leftstart + 1$ 
+        \ENDIF
+        \ENDWHILE
+        \STATE $RandomizedQuicksort(A,lo,Count-1)$
+        \STATE $RandomizeQuicksort(A, Count+1, hi)$
+        \end{algorithmic}
+        \end{algorithm}
+        
+    \item   Let total running time of the randomized quicksort $T(n)$, and $E(T(n))$ be the expected running time of the randomized quicksort. For $T(n)$, the running time for each sort time will have two parts: choosing the pivot, sorting based on the good pivot. Since you will always end up with the good pivot and do the sorting. The expected running time for ranking good pivot is $n$(the list size) and the running time for sorting list based on this good pivot is $n$ as well. Let $z$ be the number of choosing bad pivots before getting the good pivot, the expected running time for choosing the bad pivot is $\sum_z 1/2^z \cdot zn = n \cdot \sum_z 1/2^z  \cdot z = 2n$. Therefore, the total expected running time will be $4n$. As for the recursive steps, the running time will be based on the rank of the pivot. Let $i$ be the rank of the pivot ranging from $[n/4,3n/4]$, the expected running time for the recursive steps will be: $\sum_i (1/(n/2))\cdot(T(i-1) + T(n-i))$. Therefore, the total expected $E(T(n)) = 4n + \sum_i (2/(n))\cdot(T(i-1) + T(n-i))$. With base case $T(n) = 0$, in each level of recursive tree, the sum is in $O(n)$. There will be at most $log_{3/4} n$ levels. Therefore, $E(T(n))$ is  $O(nlogn)$.
+    \item  
+Let $T_i$ be the comparisons performed at level $i$ of the recursion. Then the run-time of the algorithm is $\sum_{i =1}^{M}T_i$, $M$ is the number of levels and $M \leq \log_{4/3}n$ since the pivot is always chosen in a "good" region. Let $T_{i,k}$ be the number of comparisons done for the kth subarray in the ith recursive call, and $n_k$ be the size of the subarray $k$ at level $i$ \\
+$\mathbb{E}(T_i) = \sum_{k=1}^{2^i}\mathbb{E}(T_{i,k}) = \sum_{k=1}^{2^i}2n_k = 2n$ because the sum of the size of subarrays at any level is $n$ and in expectation it take 2 tries to pick a good pivot, each try costs $n_k$ comparisons  \\
+$\Pr(T_i > 8n/3) \leq \mathbb{E}(T_i)/(8n/3) = 3/4$. The number of comparisons it takes across different levels is independent so the probability it takes more than 8n/3 comparisons across all levels is $(\frac{3}{4})^M \leq (\frac{3}{4})^{\log_{4/3}(n)} = 1/n$. \\
+Then by the above formula the probability that quicksort takes at at most $\frac{8n}{3}\log_{4/3}n$ time is at at least $1- 1/n$ (we can improve this some $c >1$ and show $1 - 1/n^c$ probability by choosing a constant bigger than 8/3)
+    
+\end{enumerate}
+
+
+
+\end{solution}
+\end{document}

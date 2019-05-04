@@ -1,0 +1,90 @@
+% ---------
+%  Compile with "pdflatex hw0".
+% --------
+%!TEX TS-program = pdflatex
+%!TEX encoding = UTF-8 Unicode
+
+\documentclass[11pt]{article}
+\usepackage{jeffe,handout,graphicx}
+\usepackage[utf8]{inputenc}		% Allow some non-ASCII Unicode in source
+
+%  Redefine suits
+\usepackage{pifont}
+\def\Spade{\text{\ding{171}}}
+\def\Heart{\text{\textcolor{Red}{\ding{170}}}}
+\def\Diamond{\text{\textcolor{Red}{\ding{169}}}}
+\def\Club{\text{\ding{168}}}
+
+\def\Cdot{\mathbin{\text{\normalfont \textbullet}}}
+\def\Sym#1{\textbf{\texttt{\color{BrickRed}#1}}}
+
+
+
+% =====================================================
+%   Define common stuff for solution headers
+% =====================================================
+\Class{CS $498$ algorithm}
+\Semester{Spring $2019$}
+\Authors{2}
+%\Section{}
+
+% =====================================================
+\begin{document}
+
+% ---------------------------------------------------------
+
+
+% ---------------------------------------------------------
+% Change authors again
+\AuthorOne{Ray Ying}{xinruiy2@illinois.edu}
+\AuthorTwo{Aditya Pillai}{apillai4@illinois.edu}
+
+\HomeworkHeader{$2$}{$4$}
+
+\begin{quote}
+
+\end{quote}
+\hrule
+
+
+\begin{solution}
+\item
+\begin{enumerate}
+    \item  
+    \begin{align*}
+        e \sum_{i = 1}^{n} g(f_i) &= e \sum \frac{f_i}{em} \ln(\frac{me}{f_i}) \\
+        &= e\sum \frac{f_i}{em} (\ln(\frac{m}{f_i}) + 1) \\
+        &= e(\sum \frac{f_i}{em} \ln(\frac{m}{f_i}) + \sum \frac{f_i}{em}) \\
+        &= e(\frac{1}{e} \sum \frac{f_i}{m} \ln(\frac{m}{f_i}) + \frac{1}{e}) \\
+        &= \Phi + 1
+    \end{align*}
+    \item
+    $\frac{d}{dl}(g(\ell)) = \frac{m}{e}\log(\frac{m}{\ell}) > 0$ when $\ell \leq m$ so $g(\ell)$ is increasing and $g(\ell) \geq g(\ell - 1)$
+    \item 
+    \begin{align*}
+        g(\ell) - g(\ell - 1) &= \frac{\ell}{em}\ln(\frac{me}{\ell}) - \frac{\ell - 1}{em}\ln(\frac{me}{\ell - 1}) \\
+        &= \frac{\ell}{m}(\ln(m) + 1 -\ln(\ell)) - \frac{\ell - 1}{em}(\ln(m) + 1 - \ln(\ell - 1)) \\
+        &= \frac{\ln(m) + 1}{em} - \frac{\ell \ln(m)}{em} + \frac{(\ell - 1)\ln(\ell -1)}{em} \\
+        &\leq \frac{\ln(m) + 1}{em}
+    \end{align*}
+    \item
+    \begin{align*}
+        \mathrm{Var}[Y] \leq \mathbb{E}[Y^2] &= \sum \frac{f_i}{m} \sum_{\ell = 1}^{f_i}\frac{m^2}{f_i}(g(\ell) - g(\ell - 1))^2 \\
+        &\leq \frac{1 + \ln(m)}{e} \sum \sum_{\ell = 1}^{f_i}g(\ell) - g(\ell - 1) \\
+        &= \frac{1 + \ln(m)}{e} \sum g(f_i) \\
+        &= \frac{1 + \ln(m)}{e^2} (1 + \Phi)
+    \end{align*}
+    $c_1 = 1/e^2$
+    \item Since we made $t$ parallel copy of the algorithm, the variance will reduced to $1/t$ to the original. Also, we are not calculating variance on $Y$ but $eY$, $Var(eY) = e^2\cdot Var(Y)$. Since we proved in the last step that the original $Var(Y)\leq \frac{1}{e}\cdot (1+ \ln(m))E[Y]$, the new variance will be 
+    $$Var(Y') \leq \frac{e\cdot (1+ \ln(m))E[Y]}{t} = \frac{e\cdot (1+ \ln(m))E[Y]}{c(1+ \ln(m))/\epsilon^2} = \frac{\epsilon^2(1+\phi)}{c}$$
+    Now, by chebyshev's inequality,
+    $$ P[|eZ - (1+\phi)|\geq \epsilon(1+\phi)] \leq \frac{Var(Y')}{\epsilon^2(1+\phi)^2} = \frac{1}{c(1+\phi)}$$
+    We want to show that $\frac{1}{c(1+\phi)} \leq \frac{1}{4} \implies \frac{4}{1+\phi}\leq c$. It's easy to see that $1+\phi \geq 1$ since the length of the stream is at least $1$, $c \geq 4$.
+    \item We create the $8\ln(1/\delta)$ copy of part $5$, let's make an indicator $Z$, for each copy, if the average result is in the range of $(1\pm \epsilon)(1 + \phi)$, then we add $1$ to the $Z$, otherwise, we add $-1$ to the $Z$. Let $k = 8\ln(1/\delta)$, the $E[Z] = \frac{k}{4}\times(-1) + \frac{3k}{4}\times(1) = \frac{k}{2}$.\\
+    Since if the median is bad, half of the copies are bad, then $E[Z] \leq 0$. We applied to Chernoff's bound:\\
+    $$Pr[|Z-E[Z]| \geq \abs{(\frac{k}{2} - 0)}] = Pr[|Z-E[Z]| \geq \frac{k}{2}] \leq 2\cdot e^{\frac{-(\frac{k}{2})^2}{2k}} = 2\cdot e^{-\frac{k}{8}} = 2 \cdot \delta$$
+    Then the probability of having a bad median is less than $2 \cdot \delta /2 = \delta$ because we take the absolute value of $Z-E[Z]$, the probability of $Z \geq E[Z]$ and $Z - E[Z] \geq \frac{k}{2}$ is the same to the probability of $Z \leq E[Z]$ and $ E[Z] - Z \geq \frac{k}{2}$.\\ Therefore, we use $O(8\ln(1/\delta)ln(m)/\epsilon^2) = O(\ln(1/\delta)ln(m)/\epsilon^2)$ independent samples to get a result within $(1+\epsilon)$ with probability $\geq 1-\delta$.
+    \end{enumerate}
+
+\end{solution}
+\end{document}

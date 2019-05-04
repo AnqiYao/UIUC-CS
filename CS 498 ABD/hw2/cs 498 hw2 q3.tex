@@ -1,0 +1,81 @@
+% ---------
+%  Compile with "pdflatex hw0".
+% --------
+%!TEX TS-program = pdflatex
+%!TEX encoding = UTF-8 Unicode
+
+\documentclass[11pt]{article}
+\usepackage{jeffe,handout,graphicx}
+\usepackage[utf8]{inputenc}		% Allow some non-ASCII Unicode in source
+
+%  Redefine suits
+\usepackage{pifont}
+\def\Spade{\text{\ding{171}}}
+\def\Heart{\text{\textcolor{Red}{\ding{170}}}}
+\def\Diamond{\text{\textcolor{Red}{\ding{169}}}}
+\def\Club{\text{\ding{168}}}
+
+\def\Cdot{\mathbin{\text{\normalfont \textbullet}}}
+\def\Sym#1{\textbf{\texttt{\color{BrickRed}#1}}}
+
+
+
+% =====================================================
+%   Define common stuff for solution headers
+% =====================================================
+\Class{CS $498$ algorithm}
+\Semester{Spring $2019$}
+\Authors{2}
+%\Section{}
+
+% =====================================================
+\begin{document}
+
+% ---------------------------------------------------------
+
+
+% ---------------------------------------------------------
+% Change authors again
+\AuthorOne{Ray Ying}{xinruiy2@illinois.edu}
+\AuthorTwo{Aditya Pillai}{apillai4@illinois.edu}
+
+\HomeworkHeader{$2$}{$3$}
+
+\begin{quote}
+
+\end{quote}
+\hrule
+
+
+\begin{solution}
+\item
+\begin{enumerate}
+    \item  $\Pr(Z = 1) = \lceil (1 - \epsilon)t / d \rceil$ 
+    \item Let $X_{j | i}$ be the indicator that $h(b_j) \leq (1 - \epsilon)tN / d \rceil$ conditioned on $Z = 1$ \\
+    $\mathrm{Var}(X_j) = \frac{(1 - \epsilon)t}{d}(1 - (1 -  \epsilon)t / d)$ \\
+    Let $X = \sum_{i= 1}^{d-1} X_i$, then $\mathbb{E}(X) = (1 - \epsilon)t(d-1)/d \leq (1 - \epsilon)t$ $\mathrm{Var}(X) = d - l \mathrm{Var}(X_j)$ the variances can be added since the hash function is $3$-wise independent, $2$ conditioning on $Z = 1$ makes the $X_j$ variables pairwise independent so the variances can be added. \\
+    \begin{align*}
+        \Pr(X \geq t) &\leq Pr(|X - \mathbb{E}(X)| \geq t - \mathbb{E}(X)) \\
+        &\leq Pr(|X - \mathbb{E}(X)| \geq t\epsilon)\\
+        & \leq \mathrm{Var}(X)/\epsilon^2 t^2 \\
+        & \leq (1 - \epsilon)t/\epsilon^2 t^2 \\
+        &= (1 - \epsilon)\epsilon \\
+        &\leq (1 + \epsilon)\epsilon
+    \end{align*}
+    \item $\Pr(h(b_i) = h(b_j)) = N/N^2 = 1/n^3$ \\
+    By union bound the probability of a collision with $h(b_i)$ is at most $\frac{d-1}{n^3} \leq 1/n^2 \leq 1/tn \leq \epsilon^3/n \leq \epsilon t/n \leq t\epsilon/d$ 
+    \item The probability that $b_i$ is outputted is at least the probability the event 1 in part 1 occurred, at most $t-1$ other elements landed in the same range as $b_i$, and no elements collided with $b_i$. Let these events be $A, B,C$ respectively. \\
+    \begin{align*}
+        \Pr(A \cap B \cap C) &= \Pr(A) \Pr(B | A) \Pr(C | A, B) \\
+        &\geq \frac{(1- \epsilon)t}{d} (1 - \epsilon(1 + \epsilon))\Pr(C | A, B) \\
+         &\geq \frac{(1- \epsilon)t}{d} (1 - \epsilon(1 + \epsilon))(1 - t\epsilon/d) \tag{3 gives upper bound on the complement of $C | A, B$} \\
+         &\geq \frac{(1- \epsilon)t}{d} (1 - \epsilon(1 + \epsilon))(1 - \epsilon) \\
+         &= \frac{(1- \epsilon)t}{d} (1 - 2 \epsilon + \epsilon^3) \\
+         &\geq \frac{(1- \epsilon)t}{d} \epsilon^3 \tag{$\epsilon$ < 1/2} \\
+         &= \frac{(1- \epsilon)}{d} \\
+         &\geq \frac{1 - 10 \epsilon}{d}
+    \end{align*}
+\end{enumerate}
+
+\end{solution}
+\end{document}

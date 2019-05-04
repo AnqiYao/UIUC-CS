@@ -1,0 +1,70 @@
+% ---------
+%  Compile with "pdflatex hw0".
+% --------
+%!TEX TS-program = pdflatex
+%!TEX encoding = UTF-8 Unicode
+
+\documentclass[11pt]{article}
+\usepackage{jeffe,handout,graphicx}
+\usepackage[utf8]{inputenc}		% Allow some non-ASCII Unicode in source
+
+%  Redefine suits
+\usepackage{pifont}
+\def\Spade{\text{\ding{171}}}
+\def\Heart{\text{\textcolor{Red}{\ding{170}}}}
+\def\Diamond{\text{\textcolor{Red}{\ding{169}}}}
+\def\Club{\text{\ding{168}}}
+
+\def\Cdot{\mathbin{\text{\normalfont \textbullet}}}
+\def\Sym#1{\textbf{\texttt{\color{BrickRed}#1}}}
+
+
+
+% =====================================================
+%   Define common stuff for solution headers
+% =====================================================
+\Class{CS $498$ algorithm}
+\Semester{Spring $2019$}
+\Authors{2}
+%\Section{}
+
+% =====================================================
+\begin{document}
+
+% ---------------------------------------------------------
+
+
+% ---------------------------------------------------------
+% Change authors again
+\AuthorOne{Ray Ying}{xinruiy2@illinois.edu}
+\AuthorTwo{Aditya Pillai}{apillai4@illinois.edu}
+
+\HomeworkHeader{$4$}{$3$}
+
+\begin{quote}
+
+\end{quote}
+\hrule
+
+
+\begin{solution}
+\item
+
+\begin{enumerate}
+    \item The schema starts with $1$ set of bit vectors with size $s$ which is large, each bit vector has $d$ bits. Essentially, it's a matrix of shape $s \times d$.\\
+    
+    We randomly permutation of the bits in each row and make $N = O(n^{1/(1+\epsilon)})$ matrices. Then, for each matrix, we sort rows by lexicographic order for performing binary search.\\
+    
+    We use two pointers that keep track of the longest prefix matches the given input bit vector $q$ through binary search, one pointer moves up and the other moves down. This will gives $2$ bit vector per matrix, which in total gives $2N = O(n^{1/(1+\epsilon)})$ bit vectors.\\
+    
+    Follow the analysis from lecture, for hamming cube, we know that $\rho = \frac{In 1/p_1}{In 1/p_2}$ where $p_1 = 1 - \frac{r}{d}$, $p_2 = 1 - \frac{r(1+\epsilon)}{d}$ ($r$ be the distance). Define $k = log_{1/p_2}$,  $n^\rho = O(n^{1/(1+\epsilon)})$, the probability that a bit vector will agree in the first $k$ bits with $p$ will be $p_1^k = n^{-\rho}$, that given $n^\rho$ such permutations, with constant probability that exists one bit vector agrees with $p$ on the first $k$ coordinates. \\
+    
+    Similarly, is a point $q'$ is at $r(1+\epsilon)$ from $q$, the probability of any coordinate agrees with $p$ is at most $p_2$, therefore, the probability of agree on first $k$ coordinates is $p_2^k = \frac{1}{n}$. Same as $N$ matrix, the expected number of rows that agrees on first $k$ coordinates are at most $N$, by Markov, the probability that bad coordinates are less than $2N$ is greater than $\frac{1}{2}$.\\
+    
+    Hence, in this schema, overall having $N$ permutations will have more than $\frac{1}{2}$ probability that finds the nearest neighbor agrees in $k$ coordinates. In this schema, we don't have to keep different structure for different $r$.
+    
+    
+\end{enumerate}
+
+\end{solution}
+\end{document}

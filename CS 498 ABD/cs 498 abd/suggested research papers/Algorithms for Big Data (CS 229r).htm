@@ -1,0 +1,193 @@
+
+<!-- saved from url=(0062)http://people.seas.harvard.edu/~minilek/cs229r/fall15/lec.html -->
+<html class="gr__people_seas_harvard_edu"><head><meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<title>Algorithms for Big Data (CS 229r)</title>
+  <style>
+    table { border-collapse: collapse; }
+    td,th { vertical-align: top; text-align: left; padding: 0.5ex 0.5em; }
+    .odd { background-color: #dddddd; }
+  </style>
+</head>
+
+<body data-gr-c-s-loaded="true">
+
+<h1>CS 229r: Algorithms for Big Data</h1>
+
+<h2>Prof. <a href="http://people.seas.harvard.edu/~minilek">Jelani Nelson</a> &nbsp;&nbsp;&nbsp; TF: Jaros&#322;aw B&#322;asiok</h2>
+
+<hr>
+<font size="+1">
+  [<a href="http://people.seas.harvard.edu/~minilek/cs229r/fall15/index.html">Home</a>]
+  [Lectures]
+  [<a href="http://people.seas.harvard.edu/~minilek/cs229r/fall15/hmwk.html">Assignments</a>]
+  [<a href="http://people.seas.harvard.edu/~minilek/cs229r/fall15/proj.html">Project</a>]
+</font>
+<hr>
+
+<h2>Scribing</h2>
+
+<ul>
+<li>Use this <a href="http://people.seas.harvard.edu/~minilek/cs229r/fall15/lec/lec-template.tex">template</a> when
+  scribing.
+
+</li><li>Each student may have to scribe 1-2 lectures, depending on class
+  size.
+
+</li><li> Pick a date below when you are available to scribe and send your
+  choice to <b><tt>
+  cs229r-f15-staff@seas.harvard.edu</tt></b>. First-come first-served.
+
+</li><li>Submit scribe notes (pdf + source) to <b><tt>
+cs229r-f15-staff@seas.harvard.edu</tt></b>.
+
+</li><li>Please give real bibliographical citations for the papers that we
+mention in class
+  (<a href="http://www.informatik.uni-trier.de/~ley/db/">DBLP</a> can
+  help you collect bibliographic info).
+
+</li><li>Scribe notes are due <b>by 6pm on the day after lecture</b>. They are posted
+immediately without proofreading (though we may proofread later and ask for some changes to be made.)
+
+</li><li>When creating your scribe notes, feel free to use <a href="http://people.seas.harvard.edu/~minilek/cs229r/fall13/lec.html">those from Fall 2013</a> (some topics and proofs given will change, so be prepared to make edits; also, it is expected that you polish and improve whatever you started with). You may also find <a href="http://people.seas.harvard.edu/~minilek/cs229r/fall13/same.pdf">these notes</a> helpful, courtesy of Sam Elder.
+
+</li></ul>
+
+<h2>Scribe Notes</h2>
+
+<ol>
+<li>Thursday, Sept. 3 — logistics, course topics, basic tail bounds (Markov, Chebyshev, Chernoff, Bernstein), Morris' algorithm.<br>
+Scribe: Zhengyu Wang.
+[<a href="http://people.seas.harvard.edu/~minilek/cs229r/fall15/lec/lec1.pdf">PDF</a>][<a href="http://people.seas.harvard.edu/~minilek/cs229r/fall15/lec/lec1.tex">TeX</a>][<a href="https://www.youtube.com/watch?v=s9xSfIw83tk&amp;index=1&amp;list=PL2SOU6wwxB0v1kQTpqpuu5kEJo2i-iUyf">video</a>]
+<p>
+
+</p></li><li>Tuesday, Sept. 8 — distinct elements, k-wise independence, geometric subsampling of streams.<br>
+Scribe: Jeffrey Ling.
+[<a href="http://people.seas.harvard.edu/~minilek/cs229r/fall15/lec/lec2.pdf">PDF</a>][<a href="http://people.seas.harvard.edu/~minilek/cs229r/fall15/lec/lec2.tex">TeX</a>][<a href="https://www.youtube.com/watch?v=fvZ_6pvP4jc&amp;index=2&amp;list=PL2SOU6wwxB0v1kQTpqpuu5kEJo2i-iUyf">video</a>]
+<p>
+
+</p></li><li>Thursday, Sept. 10 — necessity of randomized/approximate guarantees, linear sketching, AMS sketch, p-stable sketch 0&lt;p&lt;2.<br>
+Scribe: Vasileios Nakos.
+[<a href="http://people.seas.harvard.edu/~minilek/cs229r/fall15/lec/lec3.pdf">PDF</a>][<a href="http://people.seas.harvard.edu/~minilek/cs229r/fall15/lec/lec3.tex">TeX</a>][<a href="https://www.youtube.com/watch?v=l-0WSRNQ2ag&amp;index=3&amp;list=PL2SOU6wwxB0v1kQTpqpuu5kEJo2i-iUyf">video</a>]
+<p>
+
+</p></li><li>Tuesday, Sept. 15 — p-stable sketch analysis, Nisan's PRG, high &#8467;<sub>p</sub> norms (p&gt;2) via max-stability.<br>
+Scribe: Hyunghoon Cho.
+[<a href="http://people.seas.harvard.edu/~minilek/cs229r/fall15/lec/lec4.pdf">PDF</a>][<a href="http://people.seas.harvard.edu/~minilek/cs229r/fall15/lec/lec4.tex">TeX</a>][<a href="https://www.youtube.com/watch?v=vpSJYYhbeQg&amp;index=4&amp;list=PL2SOU6wwxB0v1kQTpqpuu5kEJo2i-iUyf">video</a>]
+<p>
+
+</p></li><li>Thursday, Sept. 17 — analysis of &#8467;<sub>p</sub> estimation algorithm via max-stability, deterministic point query via incoherent matrices.<br>
+Scribe: Yakir Reshef.
+[<a href="http://people.seas.harvard.edu/~minilek/cs229r/fall15/lec/lec5.pdf">PDF</a>][<a href="http://people.seas.harvard.edu/~minilek/cs229r/fall15/lec/lec5.tex">TeX</a>][<a href="https://www.youtube.com/watch?v=VGrM8fbo3tM&amp;index=5&amp;list=PL2SOU6wwxB0v1kQTpqpuu5kEJo2i-iUyf">video</a>]
+<p>
+
+</p></li><li>Tuesday, Sept. 22 — CountMin sketch, point query, heavy hitters, sparse approximation.<br>
+Scribe: Mien Wang.
+[<a href="http://people.seas.harvard.edu/~minilek/cs229r/fall15/lec/lec6.pdf">PDF</a>][<a href="http://people.seas.harvard.edu/~minilek/cs229r/fall15/lec/lec6.tex">TeX</a>][<a href="https://www.youtube.com/watch?v=t4y5uAe5nb4&amp;index=6&amp;list=PL2SOU6wwxB0v1kQTpqpuu5kEJo2i-iUyf">video</a>]
+<p>
+
+</p></li><li>Thursday, Sept. 24 — CountSketch, &#8467;<sub>0</sub> sampling, graph sketching.<br>
+Scribe: David Mende.
+[<a href="http://people.seas.harvard.edu/~minilek/cs229r/fall15/lec/lec7.pdf">PDF</a>][<a href="http://people.seas.harvard.edu/~minilek/cs229r/fall15/lec/lec7.tex">TeX</a>][<a href="https://www.youtube.com/watch?v=JgWWK-8DCes&amp;index=7&amp;list=PL2SOU6wwxB0v1kQTpqpuu5kEJo2i-iUyf">video</a>]
+<p>
+
+</p></li><li>Tuesday, Sept. 29 — amnesic dynamic programming (approximate distance to monotonicity).<br>
+Scribe: Johnny Ho.
+[<a href="http://people.seas.harvard.edu/~minilek/cs229r/fall15/lec/lec8.pdf">PDF</a>][<a href="http://people.seas.harvard.edu/~minilek/cs229r/fall15/lec/lec8.tex">TeX</a>][<a href="https://www.youtube.com/watch?v=aa2l9vTuFZo&amp;index=8&amp;list=PL2SOU6wwxB0v1kQTpqpuu5kEJo2i-iUyf">video</a>]
+<p>
+
+</p></li><li>Thursday, Oct. 1 — communication complexity (indexing, gap hamming) + application to median and F<sub>0</sub> lower bounds.<br>
+Scribe: Rachit Singh.
+[<a href="http://people.seas.harvard.edu/~minilek/cs229r/fall15/lec/lec9.pdf">PDF</a>][<a href="http://people.seas.harvard.edu/~minilek/cs229r/fall15/lec/lec9.tex">TeX</a>][<a href="https://www.youtube.com/watch?v=dtEvIva4N2s&amp;index=9&amp;list=PL2SOU6wwxB0v1kQTpqpuu5kEJo2i-iUyf">video</a>]
+<p>
+
+</p></li><li>Tuesday, Oct. 6 — randomized and approximate F<sub>0</sub> lower bounds, disjointness, F<sub>p</sub> lower bound, dimensionality reduction (JL lemma).<br>
+Scribe: Morris Yau.
+[<a href="http://people.seas.harvard.edu/~minilek/cs229r/fall15/lec/lec10.pdf">PDF</a>][<a href="http://people.seas.harvard.edu/~minilek/cs229r/fall15/lec/lec10.tex">TeX</a>][<a href="https://www.youtube.com/watch?v=c8bIaCevKo8&amp;index=10&amp;list=PL2SOU6wwxB0v1kQTpqpuu5kEJo2i-iUyf">video</a>]
+<p>
+
+</p></li><li>Thursday, Oct. 8 — Khintchine, decoupling, Hanson-Wright, proof of distributional JL lemma.<br>
+Scribe: None.
+[<a href="http://people.seas.harvard.edu/~minilek/cs229r/fall15/lec/lec11.pdf">PDF</a>][<a href="http://people.seas.harvard.edu/~minilek/cs229r/fall15/lec/lec11.tex">TeX</a>][<a href="https://www.youtube.com/watch?v=5RMNXQurh60&amp;index=11&amp;list=PL2SOU6wwxB0v1kQTpqpuu5kEJo2i-iUyf">video</a>]
+<p>
+
+</p></li><li>Tuesday, Oct. 13 — Alon's JL lower bound, beyond worst case analysis: suprema of gaussian processes, Gordon's theorem.<br>
+Scribe: Vasileios Nakos.
+[<a href="http://people.seas.harvard.edu/~minilek/cs229r/fall15/lec/lec12.pdf">PDF</a>][<a href="http://people.seas.harvard.edu/~minilek/cs229r/fall15/lec/lec12.tex">TeX</a>][<a href="https://www.youtube.com/watch?v=-ZDm0JhNN40&amp;index=12&amp;list=PL2SOU6wwxB0v1kQTpqpuu5kEJo2i-iUyf">video</a>]
+<p>
+
+</p></li><li>Thursday, Oct. 15 — ORS theorem (distributional JL implies Gordon's theorem), sparse JL.<br>
+Scribe: Yakir Reshef.
+[<a href="http://people.seas.harvard.edu/~minilek/cs229r/fall15/lec/lec13.pdf">PDF</a>][<a href="http://people.seas.harvard.edu/~minilek/cs229r/fall15/lec/lec13.tex">TeX</a>][<a href="https://www.youtube.com/watch?v=sIwmtGpNjl4&amp;index=13&amp;list=PL2SOU6wwxB0v1kQTpqpuu5kEJo2i-iUyf">video</a>]
+<p>
+
+</p></li><li>Tuesday, Oct. 20 — sparse JL proof wrap-up, Fast JL Transform, approximate nearest neighbor.<br>
+Scribe: Rachit Singh.
+[<a href="http://people.seas.harvard.edu/~minilek/cs229r/fall15/lec/lec14.pdf">PDF</a>][<a href="http://people.seas.harvard.edu/~minilek/cs229r/fall15/lec/lec14.tex">TeX</a>][<a href="https://www.youtube.com/watch?v=F46U5IG5lN8&amp;index=14&amp;list=PL2SOU6wwxB0v1kQTpqpuu5kEJo2i-iUyf">video</a>]
+<p>
+
+</p></li><li>Thursday, Oct. 22 — approximate matrix multiplication with Frobenius error via sampling / JL, matrix median trick, subspace embeddings.<br>
+Scribe: Mien Wang.
+[<a href="http://people.seas.harvard.edu/~minilek/cs229r/fall15/lec/lec15.pdf">PDF</a>][<a href="http://people.seas.harvard.edu/~minilek/cs229r/fall15/lec/lec15.tex">TeX</a>][<a href="https://www.youtube.com/watch?v=smKQB7uG7eI&amp;index=15&amp;list=PL2SOU6wwxB0v1kQTpqpuu5kEJo2i-iUyf">video</a>]
+<p>
+
+</p></li><li>Tuesday, Oct. 27 — linear least squares via subspace embeddings, leverage score sampling, non-commutative Khintchine, oblivious subspace embeddings.<br>
+Scribe: Jefferson Lee.
+[<a href="http://people.seas.harvard.edu/~minilek/cs229r/fall15/lec/lec16.pdf">PDF</a>][<a href="http://people.seas.harvard.edu/~minilek/cs229r/fall15/lec/lec16.tex">TeX</a>][<a href="https://www.youtube.com/watch?v=T9NNL6Dotnc&amp;index=16&amp;list=PL2SOU6wwxB0v1kQTpqpuu5kEJo2i-iUyf">video</a>]
+<p>
+
+</p></li><li>Thursday, Oct. 29 — oblivious subspace embeddings, faster iterative regression, sketch-and-solve regression.<br>
+Scribe: Morris Yau.
+[<a href="http://people.seas.harvard.edu/~minilek/cs229r/fall15/lec/lec17.pdf">PDF</a>][<a href="http://people.seas.harvard.edu/~minilek/cs229r/fall15/lec/lec17.tex">TeX</a>][<a href="https://www.youtube.com/watch?v=8XA1uEFtR3s&amp;index=17&amp;list=PL2SOU6wwxB0v1kQTpqpuu5kEJo2i-iUyf">video</a>]
+<p>
+
+</p></li><li>Tuesday, Nov. 3 — low-rank approximation, column-based matrix reconstruction, k-means, compressed sensing.<br>
+Scribe: Jefferson Lee.
+[<a href="http://people.seas.harvard.edu/~minilek/cs229r/fall15/lec/lec18.pdf">PDF</a>][<a href="http://people.seas.harvard.edu/~minilek/cs229r/fall15/lec/lec18.tex">TeX</a>][<a href="https://www.youtube.com/watch?v=aubLouNXyA0&amp;index=18&amp;list=PL2SOU6wwxB0v1kQTpqpuu5kEJo2i-iUyf">video</a>]
+<p>
+
+</p></li><li>Thursday, Nov. 5 — RIP and connection to incoherence, basis pursuit, Krahmer-Ward theorem.<br>
+Scribe: Abdul Wasay.
+[<a href="http://people.seas.harvard.edu/~minilek/cs229r/fall15/lec/lec19.pdf">PDF</a>][<a href="http://people.seas.harvard.edu/~minilek/cs229r/fall15/lec/lec19.tex">TeX</a>][<a href="https://www.youtube.com/watch?v=k9XG5Mv7t_g&amp;index=19&amp;list=PL2SOU6wwxB0v1kQTpqpuu5kEJo2i-iUyf">video</a>]
+<p>
+
+</p></li><li>Tuesday, Nov. 10 — Krahmer-Ward proof, Iterative Hard Thresholding.<br>
+Scribe: Yakir Reshef.
+[<a href="http://people.seas.harvard.edu/~minilek/cs229r/fall15/lec/lec20.pdf">PDF</a>][<a href="http://people.seas.harvard.edu/~minilek/cs229r/fall15/lec/lec20.tex">TeX</a>][<a href="https://www.youtube.com/watch?v=szbGlaysOd8&amp;index=20&amp;list=PL2SOU6wwxB0v1kQTpqpuu5kEJo2i-iUyf">video</a>]
+<p>
+
+</p></li><li>Thursday, Nov. 12 — &#8467;<sub>1</sub>/&#8467;<sub>1</sub> recovery, RIP<sub>1</sub>, unbalanced expanders, Sequential Sparse Matching Pursuit.<br>
+Scribe: Zezhou Liu.
+[<a href="http://people.seas.harvard.edu/~minilek/cs229r/fall15/lec/lec21.pdf">PDF</a>][<a href="http://people.seas.harvard.edu/~minilek/cs229r/fall15/lec/lec21.tex">TeX</a>][<a href="https://www.youtube.com/watch?v=waXjwYGsHYk&amp;index=21&amp;list=PL2SOU6wwxB0v1kQTpqpuu5kEJo2i-iUyf">video</a>]
+<p>
+
+</p></li><li>Tuesday, Nov. 17 — matrix completion.<br>
+Scribe: Abdul Wasay.
+[<a href="http://people.seas.harvard.edu/~minilek/cs229r/fall15/lec/lec22.pdf">PDF</a>][<a href="http://people.seas.harvard.edu/~minilek/cs229r/fall15/lec/lec22.tex">TeX</a>][<a href="https://www.youtube.com/watch?v=TNhV5Z0DlXI&amp;index=22&amp;list=PL2SOU6wwxB0v1kQTpqpuu5kEJo2i-iUyf">video</a>]
+<p>
+
+</p></li><li>Thursday, Nov. 19 — external memory model: linked list, matrix multiplication, B-tree, buffered repository tree, sorting.<br>
+Scribe: Johnny Ho.
+[<a href="http://people.seas.harvard.edu/~minilek/cs229r/fall15/lec/lec23.pdf">PDF</a>][<a href="http://people.seas.harvard.edu/~minilek/cs229r/fall15/lec/lec23.tex">TeX</a>][<a href="https://www.youtube.com/watch?v=N0BQe1WpBYo&amp;index=23&amp;list=PL2SOU6wwxB0v1kQTpqpuu5kEJo2i-iUyf">video</a>]
+<p>
+
+</p></li><li>Tuesday, Nov. 24 — competitive paging, cache-oblivious algorithms: matrix multiplication, self-organizing linked list, static B-tree, lazy funnelsort.<br>
+Scribe: Zhengyu Wang.
+[<a href="http://people.seas.harvard.edu/~minilek/cs229r/fall15/lec/lec24.pdf">PDF</a>][<a href="http://people.seas.harvard.edu/~minilek/cs229r/fall15/lec/lec24.tex">TeX</a>][<a href="https://www.youtube.com/watch?v=7dC_J0wL0L0&amp;index=24&amp;list=PL2SOU6wwxB0v1kQTpqpuu5kEJo2i-iUyf">video</a>]
+<p>
+
+</p></li><li>Thursday, Nov. 26. <b>NO CLASS (Happy Thanksgiving!).</b>
+<p>
+
+</p></li><li>Tuesday, Dec. 1 — MapReduce: TeraSort, minimum spanning tree, triangle counting.<br>
+Scribe: Zezhou Liu.
+[<a href="http://people.seas.harvard.edu/~minilek/cs229r/fall15/lec/lec26.pdf">PDF</a>][<a href="http://people.seas.harvard.edu/~minilek/cs229r/fall15/lec/lec26.tex">TeX</a>][<a href="https://www.youtube.com/watch?v=CwSbDshioQY&amp;index=25&amp;list=PL2SOU6wwxB0v1kQTpqpuu5kEJo2i-iUyf">video</a>]
+<p>
+
+</p></li><li>Thursday, Dec. 3 — <b>project presentations</b>.<br>
+<p>
+
+</p></li></ol>
+
+
+
+</body></html>

@@ -1,0 +1,103 @@
+% Put the following line the top of the file, if you want the
+% solutions to appear:
+%         \def\solutionMode{TRUE}
+
+\usepackage{color}%
+%\usepackage{mcolors}%
+\usepackage{framed}%
+\usepackage{chngpage} 
+%
+
+\providecommand{\SolVer}[1]{}%
+\providecommand{\NotSolVer}[1]{#1}%
+\providecommand{\FullVer}[1]{#1}%
+\providecommand{\Solution}[1]{}
+\providecommand{\SolutionSmall}[1]{}%
+\providecommand{\SolutionMP}[1]{}%
+\providecommand{\SolutionExt}[2]{}%
+
+\ifx\solutionMode\undefined
+
+\else%
+  \newlength{\savedparindentxx}
+  \providecommand{\SaveIndent}{}%
+  \renewcommand{\SaveIndent}{\setlength{\savedparindentxx}{\parindent}}
+
+  \providecommand{\RestoreIndent}{}%
+  \renewcommand{\RestoreIndent}{\setlength{\parindent}{\savedparindentxx}}
+
+  %   \definecolor{shadecolor}{gray}{0.96}
+\definecolor{shadecolor}{rgb}{1.0,1.0,0.95}%
+\renewcommand{\FullVer}[2]{}%
+\renewcommand{\SolutionExt}[2]{\bigskip
+      \noindent\textbf{\Large{#1}}\\
+      \vspace{-0.6cm}
+      \noindent
+      \begin{leftbar}%
+          \RestoreIndent  %
+          #2
+      \end{leftbar}
+   }
+
+   \ifx\solution\undefined
+   \newenvironment{solution}{}{}%
+   \fi
+   \renewenvironment{solution}{%
+      \smallskip%\bigskip
+      % \begin{shaded}%
+      \noindent
+      \begin{leftbar}%
+          \noindent%
+          \hspace*{-0.5cm}%
+          {\textbf{\Large{\underline{Solution}:}}}
+          
+          % \vspace{-0.6cm}
+          \RestoreIndent  %
+       }%
+       {%
+      \end{leftbar}
+      \medskip%
+   }
+   \renewcommand{\SolutionMP}[1]{%
+      \smallskip%\bigskip
+%      \begin{shaded}%
+      \noindent
+      \begin{leftbar}%
+          \noindent%
+          \hspace*{-0.5cm}%
+          {\textbf{\Large{\underline{Solution}:}}}
+          
+%          \vspace{-0.6cm}
+          \RestoreIndent  %
+          #1
+      \end{leftbar}
+      \medskip%
+      % \end{shaded}
+   }
+   \renewcommand{\Solution}[1]{}
+
+   \renewcommand{\Solution}[1]{
+      \medskip \noindent\textbf{\Large{Solution:}}\\[0.1cm]
+      \noindent\begin{minipage}{0.99\linewidth}
+      \begin{leftbar}%
+          \RestoreIndent  %
+          #1
+           \end{leftbar}
+       \end{minipage}
+    }
+    
+   \renewcommand{\SolutionSmall}[1]{
+      \noindent\begin{minipage}{0.99\linewidth}
+      \begin{leftbar}%
+          \RestoreIndent  %
+          \noindent \textbf{{Solution:}} #1
+           \end{leftbar}
+        \end{minipage}
+%      \end{adjustwidth}
+     }
+     
+   \renewcommand{\SolVer}[1]{#1}
+   \renewcommand{\NotSolVer}[1]{}%
+
+\fi
+

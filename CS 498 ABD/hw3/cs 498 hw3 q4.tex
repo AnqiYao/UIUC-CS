@@ -1,0 +1,78 @@
+% ---------
+%  Compile with "pdflatex hw0".
+% --------
+%!TEX TS-program = pdflatex
+%!TEX encoding = UTF-8 Unicode
+
+\documentclass[11pt]{article}
+\usepackage{jeffe,handout,graphicx}
+\usepackage[utf8]{inputenc}		% Allow some non-ASCII Unicode in source
+
+%  Redefine suits
+\usepackage{pifont}
+\def\Spade{\text{\ding{171}}}
+\def\Heart{\text{\textcolor{Red}{\ding{170}}}}
+\def\Diamond{\text{\textcolor{Red}{\ding{169}}}}
+\def\Club{\text{\ding{168}}}
+
+\def\Cdot{\mathbin{\text{\normalfont \textbullet}}}
+\def\Sym#1{\textbf{\texttt{\color{BrickRed}#1}}}
+
+
+
+% =====================================================
+%   Define common stuff for solution headers
+% =====================================================
+\Class{CS $498$ algorithm}
+\Semester{Spring $2019$}
+\Authors{2}
+%\Section{}
+
+% =====================================================
+\begin{document}
+
+% ---------------------------------------------------------
+
+
+% ---------------------------------------------------------
+% Change authors again
+\AuthorOne{Ray Ying}{xinruiy2@illinois.edu}
+\AuthorTwo{Aditya Pillai}{apillai4@illinois.edu}
+
+\HomeworkHeader{$3$}{$4$}
+
+\begin{quote}
+
+\end{quote}
+\hrule
+
+
+\begin{solution}
+\item
+\begin{enumerate}
+    \item 
+    \begin{enumerate}
+        \item $ p = (1 - 1/k)^d \leq (1 - (1 + \epsilon)/d)^d \leq 1/e^{1 + \epsilon} = e^{-1-\epsilon} \leq e^{-1}(1+ c \epsilon)$ which holds when $c$ is slightly above 0 for small $\epsilon$
+
+        \item $ p = ((k-1)/k)^d = (1 - 1/(1 + \epsilon)\cdot d)^d = (1 + \frac{-1/(1+\epsilon)}{d})^d = e^{-1/(1+\epsilon)} \geq (1+c\epsilon)e^{-1}$ 
+    \end{enumerate}\\
+    
+    \item We can choose $\tilde{p_i}$ such that $(1 - c \epsilon)e^{-1}  \leq \tilde{p_i} \leq (1 + c \epsilon)e^{-1}$. This implies that $\tilde{p_i} = p_i$ by part 1 and we get that $d/(1 + \epsilon) \leq k_i \leq (1 + \epsilon) d$. Since $k_i = \lceil (1 + \epsilon)^i \rceil$ we get that $(1 + \epsilon)^{i -1} \leq d \leq (1 + \epsilon)^{i+ 2}$\\
+    
+    \item We are trying to find the $i$ such that $\tilde{p_i} \in (1 \pm c\epsilon)e^{-1}$, then $k_i$ will be the estimate for $d$.
+    
+    We will calculate the each $\tilde{p_i}$ for $i \leq log(n)$ ($k_i$ is at most $d$ so $(1+\epsilon)^i\leq d$)
+    
+    Then for each $i$, we store each $\tilde{p_i}$, then it will takes $log(n)$ space in total for storing all $\tilde{p_i}$.
+    
+    we are going to calculate a unbiased $\tilde{p_i} \in (1\pm c\epsilon)e^{-1}$ through averaging and median tricks. \\
+    
+    We will use $h = O(\frac{1}{\epsilon^2})$ hash functions to compute $h$ $\tilde{p_i}$ and taking the average of it. This grantees that $Pr[|\tilde{p_i} - p_i|\geq c\epsilon p_i] \leq C$ for some constant $C$. \\
+    
+    By median tricks, we take $O(\frac{1}{\epsilon})$ space to have less than $\frac{1}{poly(n)}$ probability that the median $\tilde{p_i}$ is bad. Then, take the union bound for $\log(n)$ $i$, we can have all $\tilde{p_i} \in (1\pm c\epsilon)e^{-1}$ for all $i$.\\
+    
+    Therefore, in total we need $O(\log(n))\cdot O(\log(n))/(\epsilon^2\cdot\epsilon) = \frac{\log^2(n)}{\epsilon^3}$ space.
+\end{enumerate}
+
+\end{solution}
+\end{document}

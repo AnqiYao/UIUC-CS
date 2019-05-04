@@ -1,0 +1,234 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% LaTeX Template: Project Modified (v 0.2) 
+%
+% Original Source: http://www.howtotex.com
+% Date: February 2019
+% 
+% This is a title page template which be used for articles & reports.
+% 
+% 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\documentclass[12pt]{report}
+\usepackage[a4paper]{geometry}
+\usepackage[myheadings]{fullpage}
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+\usepackage{graphicx, wrapfig, subcaption, setspace, booktabs}
+\usepackage[T1]{fontenc}
+\usepackage[font=small, labelfont=bf]{caption}
+\usepackage{fourier}
+\usepackage[protrusion=true, expansion=true]{microtype}
+\usepackage[english]{babel}
+\usepackage{sectsty}
+\usepackage{url, lipsum}
+\usepackage{tgbonum}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{listings}
+\usepackage{color}
+ 
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+ 
+\lstdefinestyle{mystyle}{
+    backgroundcolor=\color{backcolour},   
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\footnotesize,
+    breakatwhitespace=false,         
+    breaklines=true,                 
+    captionpos=b,                    
+    keepspaces=true,                 
+    numbers=left,                    
+    numbersep=5pt,                  
+    showspaces=false,                
+    showstringspaces=false,
+    showtabs=false,                  
+    tabsize=2
+}
+ 
+\lstset{style=mystyle}
+
+\newcommand{\HRule}[1]{\rule{\linewidth}{#1}}
+\onehalfspacing
+\setcounter{tocdepth}{5}
+\setcounter{secnumdepth}{5}
+
+
+
+
+%-------------------------------------------------------------------------------
+% TITLE PAGE
+%-------------------------------------------------------------------------------
+
+\begin{document}
+{\fontfamily{cmr}\selectfont
+\title{ \normalsize \textsc{}
+		\\ [2.0cm]
+		\HRule{0.5pt} \\
+		\LARGE \textbf{\uppercase{CS 498 ABD Final Report}
+		\HRule{0.5pt} \\ [0.5cm]
+		\normalsize \today \vspace*{5\baselineskip}}
+		}
+
+\date{}
+
+\author{Aditya Pillai\\
+        Ray Ying}
+
+
+
+\maketitle
+\tableofcontents
+\newpage
+
+%-------------------------------------------------------------------------------
+% Section title formatting
+%-------------------------------------------------------------------------------
+
+%-------------------------------------------------------------------------------
+% BODY
+%-------------------------------------------------------------------------------
+\section{Introduction}
+This report is about the 2019 paper "Coresets Meet EDCS: Algorithms for Matching and Vertex Cover on Massive Graph". \\
+
+\section{Problem Statement}
+Massive graphs is becoming an important subject as it has shown in variety of applications like web graph, networks. Particular, Matching and Vertex Cover are always special problems in graphs because they are related to many NP-Hard problems. 
+
+\begin{itemize}
+    \item Mathcing: A set of edges with no two edges in the set sharing a common vertex.
+    \item Vertex covering: A set of vertices contains at least one vertex for every edges in the graph. 
+\end{itemize}
+
+The main problem discussed by this paper is randomized composable coresets for matching and vertex cover, to be exact, a general algorithm that outputs a small sized randomized composable coresets for maximum matching and minimum vertex
+cover with good approximation ratio across a wide range of settings including streaming model, distributed communication model, and massively parallel computation model. 
+
+\begin{itemize}
+    \item Randomized composable coreset: Let $G^{(1)} ,...,G^{(k)}$ be the random partitions of $G$, given an algorithm that outputs a subgraph $H^{(i)}$ of size $s$ for each partition $G^{(i)}$. It's an $\alpha$-approximation randomized composable coreset of size $s$ for a problem $P$ if and only if $P(H^{(1)} \cup H^{(2)} \cup ... \cup H^{(k)} )$ is an $\alpha$-approximation to $P(G)$ with high probability.
+    \item Streaming model: Input data is presented as a sequence of items with only limited memory.
+    \item distributed model: Divided a problem into many sub-problems, each of which is solved by one or more computers, which communicate with each other via message passing.
+    
+    \newpage 
+    
+    \item Massively Parallel Computation (MPC): With multiple machine and each machine has only limited memory, each machine perform local computation in each round and exchange massages in the end of each round. The machines output solution collectively in the end. 
+\end{itemize}
+
+The motivations for finding such an algorithm is because randomized composable coresets has advantage over other approaches in large-scale optimization and it has applications to different models. One advantage is that random coresets can bypass a previously known impossibility result for adversarial partitions. With all different kinds of settings, there is growing need for an optimal unified approach. 
+\\
+
+\section{Previous Work}
+There has been a lot of recent works regarding this topic in different settings.\\
+
+The idea of using randomized composable coresets
+to bypass the impossible results was mentioned by Khanna in 2017. He came up with the following theorem: 
+
+\begin{itemize}
+    \item There are $\mathcal{O}(n)$ size randomized composable
+    coresets with $(3 + \mathcal{O}(1))$- approximation for maximum matching, and $\mathcal{O}(log$ $n)$ approximation for minimum vertex covering.
+    \\
+\end{itemize}
+
+He then used the theorem to develop a unified approach across multiple models. Unfortunately, the approach he gave has large approximation factor and it is unable to compete with model-specific approaches.\\
+
+For streaming setting, getting $2$-approximation to matching with $\mathcal{O}(n^2)$ space in adversarial streams is an open question. The state-of-art works for this are: 
+
+\begin{itemize}
+    \item $1.85$-approximation to matching for random arrival streams with $\mathcal{O}(n)$ space.
+    \item Better than $1.85$-approximation to matching in adversarial streams with $\mathcal{O}(n^{1+\Omega(1/log log n)})$
+    \\
+    
+\end{itemize}
+
+The paper also discussed on the Edge Degree Constrained Subgraphs (EDCS). Though EDCS was used prior to this paper, it was mainly from the perspective of how large of matching it contains and how it can be maintained efficiently in a dynamically changing graph. The paper viewes EDCS in a different viewpoint and proved several new interesting structural properties of the EDCS. The definition of EDCS is as following:
+\begin{itemize}
+    \item For any graph $G = (V,E)$ and integers $\beta \geq \beta^- \geq 0$, an edge degree constrain subgraph (EDCS) $(G,\beta,\beta^-)$ is a subgraph $H$ $:=(V,E_H)$ of $G$ with following two properties:
+    \begin{itemize}
+        \item For any edge $(u, v) \in E_H$: $dH (u) + dH (v) \leq \beta $.
+        \item For any edge $(u, v) \in E \setminus E_H$: $dH (u) + dH (v) \geq \beta^-$.
+    \end{itemize}
+\end{itemize}
+
+It's can be shown that given any $\beta > \beta^-$, there exists an EDCS$(G, \beta, \beta^-)$ for the graph $G$ and finding such EDCS can be done in polynomial time. The paper also improved one of the theorem provided by Bernstein and Stein in 2016: 
+
+\begin{itemize}
+    \item A $(\beta, \epsilon)$-EDGS always constains a $(1.5 + \epsilon)$-approximate matching for $\beta > 1/\epsilon$. 
+\end{itemize}
+
+According to the paper, the most relevant to their work are the polylog(n)-space polylog(n)-approximation algorithm of 
+for estimating the size of a maximum matching in random stream, and the $(3/2)$-approximation
+communication protocol of when the input is (adversarially) partitioned between two parties
+and the communication is from one party to the other one. However, the techniques and results from these above are completely disjoint to this paper's.
+\\
+
+\section{Main Result 1}
+The paper first introduces their randomized coresets for matching and vertex cover through computing an EDCS of the input graph and applying the following two lemma:
+\begin{itemize}
+    \item Let $G = (V,E)$ be any graph  graph and $\epsilon < 1/2$ be a parameter. For parameters $\lambda > \frac{\epsilon}{100}$, $\beta > 32\lambda^{-3}$, and $\beta^- \geq (1 - \lambda) \cdot \beta$, in any subgraph $H$ $:=$ EDGS$(G,\beta,\beta^-)$, MM$(G) \leq (\frac{3}{2} + \epsilon) \cdot$ MM($H$).
+    \item  Let $G(V, E)$ be any graph, $\epsilon < 1/2$ be a parameter, and $H$ $:=$ EDCS$(G, \beta, \beta^-)$ for parameters $\beta \geq 4\epsilon$ and $\beta^- \geq \beta \cdot (1 - \epsilon/4)$. Suppose $V_{high}$ is the set of vertices $v \in V$ with $dH (v) \geq \beta^-/2$ and $V_{vc}$ is a minimum vertex cover of $H$; then $V_{high} \cup V_{vc}$ is a vertex cover of G with size at most $(2 + \epsilon) \cdot VC(H)$.
+\end{itemize}
+
+The first lemma above stating that the EDCS will approximately preserve $(1.5 + \epsilon)$-approximation of the maximum matching. A more detailed theorem is as following:
+
+\begin{itemize}
+    \item Let $G(V,E)$ be a graph and $G^{(1)},...G^{(k)}$ be a random $k$-partitions of graph $G$, for any $\epsilon \in (0,1)$, any EDCS($G^{(i)}, \Beta, (1- \lambda)\cdot\Beta)$ for $\lambda = \Theta \bigg((\frac{\epsilon}{\log {n}})^2 \bigg)$, $ \beta = \Theta(\lambda^{-6}\cdot\log^7{n})$  is a $(1.5 + \epsilon)$-approximation randomized composable coreset of size $\mathcal{O}(n \cdot \beta)$ for the maximum matching problem.
+\end{itemize}
+
+It can also be extend to vertex cover. For the vertex cover, in addition to the vertex cover for subgraph $H$, it should also covers the vertices with degree $\geq \beta^-/2$ in $H$. By the second property of EDCS, the addition vertices will cover edges in $G \setminus H$. Because $\FORALL{E'} \in G \setminus H$, at least $1$ endpoint of $E'$ will have degree $\geq \beta^-/2$, the set of vertices will be a feasible vertex cover for graph $G$. In the worst case, the if both vertices of an edge have degree $\geq \beta^-/2$, we will count both vertices in our vectex cover set. So, for vertex cover, it's about $(2 + \epsilon)\cdot VC(H)$. ($vc(H)$ is the size of the minimum vertex cover)\\
+
+The paper gives the algorithm for computing EDCS from random $k$-partitions. Let $G^{(1)},...G^{(k)}$ be a random $k$-partitions of graph $G$. For any $i \in [1,k]$, we compute the EDCS $C^{(i)} = (G^{i}, \beta,(1-\lambda)\cdot\beta)$ where $\lambda = \Theta  \bigg((\frac{\epsilon}{\log {n}})^2 \bigg)$, $ \beta = \Theta(\lambda^{-3}\cdot\log{n})$, output $C = \union_{i=0}^{k} C^{(i)}$ as EDCS of the graph $G$. A Lemma given by the paper:  
+
+\begin{itemize}
+    \item With probability $1 - \frac{4}{n^7}$, the subgraph $C$ is an EDCS$(G,\beta_c,\beta_c^-)$ for parameter:
+    $$ \lambda_C := \mathcal{O}(\log {n})\cdot\lambda^{1/2} \hspace{1cm} \beta_C := (1 + \lambda_C)\cdot k\cdot\beta \hspace{1cm} and \hspace{1cm} \beta_C^- := (1-2\lambda_C)\cdot k\cdot\beta$$
+\end{itemize}
+
+The proof of this Lemma will reply on the following property of EDCS in sampled subgraphs:
+
+\begin{itemize}
+    \item For edge sampled subgraphs, the degree distributions
+    of any two EDCS for two different edge sampled subgraphs of $G$ is almost the same no matter how the two EDCS are selected or even if the choice of the two subgraphs are not independent. For a fix graph $G(V,E)$ and $p \in (0,1)$, let $G_1$ and $G_2$ be two edge sampled subgraphs of $G$ with probability $p$ (not necessarily independent), and $H_1$ and $H_2$ be arbitrary EDCSs of $G_1$ and $G_2$ with parameters $(\beta , (1-\lambda)\cdot\beta)$, suppose $\beta \geq 750 \cdot \lambda^{-2}\cdot \ln {(n)}$, then with probability $1 - 4/n^9$, simultaneously for all $v_1 \in H_1$ and $v_2 \in H_2$, the difference between the degree will be $\leq \mathcal{O}(\log {n}) \cdot \lambda^{1/2} \cdot \beta$.
+
+\end{itemize}
+
+For any partition $G^{(i)}$, it has $p = \frac{1}{k}$ probability being edge sampled subgraph, by the above property, we know that with probability $1 - \frac{4}{n^9}$ that the degree difference between any two vertices in any two subgraph $G^{(i)}$ and $G^{(j)}$ will be $\leq \mathcal{O}(\log {n}) \cdot \lambda^{1/2} \cdot \beta = \lambda_C \cdot \beta$. We need this property to hold for any pairs of subgraph $G^{i}$ and $G^{(j)}$ in order to prove that $C$ is an EDCS$(G,\beta_C,\beta_C^-)$. Take the union bound of ${k \choose 2} = n^2$ pairs, the probability is $1 - \frac{4}{n^7}$.\\
+
+We need to show that every pairs of subgraph satisfies the property will be enough to have $C$ be an EDCS$(G,\beta_C,\beta_C^-)$.\\
+
+Let edge $(u,v) \in C^{(j)} \in C$, $j \in [1,k]$, 
+$$ d_C(u) + d_C(v) = \sum_{i = 0}^k d_{C^{(i)}}(u) + \sum_{i = 0}^k d_{C^{(i)}}(v) \leq k\cdot(d_{C^{(j)}}(u) + d_{C^{(j)}}(v)) + k\cdot\lambda_C\cdot\beta = \beta_C$$
+
+Let edge $(u',v') \in G^{(j)} \setminus C^{(j)} \in G \setminus C$, $j \in [1,k]$,
+$$ d_C(u') + d_C(v') = \sum_{i = 0}^k d_{C^{(i)}}(u) + \sum_{i = 0}^k d_{C^{(i)}}(v) \geq k\cdot(d_{C^{(j)}}(u) + d_{C^{(j)}}(v)) - k\cdot\lambda_C\cdot\beta = \beta_C^-$$
+
+Combine both cases above, $C$ satisfies the $2$ property of EDCS of graph $G$, hence, $c$ is an EDCS$(G,\beta_C,\beta_C^-)$.\\
+
+As we said above, this EDCS$(G,\beta_C,\beta_C^-)$ will preserve $(1.5 + \epsilon)$-approximation of the maximum matching and $(2 + \epsilon)$-approximation of the minimum vertex covering. Hence, we just found the solution to part of our problem, a small sized randomized composable coresets for maximum matching and minimum vertex cover with good approximation ratio. Next section will be applying this idea to different settings so that we can have an unified approach.\\
+
+
+\section{Main Result 2}
+This section of the paper uses coresets and results of EDCS to get MPC algorithms that use less memory. This modifies the ideas previously shown by creating the sub graphs by sampling by vertex instead of edges and then the separate machines compute the EDCS on their inputs. \\
+The main theorem of this section is \\ \\
+There exists an MPC algorithm that given a graph $G(V, E)$ with high probability computes a $O(1)$ approximation to both maximum matching and vertex cover of $G$ in $O(\log \log n + \log( \frac{n}{s})$ MPC rounds on machines of memory $s = n^{\Omega(1)}$  \\ \\
+The first step to doing this is compute EDCS by sampling vertices. \\
+1. Define $p = (200 \log n) \sqrt{\frac{s}{n \cdot \Delta}}$ and $k = \frac{800 \log n}{p^2}$ \\
+2. Create $k$ subgraphs of $k$ machines $G^{(1)}, G^{(2)}.....G^{(k)}$ \\
+$k = 20 \log n$, each vertex $v$ in $G$ is independently picks a $k$ wise independent hash function, $h_v: [k] \to [1/p]$ \\
+The graph $G^{(i)}$ is the induced subgraph on $G$ on vertices $v$ with $h_v(i) = 0$ \\
+3. Let $\lambda = (2 \cdot \log n)^{-3}$ and $\Beta = 750 \cdot \lambda^{-2} \cdot \ln (n)$ \\
+4. For $i = 1$ to $k$, compute $C^{(i)}$ = EDCS($G^{(i)}, \Beta, (1- \lambda)\Beta)$ on machine $i$ \\
+5. Define the multi-graph $C(V, E_{C})$ with $E_{C} = \cup_{i=1}^k C^{(i)}$ \\ \\
+The properties of this algorithm are \\
+For $\Delta \geq (n/s)(400 \cdot \log^2(n))$, with probability $1-2/n^8$ \\
+1. For any vertex $v \in V$, $|I(v)| =p \cdot k + \lambda c p k$ \\
+2. For any edge $e \in E$, there exists one index $i \in [k]$ such that $e$ belongs to $G^{(i)}$
+
+
+}
+\end{document}
+
+
